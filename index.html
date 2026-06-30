@@ -1,0 +1,1111 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<!--
+  ============================================================
+  SITIO WEB — Matilde Pizarro Toro, Fonoaudióloga
+  ============================================================
+  Última actualización:
+    - Foto de "Sobre mí" reemplazada por la nueva foto enviada
+      (se recortó solo el retrato circular; el nombre/título de
+      esa imagen no se usó como texto porque ya aparecen escritos
+      en la propia web con la tipografía del sitio).
+    - Se agregó la sección "Modalidades" (online, a domicilio en
+      Quilpué/Villa Alemana/Viña del Mar, y presencial en Viña del
+      Mar) y un selector de modalidad en el formulario de Agenda.
+      Reemplaza a la antigua sección "El espacio".
+    - Las menciones a Centro Brainland se redujeron a UNA sola,
+      en la sección "Ubicación", redactada como box arrendado de
+      forma independiente (no es relación laboral ni con Matilde
+      ni con el centro) — el resto del sitio habla en general de
+      "atención presencial en Viña del Mar".
+
+    - Instagram integrado en la sección "Contacto":
+      @fonotrans (https://www.instagram.com/fonotrans/).
+    - Se eliminó la especialidad "Tartamudez (disfemia)" de la
+      sección "Servicios" a pedido.
+
+  Queda pendiente solo este texto (tiene un subrayado punteado
+  naranja en la página):
+
+    1) Verificar el N° de WhatsApp/teléfono: el CV traía
+       "+569 971710225" (12 dígitos, uno de más para un celular
+       chileno). Se usó +56 9 7171 0225 asumiendo un 9 duplicado
+       por error de tipeo — confírmalo antes de publicar en
+       "Contacto", en el JSON-LD del <head> y en el enlace wa.me.
+
+  La sección AGENDA tiene un calendario y formulario propios
+  (no es el calendario de Skedu embebido: Skedu no permite eso).
+  Cuando alguien envía el formulario, te llega un correo con el
+  día/hora que pidió (y ahora también la modalidad elegida) —
+  tú revisas tu agenda real en Skedu y confirmas por correo o
+  WhatsApp. El formulario ya está conectado a Formspree (ver
+  comentario "CONFIGURACIÓN DEL FORMULARIO" en la sección de
+  Agenda) y revisa BOOKING_CONFIG en el <script> final para poner
+  tus días/horarios reales.
+
+  Los archivos de fotos/videos van en la carpeta assets/ junto
+  a este index.html (assets/img y assets/video) — mantén esa
+  carpeta junto al archivo al subir el sitio a tu hosting.
+  ============================================================
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Matilde Pizarro Toro | Fonoaudióloga en Quilpué, Villa Alemana y Viña del Mar</title>
+<meta name="description" content="Matilde Pizarro Toro, Fonoaudióloga. Evaluación y tratamiento de lenguaje, habla, voz y deglución para niños y adultos, otoscopia y acompañamiento vocal afirmativo. Sesiones online, a domicilio en Quilpué, Villa Alemana y Viña del Mar, y presencial en Viña del Mar. Reserva tu hora en línea.">
+<meta name="theme-color" content="#D6447E">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Matilde Pizarro Toro | Fonoaudióloga en Quilpué, Villa Alemana y Viña del Mar">
+<meta property="og:description" content="Evaluación y tratamiento de lenguaje, habla, voz y deglución para niños y adultos. Online, a domicilio y presencial. Reserva tu hora en línea.">
+<meta property="og:locale" content="es_CL">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23D6447E'/%3E%3Cpath d='M20 50 L35 50 L42 30 L50 70 L58 40 L65 50 L80 50' stroke='%23FDF1F6' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,400;0,500;0,600;0,700;1,500&amp;family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=IBM+Plex+Mono:wght@400;500&amp;display=swap" rel="stylesheet">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "MedicalBusiness",
+  "name": "Matilde Pizarro Toro — Fonoaudióloga",
+  "description": "Atención fonoaudiológica para niños y adultos: lenguaje, habla, voz y deglución. Modalidad online, a domicilio y presencial.",
+  "areaServed": ["Viña del Mar", "Quilpué", "Villa Alemana"],
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "C. Limache 1724, oficina 702",
+    "addressLocality": "Viña del Mar",
+    "addressRegion": "Valparaíso",
+    "addressCountry": "CL"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": -33.0292166,
+    "longitude": -71.5396096
+  },
+  "telephone": "+56 9 7171 0225",
+  "email": "matildepizarrotoro@gmail.com",
+  "medicalSpecialty": "SpeechAndLanguagePathology"
+}
+</script>
+
+<style>
+/* ============================================================
+   TOKENS
+   ============================================================ */
+:root{
+  --paper:#FDF1F6;
+  --paper-alt:#FFFFFF;
+  --ink:#34202B;
+  --ink-soft:#8C6478;
+  --voice:#D6447E;
+  --voice-deep:#A52F60;
+  --amber:#D98A3D;
+  --amber-deep:#BD7530;
+  --sage:#6F8F76;
+  --line:#F5D9E5;
+  --radius-sm:12px;
+  --radius-md:20px;
+  --radius-lg:30px;
+  --shadow-soft:0 18px 40px -22px rgba(52,32,43,0.32);
+  --font-display:'Fraunces', Georgia, serif;
+  --font-body:'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono:'IBM Plex Mono', ui-monospace, 'Courier New', monospace;
+}
+
+/* ============================================================
+   RESET / BASE
+   ============================================================ */
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *,*::before,*::after{animation-duration:0.01ms !important;animation-iteration-count:1 !important;transition-duration:0.01ms !important;}
+}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--font-body);-webkit-font-smoothing:antialiased;line-height:1.6;}
+img,svg{display:block;max-width:100%;}
+a{color:inherit;}
+ul,ol{list-style:none;margin:0;padding:0;}
+h1,h2,h3,p{margin:0;}
+button{font:inherit;background:none;border:none;}
+section[id]{scroll-margin-top:84px;}
+.visually-hidden{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+.skip-link{position:absolute;left:1rem;top:-60px;background:var(--ink);color:#fff;padding:.7rem 1.2rem;border-radius:0 0 10px 10px;z-index:300;transition:top .25s ease;text-decoration:none;font-weight:600;}
+.skip-link:focus{top:0;}
+:focus-visible{outline:3px solid var(--voice);outline-offset:3px;}
+
+.container{max-width:1180px;margin-inline:auto;padding-inline:clamp(1.25rem,4vw,2.5rem);}
+
+.eyebrow{font-family:var(--font-mono);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--voice);margin-bottom:1rem;font-weight:500;}
+.fill-me{border-bottom:2px dashed var(--amber);padding-bottom:1px;font-weight:600;}
+
+/* ============================================================
+   BUTTONS
+   ============================================================ */
+.btn{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--font-body);font-weight:600;font-size:.95rem;padding:.85rem 1.6rem;border-radius:999px;text-decoration:none;border:1.5px solid transparent;cursor:pointer;transition:transform .25s ease, box-shadow .25s ease, background-color .25s ease, color .25s ease, border-color .25s ease;white-space:nowrap;}
+.btn-primary{background:var(--amber);color:var(--ink);box-shadow:var(--shadow-soft);}
+.btn-primary:hover{background:var(--amber-deep);transform:translateY(-2px);}
+.btn-ghost{background:transparent;color:var(--voice);border-color:var(--voice);}
+.btn-ghost:hover{background:var(--voice);color:#fff;}
+.btn-sm{padding:.6rem 1.15rem;font-size:.85rem;}
+
+/* ============================================================
+   REVEAL ANIMATION
+   ============================================================ */
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease;}
+.reveal.is-visible{opacity:1;transform:translateY(0);}
+
+/* ============================================================
+   HEADER / NAV
+   ============================================================ */
+.site-header{position:sticky;top:0;z-index:100;background:rgba(253,241,246,0.86);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding-block:.9rem;}
+.brand{display:flex;flex-direction:column;line-height:1.2;text-decoration:none;}
+.brand-name{font-family:var(--font-display);font-weight:600;font-size:1.2rem;color:var(--ink);}
+.brand-tag{font-family:var(--font-mono);font-size:.62rem;letter-spacing:.08em;text-transform:uppercase;color:var(--voice);}
+.nav-links{display:flex;align-items:center;gap:1.9rem;}
+.nav-links a:not(.btn){font-weight:500;font-size:.94rem;text-decoration:none;color:var(--ink);position:relative;padding-bottom:2px;}
+.nav-links a:not(.btn)::after{content:"";position:absolute;left:0;right:0;bottom:-4px;height:2px;background:var(--amber);transform:scaleX(0);transform-origin:left;transition:transform .25s ease;}
+.nav-links a:not(.btn):hover::after{transform:scaleX(1);}
+.nav-cta-mobile{display:none;}
+.nav-actions{display:flex;align-items:center;gap:.75rem;}
+.nav-toggle{display:none;cursor:pointer;padding:.4rem;}
+.nav-toggle span{display:block;width:23px;height:2px;background:var(--ink);margin:5px 0;transition:transform .25s ease, opacity .25s ease;}
+.nav-toggle[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-toggle[aria-expanded="true"] span:nth-child(2){opacity:0;}
+.nav-toggle[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+
+@media (max-width:880px){
+  .nav-cta-desktop{display:none;}
+  .nav-cta-mobile{display:block;margin-top:.5rem;}
+  .nav-toggle{display:block;}
+  .nav-links{position:fixed;inset:0 0 0 28%;height:100vh;background:var(--paper-alt);flex-direction:column;justify-content:center;align-items:flex-start;gap:1.6rem;padding:2rem 2.2rem;transform:translateX(100%);transition:transform .35s ease;border-left:1px solid var(--line);box-shadow:-12px 0 30px -18px rgba(0,0,0,.25);}
+  .nav-links.is-open{transform:translateX(0);}
+  body.nav-open{overflow:hidden;}
+}
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{position:relative;overflow:hidden;padding-top:clamp(3.5rem,7vw,6rem);}
+.hero::before{content:"";position:absolute;top:-130px;right:-160px;width:520px;height:520px;background:radial-gradient(circle, rgba(214,68,126,.18), transparent 70%);border-radius:50%;pointer-events:none;}
+.hero::after{content:"";position:absolute;bottom:-160px;left:-150px;width:440px;height:440px;background:radial-gradient(circle, rgba(217,138,61,.14), transparent 70%);border-radius:50%;pointer-events:none;}
+.hero-inner{position:relative;padding-bottom:clamp(2.5rem,5vw,4rem);}
+.hero-title{font-family:var(--font-display);font-weight:600;font-size:clamp(2.3rem,1.55rem + 3.3vw,4.1rem);line-height:1.08;color:var(--ink);max-width:17ch;margin-bottom:1.4rem;}
+.hero-title em{font-style:italic;font-weight:500;color:var(--voice);}
+.hero-sub{font-size:1.15rem;font-weight:600;margin-bottom:.9rem;color:var(--ink);}
+.hero-desc{font-size:1.05rem;color:var(--ink-soft);max-width:48ch;margin-bottom:2.2rem;line-height:1.65;}
+.hero-actions{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:3.2rem;}
+.wave-wrap{margin-bottom:2.6rem;}
+.wave-wrap svg{width:100%;height:clamp(100px,17vw,190px);}
+.stop-a{stop-color:var(--amber);}
+.stop-b{stop-color:var(--voice);}
+.stop-c{stop-color:var(--voice-deep);}
+.hero-stats{display:flex;flex-wrap:wrap;gap:2.2rem;padding-top:2rem;border-top:1px solid var(--line);}
+.stat{display:flex;flex-direction:column;gap:.3rem;}
+.stat-label{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.08em;color:var(--ink-soft);}
+.stat-value{font-weight:600;color:var(--ink);}
+
+/* ============================================================
+   SECTION GENERIC
+   ============================================================ */
+.section{padding-block:clamp(4rem,7vw,7rem);}
+.section-alt{background:var(--paper-alt);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.section-head{max-width:640px;margin-bottom:3rem;}
+.section-title{font-family:var(--font-display);font-weight:600;font-size:clamp(1.85rem,1.5rem + 1.5vw,2.5rem);color:var(--ink);margin-bottom:1rem;line-height:1.18;}
+.section-lead{color:var(--ink-soft);font-size:1.05rem;line-height:1.65;}
+.section-dark{background:var(--ink);}
+.section-dark .eyebrow{color:var(--amber);}
+.section-dark .section-title{color:var(--paper);}
+.section-dark .section-lead{color:#DCBAC9;}
+
+/* ============================================================
+   SOBRE MÍ
+   ============================================================ */
+.about-grid{display:grid;grid-template-columns:280px 1fr;gap:3.5rem;align-items:center;}
+.about-photo{text-align:center;}
+.photo-frame{width:230px;height:230px;border-radius:32px;margin:0 auto 1.1rem;background:linear-gradient(155deg, rgba(214,68,126,.16), rgba(217,138,61,.18));border:3px solid var(--paper-alt);box-shadow:var(--shadow-soft);overflow:hidden;display:flex;align-items:center;justify-content:center;color:var(--voice);}
+.photo-frame img{width:100%;height:100%;object-fit:cover;display:block;}
+.photo-frame svg{width:60px;height:60px;}
+@media (max-width:880px){.about-grid{grid-template-columns:1fr;}.about-photo{text-align:left;}.photo-frame{margin:0 0 1rem;}}
+
+/* ============================================================
+   SERVICIOS
+   ============================================================ */
+.services-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(255px,1fr));gap:1.5rem;}
+.service-card{background:var(--paper-alt);border:1px solid var(--line);border-radius:var(--radius-md);padding:clamp(1.5rem,2vw,2rem);transition:transform .25s ease, box-shadow .25s ease;}
+.service-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-soft);}
+.icon-badge{width:52px;height:52px;border-radius:14px;display:flex;align-items:center;justify-content:center;background:linear-gradient(155deg, rgba(214,68,126,0.12), rgba(217,138,61,0.16));color:var(--voice);margin-bottom:1.1rem;}
+.icon-badge svg{width:26px;height:26px;}
+.service-card h3{font-size:1.08rem;font-weight:700;color:var(--ink);margin-bottom:.5rem;}
+.service-card p{font-size:.92rem;color:var(--ink-soft);line-height:1.55;}
+
+/* ============================================================
+   TESTIMONIOS
+   ============================================================ */
+.testimonios-section{position:relative;overflow:hidden;background:linear-gradient(180deg, #FFFFFF 0%, #FCE7EF 100%);}
+.testimonios-section::before{content:"";position:absolute;top:-90px;left:50%;transform:translateX(-50%);width:680px;height:300px;background:radial-gradient(ellipse, rgba(214,68,126,.14), transparent 72%);pointer-events:none;}
+.testi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.6rem;position:relative;}
+.testi-card{background:var(--paper-alt);border:1px solid var(--line);border-radius:var(--radius-md);overflow:hidden;box-shadow:var(--shadow-soft);display:flex;flex-direction:column;transition:transform .25s ease;}
+.testi-card:hover{transform:translateY(-4px);}
+.testi-video-wrap{position:relative;width:100%;aspect-ratio:9/16;background:var(--ink);}
+.testi-video-wrap video{width:100%;height:100%;object-fit:cover;display:block;}
+.testi-name{display:flex;align-items:center;gap:.5rem;padding:1rem 1.1rem .2rem;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;color:var(--voice);}
+.testi-name svg{width:15px;height:15px;color:var(--amber);flex-shrink:0;}
+.testi-quote{padding:.5rem 1.1rem 1.2rem;font-size:.92rem;color:var(--ink);line-height:1.55;font-style:italic;}
+.testi-note{margin-top:2.6rem;font-size:.85rem;color:var(--ink-soft);text-align:center;position:relative;}
+
+/* ============================================================
+   AGENDA
+   ============================================================ */
+.steps-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1.75rem;margin:0 0 3rem;}
+.step{display:flex;gap:1rem;align-items:flex-start;}
+.step-num{font-family:var(--font-mono);font-weight:500;font-size:1.4rem;color:var(--amber);line-height:1.1;}
+.step h3{font-size:1.02rem;font-weight:700;margin-bottom:.35rem;color:var(--ink);}
+.step p{font-size:.9rem;color:var(--ink-soft);line-height:1.55;}
+
+.agenda-card{background:linear-gradient(180deg, rgba(214,68,126,0.06), rgba(217,138,61,0.05));border:1px solid var(--line);border-radius:var(--radius-lg);padding:clamp(1.25rem,2.5vw,2rem);}
+.agenda-card-head{display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
+.badge-live{display:inline-flex;align-items:center;gap:.55rem;font-family:var(--font-mono);font-size:.76rem;letter-spacing:.03em;color:var(--ink-soft);background:var(--paper-alt);border:1px solid var(--line);padding:.4rem .9rem .4rem .8rem;border-radius:999px;}
+.live-dot{width:8px;height:8px;border-radius:50%;background:var(--sage);display:inline-block;animation:pulse 1.8s ease-in-out infinite;}
+@keyframes pulse{0%,100%{box-shadow:0 0 0 0 rgba(111,143,118,.55);}50%{box-shadow:0 0 0 6px rgba(111,143,118,0);}}
+
+.agenda-iframe-wrap{position:relative;width:100%;background:#fff;}
+.agenda-iframe-wrap iframe{width:100%;height:680px;border:0;display:block;}
+@media (max-width:640px){.agenda-iframe-wrap iframe{height:540px;}}
+.agenda-fallback{margin-top:1.1rem;font-size:.9rem;color:var(--ink-soft);}
+.agenda-fallback a{color:var(--voice);font-weight:600;text-decoration:underline;text-underline-offset:3px;}
+.agenda-note{margin-top:1.25rem;font-size:.85rem;font-style:italic;color:var(--ink-soft);}
+
+/* ============================================================
+   BOOKING WIDGET (solicitud de hora — calendario propio + form)
+   ============================================================ */
+.booking-widget{background:var(--paper-alt);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-soft);padding:clamp(1.1rem,2.5vw,1.75rem);}
+
+.booking-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
+.booking-cal-head .cal-month{font-family:var(--font-mono);font-size:.85rem;letter-spacing:.04em;text-transform:capitalize;color:var(--ink);font-weight:500;}
+.cal-nav{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--paper-alt);color:var(--voice);font-size:1.1rem;line-height:1;cursor:pointer;transition:background-color .2s ease,transform .2s ease;}
+.cal-nav:hover{background:var(--paper);transform:translateY(-1px);}
+.cal-nav:disabled{opacity:.35;cursor:not-allowed;transform:none;}
+
+.booking-days{display:grid;grid-auto-flow:column;grid-auto-columns:1fr;gap:.5rem;overflow-x:auto;padding-bottom:.2rem;}
+.day-btn{display:flex;flex-direction:column;align-items:center;gap:.3rem;min-width:54px;padding:.65rem .4rem;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--paper-alt);cursor:pointer;font-family:var(--font-body);transition:border-color .2s ease,background-color .2s ease,transform .2s ease;}
+.day-btn .day-name{font-family:var(--font-mono);font-size:.68rem;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);}
+.day-btn .day-num{font-size:1.05rem;font-weight:700;color:var(--ink);}
+.day-btn:hover:not(:disabled){border-color:var(--voice);transform:translateY(-2px);}
+.day-btn.is-selected{background:var(--voice);border-color:var(--voice);}
+.day-btn.is-selected .day-name,.day-btn.is-selected .day-num{color:#fff;}
+.day-btn:disabled{opacity:.32;cursor:not-allowed;}
+.day-btn:disabled:hover{transform:none;border-color:var(--line);}
+
+.booking-slots{margin-top:1.4rem;padding-top:1.4rem;border-top:1px dashed var(--line);}
+.booking-slots-label{font-size:.88rem;color:var(--ink-soft);margin-bottom:.85rem;}
+.booking-slots-label strong{color:var(--ink);}
+.slot-grid{display:flex;flex-wrap:wrap;gap:.6rem;}
+.slot-btn{font-family:var(--font-mono);font-size:.85rem;padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line);background:var(--paper-alt);color:var(--ink);cursor:pointer;transition:border-color .2s ease,background-color .2s ease,color .2s ease;}
+.slot-btn:hover{border-color:var(--amber);}
+.slot-btn.is-selected{background:var(--amber);border-color:var(--amber);color:var(--ink);font-weight:600;}
+.slot-empty{font-size:.85rem;color:var(--ink-soft);font-style:italic;}
+
+.booking-form{margin-top:1.4rem;padding-top:1.4rem;border-top:1px dashed var(--line);display:grid;gap:1rem;}
+.form-row{display:flex;flex-direction:column;gap:.35rem;}
+.form-row label{font-size:.82rem;font-weight:600;color:var(--ink);}
+.form-row input,.form-row textarea,.form-row select{font:inherit;font-family:var(--font-body);font-size:.95rem;padding:.7rem .85rem;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--paper-alt);color:var(--ink);resize:vertical;}
+.form-row input:focus,.form-row textarea:focus,.form-row select:focus{outline:none;border-color:var(--voice);}
+.booking-selected-summary{font-size:.85rem;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-sm);padding:.7rem .9rem;}
+.booking-selected-summary strong{color:var(--voice);}
+.booking-form .btn{justify-self:start;}
+.booking-form .btn:disabled{opacity:.55;cursor:not-allowed;transform:none;}
+.booking-status{font-size:.88rem;margin:0;min-height:1.2em;}
+.booking-status.is-success{color:var(--sage);font-weight:600;}
+.booking-status.is-error{color:#B3433D;font-weight:600;}
+
+/* ============================================================
+   UBICACIÓN
+   ============================================================ */
+.ubicacion-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center;}
+.ubicacion-grid .section-lead{margin-bottom:1.6rem;}
+.map-frame{border-radius:var(--radius-md);overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-soft);}
+.map-frame iframe{width:100%;height:360px;border:0;display:block;}
+@media (max-width:880px){.ubicacion-grid{grid-template-columns:1fr;}}
+
+/* ============================================================
+   CONTACTO (dark band)
+   ============================================================ */
+.contacto-inner{display:flex;flex-direction:column;gap:2.4rem;align-items:flex-start;}
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.25rem;width:100%;}
+.contact-item{display:flex;align-items:center;gap:.9rem;text-decoration:none;color:var(--paper);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);padding:1rem 1.2rem;border-radius:var(--radius-md);transition:background .25s ease, transform .25s ease;}
+.contact-item:hover{background:rgba(255,255,255,.12);transform:translateY(-2px);}
+.contact-item svg{width:22px;height:22px;color:var(--amber);flex-shrink:0;}
+.contact-label{display:block;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;color:#B9B2CC;margin-bottom:.25rem;}
+.contact-item .fill-me{color:var(--paper);border-bottom-color:var(--amber);font-weight:600;}
+
+/* ============================================================
+   FOOTER
+   ============================================================ */
+.site-footer{background:var(--voice-deep);color:#FBE7EF;padding-block:2.4rem;}
+.footer-inner{display:flex;flex-wrap:wrap;gap:1.5rem;justify-content:space-between;align-items:center;}
+.footer-name{font-family:var(--font-display);font-weight:600;font-size:1.1rem;color:var(--paper);}
+.footer-tag{font-size:.85rem;color:#F0CEDC;margin-top:.2rem;}
+.footer-links{display:flex;gap:1.4rem;flex-wrap:wrap;}
+.footer-links a{text-decoration:none;color:#FBE7EF;font-size:.9rem;}
+.footer-links a:hover{color:var(--amber);}
+.footer-bottom{margin-top:2rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.14);font-size:.82rem;color:#F0CEDC;display:flex;justify-content:space-between;flex-wrap:wrap;gap:.5rem;}
+.footer-bottom .fill-me{color:#FBE7EF;border-bottom-color:var(--amber);}
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main-content">Saltar al contenido principal</a>
+
+<header class="site-header">
+  <div class="nav-inner container">
+    <a class="brand" href="#inicio">
+      <span class="brand-name">Matilde Pizarro</span>
+      <span class="brand-tag">Fonoaudióloga</span>
+    </a>
+
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#modalidades">Modalidades</a></li>
+      <li><a href="#sobre-mi">Sobre mí</a></li>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#testimonios">Testimonios</a></li>
+      <li><a href="#agenda">Agenda</a></li>
+      <li><a href="#ubicacion">Ubicación</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+      <li class="nav-cta-mobile">
+        <a class="btn btn-primary btn-sm" href="#agenda">Reservar hora</a>
+      </li>
+    </ul>
+
+    <div class="nav-actions">
+      <a class="btn btn-primary btn-sm nav-cta-desktop" href="#agenda">Reservar hora</a>
+      <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false" aria-controls="navLinks">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<main id="main-content">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="inicio">
+    <div class="container hero-inner">
+      <p class="eyebrow reveal">Fonoaudióloga · Online, a domicilio y presencial</p>
+      <h1 class="hero-title reveal">Para que cada palabra <em>encuentre</em> su camino</h1>
+      <p class="hero-sub reveal">Matilde Pizarro Toro · Lenguaje, habla, voz y deglución para niños y adultos.</p>
+      <p class="hero-desc reveal">Sesiones online, a domicilio en Quilpué, Villa Alemana y Viña del Mar, y también presenciales en Viña del Mar. Elige el día y la hora que más te acomode y te confirmo en menos de 24 horas.</p>
+      <div class="hero-actions reveal">
+        <a class="btn btn-primary" href="#agenda">Solicitar hora →</a>
+        <a class="btn btn-ghost" href="#servicios">Ver especialidades</a>
+      </div>
+
+      <div class="wave-wrap reveal" aria-hidden="true">
+        <svg id="voiceWave" viewBox="0 0 1200 220" preserveAspectRatio="none" focusable="false">
+          <defs>
+            <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0%" class="stop-a"></stop>
+              <stop offset="55%" class="stop-b"></stop>
+              <stop offset="100%" class="stop-c"></stop>
+            </linearGradient>
+          </defs>
+          <path id="waveformPath" d="" fill="none" stroke="url(#waveGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </div>
+
+      <div class="hero-stats reveal">
+        <div class="stat"><span class="stat-label">ATENCIÓN</span><span class="stat-value">Niños y adultos</span></div>
+        <div class="stat"><span class="stat-label">MODALIDAD</span><span class="stat-value">Online · Domicilio · Presencial</span></div>
+        <div class="stat"><span class="stat-label">UBICACIÓN</span><span class="stat-value">Quilpué · Villa Alemana · Viña del Mar</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ MODALIDADES ============ -->
+  <section class="section" id="modalidades">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Modalidades</p>
+        <h2 class="section-title">Elige cómo prefieres atenderte</h2>
+        <p class="section-lead">Trabajo de forma online, a domicilio y presencial, para que la terapia se adapte a tu rutina y no al revés.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="6" y="11" width="20" height="16" rx="3"></rect>
+              <path d="M26 16.5l8-4.5v15l-8-4.5"></path>
+            </svg>
+          </div>
+          <h3>Online</h3>
+          <p>Sesiones por videollamada, ideales si prefieres atenderte desde casa o estás fuera de Quilpué, Villa Alemana o Viña del Mar.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 19L20 8l13 11"></path>
+              <path d="M10 17v13h20V17"></path>
+              <path d="M17 30v-8h6v8"></path>
+            </svg>
+          </div>
+          <h3>A domicilio</h3>
+          <p>Voy a tu casa en Quilpué, Villa Alemana y Viña del Mar — ideal si te complica trasladarte o prefieres un ambiente conocido.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 35s11-10.5 11-18a11 11 0 1 0-22 0c0 7.5 11 18 11 18Z"></path>
+              <circle cx="20" cy="17" r="4"></circle>
+            </svg>
+          </div>
+          <h3>Presencial</h3>
+          <p>Atención en box privado en Viña del Mar, con sala de espera, WiFi y ambiente cómodo. Dirección y mapa en <a href="#ubicacion">Ubicación ↓</a>.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOBRE MÍ ============ -->
+  <section class="section section-alt" id="sobre-mi">
+    <div class="container about-grid">
+      <div class="about-photo reveal">
+        <div class="photo-frame">
+          <img src="assets/img/matilde-foto.jpg" alt="Matilde Pizarro Toro, Fonoaudióloga" width="230" height="230" loading="lazy">
+        </div>
+      </div>
+      <div class="about-content reveal">
+        <p class="eyebrow">Sobre mí</p>
+        <h2 class="section-title">Hola, soy Matilde</h2>
+        <p class="section-lead">Soy Matilde Pizarro Toro, Fonoaudióloga. Trabajo con un enfoque cercano y personalizado, adaptando cada sesión a las necesidades de quien tengo enfrente — sea un niño dando sus primeros pasos en el lenguaje o un adulto que busca recuperar su voz.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVICIOS ============ -->
+  <section class="section" id="servicios">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Servicios</p>
+        <h2 class="section-title">¿En qué puedo ayudarte?</h2>
+        <p class="section-lead">Evaluación, diagnóstico y tratamiento fonoaudiológico integral a lo largo de todo el ciclo vital.</p>
+      </div>
+      <div class="services-grid">
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M7 10.5C7 8.6 8.6 7 10.5 7h19C31.4 7 33 8.6 33 10.5v12C33 24.4 31.4 26 29.5 26H17l-6.5 6v-6h-1C8.6 26 7 24.4 7 22.5v-12Z"></path>
+              <path d="M14 14.5h12M14 18.5h8"></path>
+            </svg>
+          </div>
+          <h3>Lenguaje infantil</h3>
+          <p>Evaluación y estimulación temprana del lenguaje en niños con retraso o trastorno específico del lenguaje (TEL).</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 20c5-7 11-7 15-7s10 0 15 7c-5 7-11 7-15 7s-10 0-15-7Z"></path>
+              <path d="M5 20h30"></path>
+            </svg>
+          </div>
+          <h3>Trastornos del habla</h3>
+          <p>Tratamiento de dislalias, trastornos fonológicos y dificultades en la articulación de sonidos.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+              <path d="M7 20v0M13 14v12M19 8v24M25 14v12M31 17v6"></path>
+            </svg>
+          </div>
+          <h3>Terapia de voz</h3>
+          <p>Rehabilitación vocal para disfonías y manejo de síntomas vocales. Entrenamiento en voz profesional para docentes, cantantes y locutores.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M20 6c5 6 8 11 8 15a8 8 0 0 1-16 0c0-4 3-9 8-15Z"></path>
+              <path d="M16 30l4 4 4-4"></path>
+            </svg>
+          </div>
+          <h3>Deglución (disfagia)</h3>
+          <p>Evaluación y manejo de dificultades para tragar, tanto en niños como en personas mayores.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M13 28v-3c-4-2-6-6-6-10 0-7 6-12 13-12s13 5 13 11c0 3-1.5 5.5-4 7.5V28"></path>
+              <path d="M13 28h13M16 28v4h7v-4"></path>
+              <circle cx="20" cy="14" r="1.6" fill="currentColor" stroke="none"></circle>
+              <circle cx="25" cy="17" r="1.2" fill="currentColor" stroke="none"></circle>
+              <path d="M20 14l3-1.5M20 14l2 4"></path>
+            </svg>
+          </div>
+          <h3>Rehabilitación neurológica</h3>
+          <p>Terapia de lenguaje y comunicación tras un ACV, TEC u otra condición neurológica, incluyendo apoyo en Parkinson y Alzheimer con estimulación cognitiva y de la memoria.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M24 7c-6 0-10 5-10 11 0 4 1.5 6 1.5 9.5 0 2.5-1.5 3.5-1.5 5.5 0 2 1.8 3 3.5 1.5"></path>
+              <path d="M24 7c4.5 0 7 3.5 7 8 0 3-1.2 4.5-1.2 7.2"></path>
+              <circle cx="28.5" cy="15" r="2.3"></circle>
+            </svg>
+          </div>
+          <h3>Otoscopia y lavado de oídos</h3>
+          <p>Revisión otoscópica y extracción de cerumen en box equipado especialmente para este procedimiento.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 13.5C9 10 12 7.5 15.5 7.5c2.2 0 3.8 1 4.5 2.3.7-1.3 2.3-2.3 4.5-2.3C28 7.5 31 10 31 13.5c0 6-7 11-11 14.5-4-3.5-11-8.5-11-14.5Z"></path>
+              <path d="M14 18.5h4l2-3.5 2.5 6 1.8-2.5H28"></path>
+            </svg>
+          </div>
+          <h3>Acompañamiento vocal afirmativo</h3>
+          <p>Acompañamiento vocal afirmativo para personas trans y de género diverso, en un espacio cercano y respetuoso.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TESTIMONIOS ============ -->
+  <section class="section testimonios-section" id="testimonios">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Testimonios</p>
+        <h2 class="section-title">Voces que encontraron su camino</h2>
+        <p class="section-lead">Relatos reales de personas que han vivido un proceso de acompañamiento vocal conmigo, compartidos con su permiso.</p>
+      </div>
+
+      <div class="testi-grid">
+
+        <article class="testi-card reveal">
+          <div class="testi-video-wrap">
+            <video controls preload="metadata" poster="assets/img/testimonio-1-poster.jpg" playsinline>
+              <source src="assets/video/testimonio-1.mp4" type="video/mp4">
+              Tu navegador no soporta la reproducción de video.
+            </video>
+          </div>
+          <p class="testi-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9Z"></path></svg> Testimonio de paciente</p>
+          <p class="testi-quote">«Hubo un momento en que pensé que no iba a poder cantar igual otra vez.»</p>
+        </article>
+
+        <article class="testi-card reveal">
+          <div class="testi-video-wrap">
+            <video controls preload="metadata" poster="assets/img/testimonio-2-poster.jpg" playsinline>
+              <source src="assets/video/testimonio-2.mp4" type="video/mp4">
+              Tu navegador no soporta la reproducción de video.
+            </video>
+          </div>
+          <p class="testi-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9Z"></path></svg> Testimonio de paciente</p>
+          <p class="testi-quote">Su experiencia con el acompañamiento vocal afirmativo, contada en sus propias palabras.</p>
+        </article>
+
+        <article class="testi-card reveal">
+          <div class="testi-video-wrap">
+            <video controls preload="metadata" poster="assets/img/testimonio-3-poster.jpg" playsinline>
+              <source src="assets/video/testimonio-3.mp4" type="video/mp4">
+              Tu navegador no soporta la reproducción de video.
+            </video>
+          </div>
+          <p class="testi-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9Z"></path></svg> Testimonio de paciente</p>
+          <p class="testi-quote">Segunda parte de su testimonio, reflexionando sobre su voz y su proceso.</p>
+        </article>
+
+        <article class="testi-card reveal">
+          <div class="testi-video-wrap">
+            <video controls preload="metadata" poster="assets/img/sesion-poster.jpg" playsinline>
+              <source src="assets/video/sesion-acompanamiento.mp4" type="video/mp4">
+              Tu navegador no soporta la reproducción de video.
+            </video>
+          </div>
+          <p class="testi-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M10 8.5l6 3.5-6 3.5z"></path></svg> Dentro de una sesión</p>
+          <p class="testi-quote">Un momento real registrado durante una sesión de acompañamiento vocal afirmativo en consulta.</p>
+        </article>
+
+      </div>
+      <p class="testi-note">Gracias infinitas a quienes compartieron su voz y su proceso para este espacio. 💗</p>
+    </div>
+  </section>
+
+  <!-- ============ AGENDA ============ -->
+  <section class="section" id="agenda">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Agenda en línea</p>
+        <h2 class="section-title">Reserva tu hora cuando te acomode</h2>
+        <p class="section-lead">Elige el día y la hora que más te acomoden y completa tus datos. Te confirmo por correo o WhatsApp en menos de 24 horas si el horario solicitado está disponible.</p>
+      </div>
+
+      <ol class="steps-list reveal">
+        <li class="step">
+          <span class="step-num">01</span>
+          <div><h3>Elige día y hora</h3><p>Selecciona el día y el horario que prefieras dentro de mi horario habitual de atención.</p></div>
+        </li>
+        <li class="step">
+          <span class="step-num">02</span>
+          <div><h3>Completa tus datos</h3><p>Ingresa tu nombre y datos de contacto para que pueda escribirte.</p></div>
+        </li>
+        <li class="step">
+          <span class="step-num">03</span>
+          <div><h3>Te confirmo la hora</h3><p>Reviso la disponibilidad real y te confirmo por correo o WhatsApp en menos de 24 horas.</p></div>
+        </li>
+      </ol>
+
+      <div class="agenda-card reveal">
+        <div class="agenda-card-head">
+          <span class="badge-live"><span class="live-dot"></span>Respondo en menos de 24 horas</span>
+        </div>
+
+        <div class="booking-widget" id="bookingWidget">
+          <div class="booking-calendar">
+            <div class="booking-cal-head">
+              <button type="button" class="cal-nav" id="calPrev" aria-label="Días anteriores">‹</button>
+              <span class="cal-month" id="calMonthLabel">—</span>
+              <button type="button" class="cal-nav" id="calNext" aria-label="Más días">›</button>
+            </div>
+            <div class="booking-days" id="calDays"></div>
+          </div>
+
+          <div class="booking-slots">
+            <p class="booking-slots-label">Horas para el <strong id="selectedDateLabel">día seleccionado</strong></p>
+            <div class="slot-grid" id="slotGrid"><p class="slot-empty">Elige primero un día arriba.</p></div>
+          </div>
+
+          <form class="booking-form" id="bookingForm">
+            <!--
+              CONFIGURACIÓN DEL FORMULARIO — Formspree (ya configurado):
+              Este formulario envía las solicitudes a tu formulario de
+              Formspree: https://formspree.io/f/xwvdnjpg
+              La primera vez que llegue un envío real, Formspree te pedirá
+              confirmar tu correo (matildepizarrotoro@gmail.com) antes de
+              empezar a reenviarte los mensajes — revisa tu bandeja de
+              entrada / spam ese primer día.
+              Revisa el bloque BOOKING_CONFIG en el <script> al final del
+              archivo para ajustar tus días y horarios reales de atención.
+            -->
+            <input type="hidden" name="_subject" id="formSubject" value="Nueva solicitud de hora — Matilde Pizarro Toro">
+            <input type="hidden" name="dia_solicitado" id="formDate" value="">
+            <input type="hidden" name="hora_solicitada" id="formTime" value="">
+            <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off">
+
+            <p class="booking-selected-summary" id="bookingSummary">Aún no has elegido día ni hora.</p>
+
+            <div class="form-row">
+              <label for="bf-modalidad">Modalidad</label>
+              <select id="bf-modalidad" name="modalidad" required>
+                <option value="" disabled selected>Selecciona una opción</option>
+                <option value="Online">Online</option>
+                <option value="A domicilio">A domicilio (Quilpué, Villa Alemana o Viña del Mar)</option>
+                <option value="Presencial">Presencial en Viña del Mar</option>
+              </select>
+            </div>
+            <div class="form-row">
+              <label for="bf-name">Nombre completo</label>
+              <input type="text" id="bf-name" name="name" required autocomplete="name">
+            </div>
+            <div class="form-row">
+              <label for="bf-email">Correo electrónico</label>
+              <input type="email" id="bf-email" name="email" required autocomplete="email">
+            </div>
+            <div class="form-row">
+              <label for="bf-phone">WhatsApp / Teléfono</label>
+              <input type="tel" id="bf-phone" name="phone" required autocomplete="tel">
+            </div>
+            <div class="form-row">
+              <label for="bf-message">Mensaje (opcional)</label>
+              <textarea id="bf-message" name="message" rows="3" placeholder="Cuéntame brevemente el motivo de la consulta"></textarea>
+            </div>
+
+            <button type="submit" class="btn btn-primary" id="bookingSubmit">Enviar solicitud de hora →</button>
+            <p class="booking-status" id="bookingStatus" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <p class="agenda-note">Esto es una <strong>solicitud</strong> de hora, no una reserva confirmada de inmediato: reviso mi agenda real y te confirmo por correo o WhatsApp.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ UBICACIÓN ============ -->
+  <section class="section section-alt" id="ubicacion">
+    <div class="container ubicacion-grid">
+      <div class="reveal">
+        <p class="eyebrow">Ubicación</p>
+        <h2 class="section-title">Online, a domicilio o presencial: tú eliges</h2>
+        <p class="section-lead">Hago sesiones online por videollamada y a domicilio en Quilpué, Villa Alemana y Viña del Mar. Para la atención presencial en Viña del Mar, arriendo de forma independiente un box en Centro Brainland — C. Limache 1724, oficina 702 — frente al Hospital Clínico Viña del Mar y a pasos del Hospital Gustavo Fricke y el Metro Hospital, con estacionamientos y comercios cercanos.</p>
+        <a class="btn btn-ghost" href="https://maps.google.com/?q=-33.02921659999999,-71.53960959999999" target="_blank" rel="noopener noreferrer">Cómo llegar →</a>
+      </div>
+      <div class="map-frame reveal">
+        <iframe src="https://www.google.com/maps?q=-33.0292166,-71.5396096&z=16&output=embed" title="Mapa de ubicación — Viña del Mar" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section class="section section-dark" id="contacto">
+    <div class="container contacto-inner">
+      <div class="reveal">
+        <p class="eyebrow">Contacto</p>
+        <h2 class="section-title">¿Tienes dudas? Escríbeme</h2>
+        <p class="section-lead">Si necesitas más información antes de reservar, puedes escribirme directamente.</p>
+      </div>
+
+      <div class="contact-grid reveal">
+        <a class="contact-item" href="https://wa.me/56971710225" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2C10.5 21 3 13.5 3 6a2 2 0 0 1 2-2Z"></path></svg>
+          <div><span class="contact-label">WhatsApp</span><span class="fill-me">+56 9 7171 0225</span></div>
+        </a>
+        <a class="contact-item" href="mailto:matildepizarrotoro@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"></rect><path d="M4 7l8 6 8-6"></path></svg>
+          <div><span class="contact-label">Correo</span><span>matildepizarrotoro@gmail.com</span></div>
+        </a>
+        <a class="contact-item" href="https://www.instagram.com/fonotrans/" target="_blank" rel="noopener noreferrer">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="3"></rect><circle cx="12" cy="13.5" r="3.6"></circle><path d="M8.5 7l1.3-2.2h4.4L15.5 7"></path></svg>
+          <div><span class="contact-label">Instagram</span><span>@fonotrans</span></div>
+        </a>
+      </div>
+
+      <a class="btn btn-primary" href="#agenda">Solicitar hora →</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <div>
+      <div class="footer-name">Matilde Pizarro Toro</div>
+      <p class="footer-tag">Fonoaudióloga · Online, a domicilio y presencial</p>
+    </div>
+    <nav class="footer-links" aria-label="Enlaces del pie de página">
+      <a href="#modalidades">Modalidades</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#sobre-mi">Sobre mí</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#agenda">Agenda</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+  </div>
+  <div class="container footer-bottom">
+    <span>© <span id="year"></span> Matilde Pizarro Toro. Todos los derechos reservados.</span>
+    <span>Quilpué · Villa Alemana · Viña del Mar</span>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Menú móvil
+  var navToggle = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
+  if (navToggle && navLinks) {
+    navToggle.addEventListener('click', function () {
+      var isOpen = navLinks.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      document.body.classList.toggle('nav-open', isOpen);
+    });
+    navLinks.querySelectorAll('a').forEach(function (link) {
+      link.addEventListener('click', function () {
+        navLinks.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
+        document.body.classList.remove('nav-open');
+      });
+    });
+  }
+
+  // Revelado al hacer scroll
+  var revealEls = document.querySelectorAll('.reveal');
+  if ('IntersectionObserver' in window && !reduceMotion) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    revealEls.forEach(function (el) { io.observe(el); });
+  } else {
+    revealEls.forEach(function (el) { el.classList.add('is-visible'); });
+  }
+
+  // Año del footer
+  var yearEl = document.getElementById('year');
+  if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
+
+  drawWaveform();
+  initBookingWidget();
+});
+
+/* ============================================================
+   BOOKING WIDGET — calendario propio + solicitud por correo
+   ============================================================
+   Esto NO consulta la disponibilidad real de Skedu (eso requiere
+   la API de pago de Skedu + un servidor backend). Muestra tu
+   horario HABITUAL de atención; cada solicitud llega por correo
+   para que tú la confirmes a mano contra tu agenda real.
+   ============================================================ */
+var BOOKING_CONFIG = {
+  // Cuántos días hacia adelante se pueden elegir desde hoy.
+  daysAheadToShow: 21,
+  // Días de la semana en que atiendes: 0=domingo, 1=lunes ... 6=sábado.
+  openDays: [1, 2, 3, 4, 5, 6],
+  // Horas que se muestran como botones para cada día abierto (24h).
+  slots: ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
+  // Cuántos días se muestran a la vez en la tira de fechas.
+  daysPerPage: 7
+};
+
+function initBookingWidget() {
+  var widget = document.getElementById('bookingWidget');
+  if (!widget) return;
+
+  var calDays = document.getElementById('calDays');
+  var calMonthLabel = document.getElementById('calMonthLabel');
+  var calPrev = document.getElementById('calPrev');
+  var calNext = document.getElementById('calNext');
+  var slotGrid = document.getElementById('slotGrid');
+  var selectedDateLabel = document.getElementById('selectedDateLabel');
+  var bookingSummary = document.getElementById('bookingSummary');
+  var form = document.getElementById('bookingForm');
+  var formDate = document.getElementById('formDate');
+  var formTime = document.getElementById('formTime');
+  var formSubject = document.getElementById('formSubject');
+  var submitBtn = document.getElementById('bookingSubmit');
+  var statusEl = document.getElementById('bookingStatus');
+
+  var todayBase = new Date();
+  todayBase.setHours(0, 0, 0, 0);
+
+  var pageOffset = 0; // en bloques de daysPerPage días
+  var maxOffset = Math.max(0, Math.ceil(BOOKING_CONFIG.daysAheadToShow / BOOKING_CONFIG.daysPerPage) - 1);
+  var selectedDate = null; // Date object, sin hora
+  var selectedTime = null; // string '09:00'
+
+  var dayNames = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
+  var monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+
+  function addDays(date, n) {
+    var d = new Date(date);
+    d.setDate(d.getDate() + n);
+    return d;
+  }
+
+  function sameDay(a, b) {
+    return a.getFullYear() === b.getFullYear() && a.getMonth() === b.getMonth() && a.getDate() === b.getDate();
+  }
+
+  function formatLongDate(d) {
+    return dayNames[d.getDay()] + ' ' + d.getDate() + ' de ' + monthNames[d.getMonth()];
+  }
+
+  function renderDays() {
+    calDays.innerHTML = '';
+    var startIndex = pageOffset * BOOKING_CONFIG.daysPerPage;
+    var monthsShown = {};
+
+    for (var i = 0; i < BOOKING_CONFIG.daysPerPage; i++) {
+      var dayIndex = startIndex + i;
+      if (dayIndex >= BOOKING_CONFIG.daysAheadToShow) break;
+      var d = addDays(todayBase, dayIndex);
+      monthsShown[monthNames[d.getMonth()]] = true;
+
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'day-btn';
+
+      var isOpen = BOOKING_CONFIG.openDays.indexOf(d.getDay()) !== -1;
+      if (!isOpen) {
+        btn.disabled = true;
+        btn.title = 'Cerrado este día';
+      }
+      if (selectedDate && sameDay(selectedDate, d)) {
+        btn.classList.add('is-selected');
+      }
+
+      var nameSpan = document.createElement('span');
+      nameSpan.className = 'day-name';
+      nameSpan.textContent = dayNames[d.getDay()];
+      var numSpan = document.createElement('span');
+      numSpan.className = 'day-num';
+      numSpan.textContent = String(d.getDate());
+
+      btn.appendChild(nameSpan);
+      btn.appendChild(numSpan);
+
+      (function (dateForBtn) {
+        btn.addEventListener('click', function () {
+          selectedDate = dateForBtn;
+          selectedTime = null;
+          renderDays();
+          renderSlots();
+          updateSummary();
+        });
+      })(d);
+
+      calDays.appendChild(btn);
+    }
+
+    var labels = Object.keys(monthsShown);
+    calMonthLabel.textContent = labels.join(' / ');
+
+    calPrev.disabled = pageOffset <= 0;
+    calNext.disabled = pageOffset >= maxOffset;
+  }
+
+  function renderSlots() {
+    slotGrid.innerHTML = '';
+    if (!selectedDate) {
+      selectedDateLabel.textContent = 'día seleccionado';
+      var emptyMsg = document.createElement('p');
+      emptyMsg.className = 'slot-empty';
+      emptyMsg.textContent = 'Elige primero un día arriba.';
+      slotGrid.appendChild(emptyMsg);
+      return;
+    }
+
+    selectedDateLabel.textContent = formatLongDate(selectedDate);
+
+    BOOKING_CONFIG.slots.forEach(function (time) {
+      var btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'slot-btn';
+      btn.textContent = time;
+      if (selectedTime === time) btn.classList.add('is-selected');
+      btn.addEventListener('click', function () {
+        selectedTime = time;
+        renderSlots();
+        updateSummary();
+      });
+      slotGrid.appendChild(btn);
+    });
+  }
+
+  function updateSummary() {
+    if (selectedDate && selectedTime) {
+      var dateText = formatLongDate(selectedDate);
+      bookingSummary.innerHTML = 'Vas a solicitar el <strong>' + dateText + ', ' + selectedTime + ' hrs</strong>.';
+      formDate.value = dateText;
+      formTime.value = selectedTime;
+      formSubject.value = 'Nueva solicitud de hora — ' + dateText + ' ' + selectedTime + ' hrs';
+    } else {
+      bookingSummary.textContent = 'Aún no has elegido día ni hora.';
+      formDate.value = '';
+      formTime.value = '';
+    }
+  }
+
+  calPrev.addEventListener('click', function () {
+    if (pageOffset > 0) { pageOffset--; renderDays(); }
+  });
+  calNext.addEventListener('click', function () {
+    if (pageOffset < maxOffset) { pageOffset++; renderDays(); }
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    statusEl.className = 'booking-status';
+    statusEl.textContent = '';
+
+    if (!selectedDate || !selectedTime) {
+      statusEl.textContent = 'Por favor elige un día y una hora antes de enviar.';
+      statusEl.className = 'booking-status is-error';
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Enviando…';
+
+    var formData = new FormData(form);
+
+    fetch('https://formspree.io/f/xwvdnjpg', {
+      method: 'POST',
+      headers: { 'Accept': 'application/json' },
+      body: formData
+    })
+      .then(function (res) {
+        if (res.ok) {
+          statusEl.textContent = '¡Listo! Recibí tu solicitud y te escribo pronto para confirmar.';
+          statusEl.className = 'booking-status is-success';
+          form.reset();
+          selectedDate = null;
+          selectedTime = null;
+          renderDays();
+          renderSlots();
+          updateSummary();
+        } else {
+          return res.json().then(function (data) {
+            var msg = (data && data.errors && data.errors.map(function (err) { return err.message; }).join(', ')) || 'Error desconocido';
+            throw new Error(msg);
+          });
+        }
+      })
+      .catch(function () {
+        statusEl.textContent = 'No se pudo enviar la solicitud. Intenta de nuevo o escríbeme directo por WhatsApp.';
+        statusEl.className = 'booking-status is-error';
+      })
+      .finally(function () {
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Enviar solicitud de hora →';
+      });
+  });
+
+  renderDays();
+  renderSlots();
+  updateSummary();
+}
+
+function drawWaveform() {
+  var path = document.getElementById('waveformPath');
+  if (!path) return;
+  var W = 1200, H = 220, MID = H / 2, N = 160;
+  var pts = [];
+  for (var i = 0; i <= N; i++) {
+    var t = i / N;
+    var chaos = Math.pow(1 - t, 1.7);
+    var freq = 5.2;
+    var angle = t * Math.PI * 2 * freq;
+    var smooth = Math.sin(angle) * (H * 0.20);
+    var jitterAmp = H * 0.32 * chaos;
+    var jitter = (Math.random() * 2 - 1) * jitterAmp + Math.sin(i * 2.3) * jitterAmp * 0.35;
+    var y = MID + smooth * (1 - chaos * 0.25) + jitter;
+    pts.push([t * W, y]);
+  }
+  var d = 'M ' + pts[0][0].toFixed(1) + ',' + pts[0][1].toFixed(1);
+  for (var j = 1; j < pts.length - 1; j++) {
+    var x1 = pts[j][0], y1 = pts[j][1];
+    var x2 = pts[j + 1][0], y2 = pts[j + 1][1];
+    var mx = (x1 + x2) / 2, my = (y1 + y2) / 2;
+    d += ' Q ' + x1.toFixed(1) + ',' + y1.toFixed(1) + ' ' + mx.toFixed(1) + ',' + my.toFixed(1);
+  }
+  var last = pts[pts.length - 1];
+  d += ' L ' + last[0].toFixed(1) + ',' + last[1].toFixed(1);
+  path.setAttribute('d', d);
+
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (!reduceMotion) {
+    var len = path.getTotalLength();
+    path.style.strokeDasharray = String(len);
+    path.style.strokeDashoffset = String(len);
+    path.getBoundingClientRect();
+    path.style.transition = 'stroke-dashoffset 1.6s ease-out';
+    requestAnimationFrame(function () {
+      path.style.strokeDashoffset = '0';
+    });
+  }
+}
+</script>
+</body>
+</html>
