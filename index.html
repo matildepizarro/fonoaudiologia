@@ -6,6 +6,32 @@
   SITIO WEB — Matilde Pizarro Toro, Fonoaudióloga
   ============================================================
   Última actualización:
+    - Testimonios: se reemplazaron los 3 videos de la sección "Testimonios"
+      por versiones editadas. El testimonio que antes estaba dividido en
+      "parte 1" y "parte 2" ahora es un solo video (una sola tarjeta); los
+      otros dos videos (el primer testimonio y el de "Dentro de una
+      sesión") fueron reemplazados por sus versiones mejoradas. Por eso
+      ahora quedan solo 3 tarjetas en vez de 4.
+    - Agenda: el calendario ahora consulta automáticamente una Google
+      Sheet (a través de un Google Apps Script publicado como Web App)
+      para saber qué horarios ya fueron reservados por otra persona y
+      mostrarlos como "Reservado" (deshabilitados). Esto es necesario
+      porque el sitio es estático (GitHub Pages) y no tiene backend
+      propio. TIENES QUE PEGAR la URL de tu Apps Script en
+      BOOKING_CONFIG.appsScriptUrl más abajo — mientras esa URL no esté
+      configurada, el calendario sigue funcionando igual que antes (sin
+      bloquear horarios ocupados). Ver las instrucciones paso a paso que
+      te compartió Claude junto con estos archivos para crear la Sheet y
+      el Apps Script.
+    - Agenda: ahora queda habilitada todo el año de forma rodante
+      (365 días desde el día en que alguien visita la página, ya
+      no se corta a las 3 semanas). Se abrieron sábado y domingo,
+      pero quedan reservados solo para "lavado de oídos a
+      domicilio": esos días el formulario bloquea automáticamente
+      la modalidad en "A domicilio" y se lo avisa a quien agenda.
+      Lunes a viernes sigue exactamente igual que antes (todas las
+      modalidades, mismos horarios). Todo esto se controla en
+      BOOKING_CONFIG, al final del archivo.
     - Foto de "Sobre mí" reemplazada por la nueva foto enviada
       (se recortó solo el retrato circular; el nombre/título de
       esa imagen no se usó como texto porque ya aparecen escritos
@@ -275,6 +301,8 @@ section[id]{scroll-margin-top:84px;}
 .agenda-fallback{margin-top:1.1rem;font-size:.9rem;color:var(--ink-soft);}
 .agenda-fallback a{color:var(--voice);font-weight:600;text-decoration:underline;text-underline-offset:3px;}
 .agenda-note{margin-top:1.25rem;font-size:.85rem;font-style:italic;color:var(--ink-soft);}
+.agenda-schedule-note{margin:0 0 1.25rem;font-size:.88rem;color:var(--ink-soft);background:var(--paper);border:1px dashed var(--line);border-radius:var(--radius-sm);padding:.75rem 1rem;}
+.agenda-schedule-note strong{color:var(--voice);font-weight:700;}
 
 /* ============================================================
    BOOKING WIDGET (solicitud de hora — calendario propio + form)
@@ -296,14 +324,22 @@ section[id]{scroll-margin-top:84px;}
 .day-btn.is-selected .day-name,.day-btn.is-selected .day-num{color:#fff;}
 .day-btn:disabled{opacity:.32;cursor:not-allowed;}
 .day-btn:disabled:hover{transform:none;border-color:var(--line);}
+.day-btn-weekend{position:relative;}
+.day-btn-weekend::after{content:'';position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--amber);}
+.day-btn-weekend.is-selected::after{background:#fff;}
 
 .booking-slots{margin-top:1.4rem;padding-top:1.4rem;border-top:1px dashed var(--line);}
 .booking-slots-label{font-size:.88rem;color:var(--ink-soft);margin-bottom:.85rem;}
 .booking-slots-label strong{color:var(--ink);}
+.weekend-note{margin:0 0 .9rem;font-size:.83rem;color:var(--voice);background:rgba(214,68,126,0.08);border:1px solid rgba(214,68,126,0.25);border-radius:var(--radius-sm);padding:.6rem .8rem;}
+.weekend-note strong{font-weight:700;}
 .slot-grid{display:flex;flex-wrap:wrap;gap:.6rem;}
 .slot-btn{font-family:var(--font-mono);font-size:.85rem;padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line);background:var(--paper-alt);color:var(--ink);cursor:pointer;transition:border-color .2s ease,background-color .2s ease,color .2s ease;}
 .slot-btn:hover{border-color:var(--amber);}
 .slot-btn.is-selected{background:var(--amber);border-color:var(--amber);color:var(--ink);font-weight:600;}
+.slot-btn.is-booked{display:inline-flex;flex-direction:column;align-items:center;line-height:1.25;gap:.05rem;background:var(--paper);border-color:var(--line);color:var(--ink-soft);cursor:not-allowed;opacity:.7;}
+.slot-btn.is-booked:hover{border-color:var(--line);}
+.slot-btn .slot-tag{font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;color:var(--voice-deep);}
 .slot-empty{font-size:.85rem;color:var(--ink-soft);font-style:italic;}
 
 .booking-form{margin-top:1.4rem;padding-top:1.4rem;border-top:1px dashed var(--line);display:grid;gap:1rem;}
@@ -311,6 +347,7 @@ section[id]{scroll-margin-top:84px;}
 .form-row label{font-size:.82rem;font-weight:600;color:var(--ink);}
 .form-row input,.form-row textarea,.form-row select{font:inherit;font-family:var(--font-body);font-size:.95rem;padding:.7rem .85rem;border-radius:var(--radius-sm);border:1.5px solid var(--line);background:var(--paper-alt);color:var(--ink);resize:vertical;}
 .form-row input:focus,.form-row textarea:focus,.form-row select:focus{outline:none;border-color:var(--voice);}
+.form-hint{margin:.35rem 0 0;font-size:.78rem;color:var(--voice);font-style:italic;}
 .booking-selected-summary{font-size:.85rem;color:var(--ink-soft);background:var(--paper);border:1px solid var(--line);border-radius:var(--radius-sm);padding:.7rem .9rem;}
 .booking-selected-summary strong{color:var(--voice);}
 .booking-form .btn{justify-self:start;}
@@ -608,18 +645,7 @@ section[id]{scroll-margin-top:84px;}
             </video>
           </div>
           <p class="testi-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9Z"></path></svg> Testimonio de paciente</p>
-          <p class="testi-quote">Su experiencia con el acompañamiento vocal afirmativo, contada en sus propias palabras.</p>
-        </article>
-
-        <article class="testi-card reveal">
-          <div class="testi-video-wrap">
-            <video controls preload="metadata" poster="assets/img/testimonio-3-poster.jpg" playsinline>
-              <source src="assets/video/testimonio-3.mp4" type="video/mp4">
-              Tu navegador no soporta la reproducción de video.
-            </video>
-          </div>
-          <p class="testi-name"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-4.6-9.5-9A5.5 5.5 0 0 1 12 6a5.5 5.5 0 0 1 9.5 6c-2.5 4.4-9.5 9-9.5 9Z"></path></svg> Testimonio de paciente</p>
-          <p class="testi-quote">Segunda parte de su testimonio, reflexionando sobre su voz y su proceso.</p>
+          <p class="testi-quote">«Este proceso me ha ayudado a sentirme más cerca de mi identidad y de mi voz.»</p>
         </article>
 
         <article class="testi-card reveal">
@@ -650,7 +676,7 @@ section[id]{scroll-margin-top:84px;}
       <ol class="steps-list reveal">
         <li class="step">
           <span class="step-num">01</span>
-          <div><h3>Elige día y hora</h3><p>Selecciona el día y el horario que prefieras dentro de mi horario habitual de atención.</p></div>
+          <div><h3>Elige día y hora</h3><p>Selecciona el día y el horario que prefieras. Lunes a viernes atiendo todas las modalidades; sábados y domingos, solo lavado de oídos a domicilio.</p></div>
         </li>
         <li class="step">
           <span class="step-num">02</span>
@@ -667,6 +693,8 @@ section[id]{scroll-margin-top:84px;}
           <span class="badge-live"><span class="live-dot"></span>Respondo en menos de 24 horas</span>
         </div>
 
+        <p class="agenda-schedule-note">Lunes a viernes: horario habitual de atención (todas las modalidades). Sábados y domingos: agenda abierta solo para <strong>lavado de oídos a domicilio</strong>.</p>
+
         <div class="booking-widget" id="bookingWidget">
           <div class="booking-calendar">
             <div class="booking-cal-head">
@@ -679,6 +707,7 @@ section[id]{scroll-margin-top:84px;}
 
           <div class="booking-slots">
             <p class="booking-slots-label">Horas para el <strong id="selectedDateLabel">día seleccionado</strong></p>
+            <p class="weekend-note" id="weekendNote" hidden>Elegiste un fin de semana: la agenda solo está disponible para <strong>lavado de oídos a domicilio</strong>.</p>
             <div class="slot-grid" id="slotGrid"><p class="slot-empty">Elige primero un día arriba.</p></div>
           </div>
 
@@ -705,10 +734,11 @@ section[id]{scroll-margin-top:84px;}
               <label for="bf-modalidad">Modalidad</label>
               <select id="bf-modalidad" name="modalidad" required>
                 <option value="" disabled selected>Selecciona una opción</option>
-                <option value="Online">Online</option>
-                <option value="A domicilio">A domicilio (Quilpué, Villa Alemana o Viña del Mar)</option>
-                <option value="Presencial">Presencial en Viña del Mar</option>
+                <option value="Online" id="opt-online">Online</option>
+                <option value="A domicilio" id="opt-domicilio">A domicilio (Quilpué, Villa Alemana o Viña del Mar)</option>
+                <option value="Presencial" id="opt-presencial">Presencial en Viña del Mar</option>
               </select>
+              <p class="form-hint" id="modalidadHint" hidden>Los sábados y domingos solo atiendo lavado de oídos a domicilio, por eso la modalidad queda fija en "A domicilio".</p>
             </div>
             <div class="form-row">
               <label for="bf-name">Nombre completo</label>
@@ -859,13 +889,39 @@ document.addEventListener('DOMContentLoaded', function () {
    ============================================================ */
 var BOOKING_CONFIG = {
   // Cuántos días hacia adelante se pueden elegir desde hoy.
-  daysAheadToShow: 21,
-  // Días de la semana en que atiendes: 0=domingo, 1=lunes ... 6=sábado.
-  openDays: [1, 2, 3, 4, 5, 6],
-  // Horas que se muestran como botones para cada día abierto (24h).
+  // 365 = la agenda queda abierta "todo el año" en forma rodante: cada
+  // vez que alguien entra a la página puede agendar hasta 12 meses
+  // hacia adelante desde ESE día (no hay que tocar esto nunca más).
+  daysAheadToShow: 365,
+  // Días de la semana habilitados: 0=domingo, 1=lunes ... 6=sábado.
+  // Ahora quedan los 7 días abiertos; sábado y domingo se restringen
+  // más abajo (ver weekendDays) para que solo sirvan para agendar
+  // lavado de oídos a domicilio.
+  openDays: [0, 1, 2, 3, 4, 5, 6],
+  // Horas que se muestran de lunes a viernes (24h) — sin cambios.
   slots: ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
+  // Días que se tratan como "fin de semana" (0=domingo, 6=sábado).
+  // En estos días el formulario fuerza la modalidad a "A domicilio"
+  // y se avisa que es solo para lavado de oídos.
+  weekendDays: [0, 6],
+  // Horas que se muestran sábado y domingo. Por defecto son las mismas
+  // que entre semana; si quieres un horario más acotado para el lavado
+  // de oídos a domicilio, cambia solo este arreglo.
+  weekendSlots: ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
   // Cuántos días se muestran a la vez en la tira de fechas.
-  daysPerPage: 7
+  daysPerPage: 7,
+  // ============================================================
+  // URL de tu Google Apps Script publicado como Web App (te la da
+  // Google al final del paso "Implementar > Nueva implementación").
+  // Debe verse algo así:
+  // https://script.google.com/macros/s/AKfycb.../exec
+  // Mientras dejes el valor de más abajo (el que empieza con "PEGA_AQUI"),
+  // el calendario sigue funcionando exactamente igual que antes, mostrando
+  // siempre el horario de plantilla, sin marcar nada como "Reservado".
+  // Sigue las instrucciones paso a paso para crear la Sheet y el Apps
+  // Script, y pega aquí la URL que te entregue Google al publicarlo.
+  // ============================================================
+  appsScriptUrl: 'https://script.google.com/macros/s/AKfycbwpZJr1cUQvicwNFLkvjln8gsF0UtqhoDs4veipMHAwclap4ZGxvFvvklLZijfeBooo/exec'
 };
 
 function initBookingWidget() {
@@ -877,12 +933,18 @@ function initBookingWidget() {
   var calPrev = document.getElementById('calPrev');
   var calNext = document.getElementById('calNext');
   var slotGrid = document.getElementById('slotGrid');
+  var weekendNote = document.getElementById('weekendNote');
   var selectedDateLabel = document.getElementById('selectedDateLabel');
   var bookingSummary = document.getElementById('bookingSummary');
   var form = document.getElementById('bookingForm');
   var formDate = document.getElementById('formDate');
   var formTime = document.getElementById('formTime');
   var formSubject = document.getElementById('formSubject');
+  var formModalidad = document.getElementById('bf-modalidad');
+  var modalidadHint = document.getElementById('modalidadHint');
+  var optOnline = document.getElementById('opt-online');
+  var optDomicilio = document.getElementById('opt-domicilio');
+  var optPresencial = document.getElementById('opt-presencial');
   var submitBtn = document.getElementById('bookingSubmit');
   var statusEl = document.getElementById('bookingStatus');
 
@@ -893,6 +955,56 @@ function initBookingWidget() {
   var maxOffset = Math.max(0, Math.ceil(BOOKING_CONFIG.daysAheadToShow / BOOKING_CONFIG.daysPerPage) - 1);
   var selectedDate = null; // Date object, sin hora
   var selectedTime = null; // string '09:00'
+
+  // ============================================================
+  // DISPONIBILIDAD REAL (Google Sheets + Google Apps Script)
+  // ============================================================
+  // bookedSlots guarda en memoria qué horarios ya fueron reservados por
+  // otra persona, según la Google Sheet. La llave de cada horario es
+  // "YYYY-MM-DD__HH:MM" (ver slotKey más abajo).
+  var bookedSlots = {};
+
+  function pad2(n) { return n < 10 ? '0' + n : String(n); }
+
+  // Convierte un objeto Date a texto 'YYYY-MM-DD' (formato usado para
+  // comparar fechas contra la Google Sheet, sin depender del idioma).
+  function isoDate(d) {
+    return d.getFullYear() + '-' + pad2(d.getMonth() + 1) + '-' + pad2(d.getDate());
+  }
+
+  function slotKey(dateIso, time) {
+    return dateIso + '__' + time;
+  }
+
+  // Consulta el Apps Script (GET) y actualiza bookedSlots. Si la URL no
+  // se ha configurado todavía, o si falla la consulta (sin internet, URL
+  // mal copiada, etc.), simplemente no marca nada como reservado — el
+  // calendario sigue mostrando el horario de plantilla como respaldo.
+  function loadBookedSlots(callback) {
+    var url = BOOKING_CONFIG.appsScriptUrl;
+    if (!url || url.indexOf('PEGA_AQUI') !== -1) {
+      if (typeof callback === 'function') callback();
+      return;
+    }
+    fetch(url)
+      .then(function (res) { return res.json(); })
+      .then(function (data) {
+        var nuevos = {};
+        var lista = (data && data.reservados) ? data.reservados : [];
+        lista.forEach(function (item) {
+          if (item && item.fecha && item.hora) {
+            nuevos[slotKey(String(item.fecha), String(item.hora))] = true;
+          }
+        });
+        bookedSlots = nuevos;
+      })
+      .catch(function () {
+        // Sin conexión con el Apps Script: seguimos con el horario de plantilla.
+      })
+      .finally(function () {
+        if (typeof callback === 'function') callback();
+      });
+  }
 
   var dayNames = ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'];
   var monthNames = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -931,6 +1043,11 @@ function initBookingWidget() {
         btn.disabled = true;
         btn.title = 'Cerrado este día';
       }
+      var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(d.getDay()) !== -1;
+      if (isOpen && isWeekendDay) {
+        btn.classList.add('day-btn-weekend');
+        btn.title = 'Solo lavado de oídos a domicilio';
+      }
       if (selectedDate && sameDay(selectedDate, d)) {
         btn.classList.add('is-selected');
       }
@@ -952,6 +1069,7 @@ function initBookingWidget() {
           renderDays();
           renderSlots();
           updateSummary();
+          syncModalidadWithSelectedDate();
         });
       })(d);
 
@@ -969,6 +1087,7 @@ function initBookingWidget() {
     slotGrid.innerHTML = '';
     if (!selectedDate) {
       selectedDateLabel.textContent = 'día seleccionado';
+      if (weekendNote) weekendNote.hidden = true;
       var emptyMsg = document.createElement('p');
       emptyMsg.className = 'slot-empty';
       emptyMsg.textContent = 'Elige primero un día arriba.';
@@ -978,28 +1097,63 @@ function initBookingWidget() {
 
     selectedDateLabel.textContent = formatLongDate(selectedDate);
 
-    BOOKING_CONFIG.slots.forEach(function (time) {
+    var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
+    if (weekendNote) weekendNote.hidden = !isWeekendDay;
+    var activeSlots = isWeekendDay ? BOOKING_CONFIG.weekendSlots : BOOKING_CONFIG.slots;
+    var dateIso = isoDate(selectedDate);
+
+    activeSlots.forEach(function (time) {
       var btn = document.createElement('button');
       btn.type = 'button';
       btn.className = 'slot-btn';
-      btn.textContent = time;
-      if (selectedTime === time) btn.classList.add('is-selected');
-      btn.addEventListener('click', function () {
-        selectedTime = time;
-        renderSlots();
-        updateSummary();
-      });
+
+      var isBooked = !!bookedSlots[slotKey(dateIso, time)];
+      if (isBooked) {
+        btn.classList.add('is-booked');
+        btn.disabled = true;
+        btn.title = 'Este horario ya fue reservado por otra persona';
+        btn.innerHTML = time + '<span class="slot-tag">Reservado</span>';
+        // Por si el horario que tenías elegido se acaba de ocupar.
+        if (selectedTime === time) selectedTime = null;
+      } else {
+        btn.textContent = time;
+        if (selectedTime === time) btn.classList.add('is-selected');
+        btn.addEventListener('click', function () {
+          selectedTime = time;
+          renderSlots();
+          updateSummary();
+        });
+      }
       slotGrid.appendChild(btn);
     });
+  }
+
+  function syncModalidadWithSelectedDate() {
+    if (!selectedDate || !formModalidad) return;
+    var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
+
+    if (isWeekendDay) {
+      if (optOnline) optOnline.disabled = true;
+      if (optPresencial) optPresencial.disabled = true;
+      if (optDomicilio) optDomicilio.disabled = false;
+      formModalidad.value = 'A domicilio';
+      if (modalidadHint) modalidadHint.hidden = false;
+    } else {
+      if (optOnline) optOnline.disabled = false;
+      if (optPresencial) optPresencial.disabled = false;
+      if (optDomicilio) optDomicilio.disabled = false;
+      if (modalidadHint) modalidadHint.hidden = true;
+    }
   }
 
   function updateSummary() {
     if (selectedDate && selectedTime) {
       var dateText = formatLongDate(selectedDate);
-      bookingSummary.innerHTML = 'Vas a solicitar el <strong>' + dateText + ', ' + selectedTime + ' hrs</strong>.';
+      var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
+      bookingSummary.innerHTML = 'Vas a solicitar el <strong>' + dateText + ', ' + selectedTime + ' hrs</strong>' + (isWeekendDay ? ' — <strong>lavado de oídos a domicilio</strong>' : '') + '.';
       formDate.value = dateText;
       formTime.value = selectedTime;
-      formSubject.value = 'Nueva solicitud de hora — ' + dateText + ' ' + selectedTime + ' hrs';
+      formSubject.value = (isWeekendDay ? '[Fin de semana · lavado de oídos a domicilio] ' : '') + 'Nueva solicitud de hora — ' + dateText + ' ' + selectedTime + ' hrs';
     } else {
       bookingSummary.textContent = 'Aún no has elegido día ni hora.';
       formDate.value = '';
@@ -1025,46 +1179,98 @@ function initBookingWidget() {
       return;
     }
 
+    var chosenDateIso = isoDate(selectedDate);
+    var chosenTime = selectedTime;
+
     submitBtn.disabled = true;
-    submitBtn.textContent = 'Enviando…';
+    submitBtn.textContent = 'Verificando disponibilidad…';
 
-    var formData = new FormData(form);
-
-    fetch('https://formspree.io/f/xwvdnjpg', {
-      method: 'POST',
-      headers: { 'Accept': 'application/json' },
-      body: formData
-    })
-      .then(function (res) {
-        if (res.ok) {
-          statusEl.textContent = '¡Listo! Recibí tu solicitud y te escribo pronto para confirmar.';
-          statusEl.className = 'booking-status is-success';
-          form.reset();
-          selectedDate = null;
-          selectedTime = null;
-          renderDays();
-          renderSlots();
-          updateSummary();
-        } else {
-          return res.json().then(function (data) {
-            var msg = (data && data.errors && data.errors.map(function (err) { return err.message; }).join(', ')) || 'Error desconocido';
-            throw new Error(msg);
-          });
-        }
-      })
-      .catch(function () {
-        statusEl.textContent = 'No se pudo enviar la solicitud. Intenta de nuevo o escríbeme directo por WhatsApp.';
+    // Antes de enviar, se vuelve a consultar la Google Sheet por si alguien
+    // más acaba de tomar ese mismo horario en los últimos minutos.
+    loadBookedSlots(function () {
+      if (bookedSlots[slotKey(chosenDateIso, chosenTime)]) {
+        statusEl.textContent = 'Justo se acaba de ocupar ese día y hora. Por favor elige otro horario.';
         statusEl.className = 'booking-status is-error';
-      })
-      .finally(function () {
         submitBtn.disabled = false;
         submitBtn.textContent = 'Enviar solicitud de hora →';
-      });
+        selectedTime = null;
+        renderSlots();
+        updateSummary();
+        return;
+      }
+
+      submitBtn.textContent = 'Enviando…';
+      var formData = new FormData(form);
+
+      fetch('https://formspree.io/f/xwvdnjpg', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: formData
+      })
+        .then(function (res) {
+          if (res.ok) {
+            statusEl.textContent = '¡Listo! Recibí tu solicitud y te escribo pronto para confirmar.';
+            statusEl.className = 'booking-status is-success';
+
+            // Guarda la reserva en la Google Sheet para bloquear ese horario
+            // a otras personas. Es "best effort": si esto falla (por ejemplo
+            // BOOKING_CONFIG.appsScriptUrl no está configurada todavía), la
+            // solicitud igual llegó por correo vía Formspree.
+            var url = BOOKING_CONFIG.appsScriptUrl;
+            if (url && url.indexOf('PEGA_AQUI') === -1) {
+              fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({
+                  fecha: chosenDateIso,
+                  hora: chosenTime,
+                  nombre: formData.get('name') || '',
+                  modalidad: formData.get('modalidad') || ''
+                })
+              })
+                .then(function () {
+                  bookedSlots[slotKey(chosenDateIso, chosenTime)] = true;
+                })
+                .catch(function () {
+                  // No interrumpe la experiencia del usuario si esto falla.
+                });
+            }
+
+            form.reset();
+            selectedDate = null;
+            selectedTime = null;
+            if (optOnline) optOnline.disabled = false;
+            if (optPresencial) optPresencial.disabled = false;
+            if (modalidadHint) modalidadHint.hidden = true;
+            renderDays();
+            renderSlots();
+            updateSummary();
+          } else {
+            return res.json().then(function (data) {
+              var msg = (data && data.errors && data.errors.map(function (err) { return err.message; }).join(', ')) || 'Error desconocido';
+              throw new Error(msg);
+            });
+          }
+        })
+        .catch(function () {
+          statusEl.textContent = 'No se pudo enviar la solicitud. Intenta de nuevo o escríbeme directo por WhatsApp.';
+          statusEl.className = 'booking-status is-error';
+        })
+        .finally(function () {
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Enviar solicitud de hora →';
+        });
+    });
   });
 
   renderDays();
   renderSlots();
   updateSummary();
+  // Al cargar el widget, consulta qué horarios ya están ocupados y
+  // vuelve a dibujar los horarios del día seleccionado (si había alguno).
+  loadBookedSlots(function () {
+    renderSlots();
+  });
 }
 
 function drawWaveform() {
