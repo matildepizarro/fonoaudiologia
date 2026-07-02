@@ -34,6 +34,12 @@ function getSheet_() {
     sheet = ss.insertSheet(SHEET_NAME);
     sheet.appendRow(['fecha', 'hora', 'nombre', 'modalidad', 'timestamp']);
   }
+  // Fuerza a que las columnas "fecha" (A) y "hora" (B) se guarden siempre
+  // como texto plano, para que Google Sheets no las "autoformatee" como
+  // fecha/hora y así evitar que el sitio web deje de reconocer los
+  // horarios ya reservados. Se aplica cada vez por si alguien cambió el
+  // formato sin querer.
+  sheet.getRange('A:B').setNumberFormat('@');
   return sheet;
 }
 
@@ -43,11 +49,19 @@ function getSheet_() {
  */
 function doGet(e) {
   var sheet = getSheet_();
-  var data = sheet.getDataRange().getValues(); // incluye la fila de encabezado
+  var data = sheet.getDataRange().getValues(); // puede incluir la fila de encabezado
   var tz = Session.getScriptTimeZone();
   var reservados = [];
 
-  for (var i = 1; i < data.length; i++) {
+  // Solo saltamos la primera fila si de verdad es el encabezado (si la
+  // primera celda dice "fecha"). Así, si alguna vez falta el encabezado
+  // en la Sheet, no perdemos la primera reserva por accidente.
+  var startRow = 0;
+  if (data.length > 0 && String(data[0][0]).trim().toLowerCase() === 'fecha') {
+    startRow = 1;
+  }
+
+  for (var i = startRow; i < data.length; i++) {
     var fecha = data[i][0];
     var hora = data[i][1];
     if (!fecha || !hora) continue;
@@ -60,7 +74,17 @@ function doGet(e) {
       fecha = String(fecha).trim();
     }
 
-    reservados.push({ fecha: fecha, hora: String(hora).trim() });
+    // Lo mismo puede pasarle a la hora: si Sheets la "autoformateó" como
+    // un valor de hora (en vez de dejarla como texto "09:00"), llega aquí
+    // como objeto Date. La convertimos a texto 'HH:mm' para que coincida
+    // con el formato que espera el sitio web.
+    if (Object.prototype.toString.call(hora) === '[object Date]') {
+      hora = Utilities.formatDate(hora, tz, 'HH:mm');
+    } else {
+      hora = String(hora).trim();
+    }
+
+    reservados.push({ fecha: fecha, hora: hora });
   }
 
   return ContentService

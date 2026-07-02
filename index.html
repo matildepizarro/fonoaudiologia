@@ -340,6 +340,8 @@ section[id]{scroll-margin-top:84px;}
 .slot-btn.is-booked{display:inline-flex;flex-direction:column;align-items:center;line-height:1.25;gap:.05rem;background:var(--paper);border-color:var(--line);color:var(--ink-soft);cursor:not-allowed;opacity:.7;}
 .slot-btn.is-booked:hover{border-color:var(--line);}
 .slot-btn .slot-tag{font-size:.62rem;text-transform:uppercase;letter-spacing:.06em;color:var(--voice-deep);}
+.slot-btn{display:inline-flex;flex-direction:column;align-items:center;line-height:1.25;gap:.05rem;}
+.slot-btn .slot-tag-home{color:var(--amber-deep, var(--voice-deep));}
 .slot-empty{font-size:.85rem;color:var(--ink-soft);font-style:italic;}
 
 .booking-form{margin-top:1.4rem;padding-top:1.4rem;border-top:1px dashed var(--line);display:grid;gap:1rem;}
@@ -676,7 +678,7 @@ section[id]{scroll-margin-top:84px;}
       <ol class="steps-list reveal">
         <li class="step">
           <span class="step-num">01</span>
-          <div><h3>Elige día y hora</h3><p>Selecciona el día y el horario que prefieras. Lunes a viernes atiendo todas las modalidades; sábados y domingos, solo lavado de oídos a domicilio.</p></div>
+          <div><h3>Elige día y hora</h3><p>Selecciona el día y el horario que prefieras. Lunes a viernes de 08:00 a 18:00 atiendo todas las modalidades; de 19:00 a 21:00 y los fines de semana, solo a domicilio.</p></div>
         </li>
         <li class="step">
           <span class="step-num">02</span>
@@ -693,7 +695,7 @@ section[id]{scroll-margin-top:84px;}
           <span class="badge-live"><span class="live-dot"></span>Respondo en menos de 24 horas</span>
         </div>
 
-        <p class="agenda-schedule-note">Lunes a viernes: horario habitual de atención (todas las modalidades). Sábados y domingos: agenda abierta solo para <strong>lavado de oídos a domicilio</strong>.</p>
+        <p class="agenda-schedule-note">Lunes a viernes de 08:00 a 18:00: todas las modalidades. Lunes a viernes de 19:00 a 21:00 y sábados y domingos de 09:00 a 14:00: agenda abierta solo para <strong>atención a domicilio</strong>.</p>
 
         <div class="booking-widget" id="bookingWidget">
           <div class="booking-calendar">
@@ -898,16 +900,19 @@ var BOOKING_CONFIG = {
   // más abajo (ver weekendDays) para que solo sirvan para agendar
   // lavado de oídos a domicilio.
   openDays: [0, 1, 2, 3, 4, 5, 6],
-  // Horas que se muestran de lunes a viernes (24h) — sin cambios.
-  slots: ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
+  // Horas que se muestran de lunes a viernes (24h).
+  slots: ['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00'],
+  // De estas horas (dentro de "slots", de lunes a viernes), estas quedan
+  // SOLO para atención a domicilio. El resto (08:00 a 18:00) admite
+  // cualquier modalidad (online, a domicilio o presencial).
+  homeOnlySlots: ['19:00', '20:00', '21:00'],
   // Días que se tratan como "fin de semana" (0=domingo, 6=sábado).
   // En estos días el formulario fuerza la modalidad a "A domicilio"
   // y se avisa que es solo para lavado de oídos.
   weekendDays: [0, 6],
-  // Horas que se muestran sábado y domingo. Por defecto son las mismas
-  // que entre semana; si quieres un horario más acotado para el lavado
-  // de oídos a domicilio, cambia solo este arreglo.
-  weekendSlots: ['09:00', '10:00', '11:00', '12:00', '15:00', '16:00', '17:00', '18:00', '19:00'],
+  // Horas que se muestran sábado y domingo: agenda abierta solo para
+  // lavado de oídos a domicilio.
+  weekendSlots: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'],
   // Cuántos días se muestran a la vez en la tira de fechas.
   daysPerPage: 7,
   // ============================================================
@@ -986,7 +991,13 @@ function initBookingWidget() {
       if (typeof callback === 'function') callback();
       return;
     }
-    fetch(url)
+    // Se agrega un parámetro único (marca de tiempo) al final de la URL
+    // para evitar que el navegador reutilice una respuesta guardada en
+    // caché de una consulta anterior. Sin esto, a veces el calendario
+    // sigue mostrando horarios como disponibles aunque ya estén
+    // reservados, porque el navegador no vuelve a preguntarle a Google.
+    var cacheBustedUrl = url + (url.indexOf('?') === -1 ? '?' : '&') + '_=' + Date.now();
+    fetch(cacheBustedUrl, { cache: 'no-store' })
       .then(function (res) { return res.json(); })
       .then(function (data) {
         var nuevos = {};
@@ -1108,6 +1119,7 @@ function initBookingWidget() {
       btn.className = 'slot-btn';
 
       var isBooked = !!bookedSlots[slotKey(dateIso, time)];
+      var isHomeOnlyTime = !isWeekendDay && BOOKING_CONFIG.homeOnlySlots.indexOf(time) !== -1;
       if (isBooked) {
         btn.classList.add('is-booked');
         btn.disabled = true;
@@ -1116,12 +1128,14 @@ function initBookingWidget() {
         // Por si el horario que tenías elegido se acaba de ocupar.
         if (selectedTime === time) selectedTime = null;
       } else {
-        btn.textContent = time;
+        btn.innerHTML = isHomeOnlyTime ? (time + '<span class="slot-tag slot-tag-home">Solo a domicilio</span>') : time;
+        if (isHomeOnlyTime) btn.title = 'Este horario solo está disponible para atención a domicilio';
         if (selectedTime === time) btn.classList.add('is-selected');
         btn.addEventListener('click', function () {
           selectedTime = time;
           renderSlots();
           updateSummary();
+          syncModalidadWithSelectedDate();
         });
       }
       slotGrid.appendChild(btn);
@@ -1131,13 +1145,20 @@ function initBookingWidget() {
   function syncModalidadWithSelectedDate() {
     if (!selectedDate || !formModalidad) return;
     var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
+    var isHomeOnlyTime = !isWeekendDay && selectedTime && BOOKING_CONFIG.homeOnlySlots.indexOf(selectedTime) !== -1;
+    var forceHome = isWeekendDay || isHomeOnlyTime;
 
-    if (isWeekendDay) {
+    if (forceHome) {
       if (optOnline) optOnline.disabled = true;
       if (optPresencial) optPresencial.disabled = true;
       if (optDomicilio) optDomicilio.disabled = false;
       formModalidad.value = 'A domicilio';
-      if (modalidadHint) modalidadHint.hidden = false;
+      if (modalidadHint) {
+        modalidadHint.hidden = false;
+        modalidadHint.innerHTML = isWeekendDay
+          ? 'Los sábados y domingos solo atiendo lavado de oídos a domicilio, por eso la modalidad queda fija en "A domicilio".'
+          : 'A partir de las 19:00 entre semana solo atiendo a domicilio, por eso la modalidad queda fija en "A domicilio".';
+      }
     } else {
       if (optOnline) optOnline.disabled = false;
       if (optPresencial) optPresencial.disabled = false;
@@ -1150,10 +1171,14 @@ function initBookingWidget() {
     if (selectedDate && selectedTime) {
       var dateText = formatLongDate(selectedDate);
       var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
-      bookingSummary.innerHTML = 'Vas a solicitar el <strong>' + dateText + ', ' + selectedTime + ' hrs</strong>' + (isWeekendDay ? ' — <strong>lavado de oídos a domicilio</strong>' : '') + '.';
+      var isHomeOnlyTime = !isWeekendDay && BOOKING_CONFIG.homeOnlySlots.indexOf(selectedTime) !== -1;
+      var forceHome = isWeekendDay || isHomeOnlyTime;
+      var homeLabel = isWeekendDay ? 'lavado de oídos a domicilio' : 'atención a domicilio';
+      bookingSummary.innerHTML = 'Vas a solicitar el <strong>' + dateText + ', ' + selectedTime + ' hrs</strong>' + (forceHome ? ' — <strong>' + homeLabel + '</strong>' : '') + '.';
       formDate.value = dateText;
       formTime.value = selectedTime;
-      formSubject.value = (isWeekendDay ? '[Fin de semana · lavado de oídos a domicilio] ' : '') + 'Nueva solicitud de hora — ' + dateText + ' ' + selectedTime + ' hrs';
+      var subjectTag = isWeekendDay ? '[Fin de semana · lavado de oídos a domicilio] ' : (isHomeOnlyTime ? '[Horario a domicilio] ' : '');
+      formSubject.value = subjectTag + 'Nueva solicitud de hora — ' + dateText + ' ' + selectedTime + ' hrs';
     } else {
       bookingSummary.textContent = 'Aún no has elegido día ni hora.';
       formDate.value = '';
