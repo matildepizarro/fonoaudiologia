@@ -678,7 +678,7 @@ section[id]{scroll-margin-top:84px;}
       <ol class="steps-list reveal">
         <li class="step">
           <span class="step-num">01</span>
-          <div><h3>Elige día y hora</h3><p>Selecciona el día y el horario que prefieras. Lunes a viernes de 08:00 a 18:00 atiendo todas las modalidades; de 19:00 a 21:00 y los fines de semana, solo a domicilio.</p></div>
+          <div><h3>Elige día y hora</h3><p>Selecciona el día y el horario que prefieras. Lunes a viernes de 08:00 a 18:00 atiendo todas las modalidades; de 19:00 a 21:00 y los fines de semana, online o a domicilio (sin presencial).</p></div>
         </li>
         <li class="step">
           <span class="step-num">02</span>
@@ -695,7 +695,7 @@ section[id]{scroll-margin-top:84px;}
           <span class="badge-live"><span class="live-dot"></span>Respondo en menos de 24 horas</span>
         </div>
 
-        <p class="agenda-schedule-note">Lunes a viernes de 08:00 a 18:00: todas las modalidades. Lunes a viernes de 19:00 a 21:00 y sábados y domingos de 09:00 a 14:00: agenda abierta solo para <strong>atención a domicilio</strong>.</p>
+        <p class="agenda-schedule-note">Lunes a viernes de 08:00 a 18:00: todas las modalidades. Lunes a viernes de 19:00 a 21:00 y sábados y domingos de 09:00 a 14:00: <strong>online o a domicilio</strong> (sin presencial).</p>
 
         <div class="booking-widget" id="bookingWidget">
           <div class="booking-calendar">
@@ -709,7 +709,7 @@ section[id]{scroll-margin-top:84px;}
 
           <div class="booking-slots">
             <p class="booking-slots-label">Horas para el <strong id="selectedDateLabel">día seleccionado</strong></p>
-            <p class="weekend-note" id="weekendNote" hidden>Elegiste un fin de semana: la agenda solo está disponible para <strong>lavado de oídos a domicilio</strong>.</p>
+            <p class="weekend-note" id="weekendNote" hidden>Elegiste un fin de semana: la agenda está disponible para <strong>online o a domicilio</strong> (no presencial).</p>
             <div class="slot-grid" id="slotGrid"><p class="slot-empty">Elige primero un día arriba.</p></div>
           </div>
 
@@ -740,7 +740,7 @@ section[id]{scroll-margin-top:84px;}
                 <option value="A domicilio" id="opt-domicilio">A domicilio (Quilpué, Villa Alemana o Viña del Mar)</option>
                 <option value="Presencial" id="opt-presencial">Presencial en Viña del Mar</option>
               </select>
-              <p class="form-hint" id="modalidadHint" hidden>Los sábados y domingos solo atiendo lavado de oídos a domicilio, por eso la modalidad queda fija en "A domicilio".</p>
+              <p class="form-hint" id="modalidadHint" hidden>Los sábados y domingos atiendo online o a domicilio (no presencial).</p>
             </div>
             <div class="form-row">
               <label for="bf-name">Nombre completo</label>
@@ -1057,7 +1057,7 @@ function initBookingWidget() {
       var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(d.getDay()) !== -1;
       if (isOpen && isWeekendDay) {
         btn.classList.add('day-btn-weekend');
-        btn.title = 'Solo lavado de oídos a domicilio';
+        btn.title = 'Online o a domicilio (sin presencial)';
       }
       if (selectedDate && sameDay(selectedDate, d)) {
         btn.classList.add('is-selected');
@@ -1128,8 +1128,8 @@ function initBookingWidget() {
         // Por si el horario que tenías elegido se acaba de ocupar.
         if (selectedTime === time) selectedTime = null;
       } else {
-        btn.innerHTML = isHomeOnlyTime ? (time + '<span class="slot-tag slot-tag-home">Solo a domicilio</span>') : time;
-        if (isHomeOnlyTime) btn.title = 'Este horario solo está disponible para atención a domicilio';
+        btn.innerHTML = isHomeOnlyTime ? (time + '<span class="slot-tag slot-tag-home">Online / domicilio</span>') : time;
+        if (isHomeOnlyTime) btn.title = 'Este horario está disponible para atención online o a domicilio (no presencial)';
         if (selectedTime === time) btn.classList.add('is-selected');
         btn.addEventListener('click', function () {
           selectedTime = time;
@@ -1146,18 +1146,20 @@ function initBookingWidget() {
     if (!selectedDate || !formModalidad) return;
     var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
     var isHomeOnlyTime = !isWeekendDay && selectedTime && BOOKING_CONFIG.homeOnlySlots.indexOf(selectedTime) !== -1;
-    var forceHome = isWeekendDay || isHomeOnlyTime;
+    var noPresencial = isWeekendDay || isHomeOnlyTime;
 
-    if (forceHome) {
-      if (optOnline) optOnline.disabled = true;
-      if (optPresencial) optPresencial.disabled = true;
+    if (noPresencial) {
+      if (optOnline) optOnline.disabled = false;
       if (optDomicilio) optDomicilio.disabled = false;
-      formModalidad.value = 'A domicilio';
+      if (optPresencial) optPresencial.disabled = true;
+      // Si tenía "Presencial" elegido de antes, lo limpiamos porque en
+      // este horario no está disponible.
+      if (formModalidad.value === 'Presencial') formModalidad.value = '';
       if (modalidadHint) {
         modalidadHint.hidden = false;
         modalidadHint.innerHTML = isWeekendDay
-          ? 'Los sábados y domingos solo atiendo lavado de oídos a domicilio, por eso la modalidad queda fija en "A domicilio".'
-          : 'A partir de las 19:00 entre semana solo atiendo a domicilio, por eso la modalidad queda fija en "A domicilio".';
+          ? 'Los sábados y domingos atiendo online o a domicilio (no presencial).'
+          : 'A partir de las 19:00 entre semana atiendo online o a domicilio (no presencial).';
       }
     } else {
       if (optOnline) optOnline.disabled = false;
@@ -1172,12 +1174,11 @@ function initBookingWidget() {
       var dateText = formatLongDate(selectedDate);
       var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
       var isHomeOnlyTime = !isWeekendDay && BOOKING_CONFIG.homeOnlySlots.indexOf(selectedTime) !== -1;
-      var forceHome = isWeekendDay || isHomeOnlyTime;
-      var homeLabel = isWeekendDay ? 'lavado de oídos a domicilio' : 'atención a domicilio';
-      bookingSummary.innerHTML = 'Vas a solicitar el <strong>' + dateText + ', ' + selectedTime + ' hrs</strong>' + (forceHome ? ' — <strong>' + homeLabel + '</strong>' : '') + '.';
+      var noPresencial = isWeekendDay || isHomeOnlyTime;
+      bookingSummary.innerHTML = 'Vas a solicitar el <strong>' + dateText + ', ' + selectedTime + ' hrs</strong>' + (noPresencial ? ' — <strong>online o a domicilio</strong>' : '') + '.';
       formDate.value = dateText;
       formTime.value = selectedTime;
-      var subjectTag = isWeekendDay ? '[Fin de semana · lavado de oídos a domicilio] ' : (isHomeOnlyTime ? '[Horario a domicilio] ' : '');
+      var subjectTag = isWeekendDay ? '[Fin de semana] ' : (isHomeOnlyTime ? '[Horario online/domicilio] ' : '');
       formSubject.value = subjectTag + 'Nueva solicitud de hora — ' + dateText + ' ' + selectedTime + ' hrs';
     } else {
       bookingSummary.textContent = 'Aún no has elegido día ni hora.';
