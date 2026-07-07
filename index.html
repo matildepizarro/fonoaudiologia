@@ -6,6 +6,39 @@
   SITIO WEB — Matilde Pizarro Toro, Fonoaudióloga
   ============================================================
   Última actualización:
+    - Se agregó un botón flotante de WhatsApp (esquina inferior
+      derecha, visible en todas las secciones) para que agendar o
+      preguntar sea más directo, sobre todo en celular.
+    - Nueva sección "Preguntas frecuentes" (antes de Contacto), con
+      dudas típicas antes de agendar (derivación médica, Fonasa/
+      Isapre, duración de la primera sesión, cancelaciones, inglés,
+      requisitos para sesión online) + su propio esquema FAQPage
+      para buscadores. Los puntos marcados con línea punteada
+      naranja (clase "fill-me") son los que debes confirmar o
+      ajustar con tu información real (por ejemplo, si tienes
+      convenio con alguna Isapre).
+    - SEO/redes sociales: se agregaron etiquetas og:image y
+      twitter:card (usan tu foto de "Sobre mí"); cuando publiques
+      el sitio en su dominio final, cámbialas por la URL absoluta
+      de la imagen (ver comentario junto a esas etiquetas en el
+      <head>).
+    - Foto de "Sobre mí": se reemplazó por una versión más nítida
+      (recorte de cabeza y hombros, escalada con más resolución
+      para que no se vea pixelada en pantallas grandes).
+    - Se agregó que la atención es en español e inglés (certificación
+      B1 TOEIC Bridge): aparece como dato en el Hero (franja de
+      estadísticas), en "Sobre mí", en la nueva FAQ, y como dato
+      técnico en el JSON-LD del <head> (availableLanguage).
+    - Agenda: se bloquearon sin horas disponibles los días 9, 10 y
+      11 de julio de 2026, y el 14 de agosto de 2026 (cumpleaños de
+      Matilde, con el mensaje "Hoy es el cumpleaños de tu
+      fonoaudióloga"). También se bloquearon los feriados: 15 de
+      agosto, 18 y 19 de septiembre, 31 de octubre, 1 de noviembre,
+      8 de diciembre y 25 de diciembre de 2026. Todo esto se
+      controla en BOOKING_CONFIG.blockedDates, al final del
+      archivo — el día sigue visible en el calendario (con un
+      puntito rosa) pero al elegirlo se muestra el mensaje
+      correspondiente y no aparecen horarios para reservar.
     - Testimonios: se reemplazaron los 3 videos de la sección "Testimonios"
       por versiones editadas. El testimonio que antes estaba dividido en
       "parte 1" y "parte 2" ahora es un solo video (una sola tarjeta); los
@@ -32,10 +65,6 @@
       Lunes a viernes sigue exactamente igual que antes (todas las
       modalidades, mismos horarios). Todo esto se controla en
       BOOKING_CONFIG, al final del archivo.
-    - Foto de "Sobre mí" reemplazada por la nueva foto enviada
-      (se recortó solo el retrato circular; el nombre/título de
-      esa imagen no se usó como texto porque ya aparecen escritos
-      en la propia web con la tipografía del sitio).
     - Se agregó la sección "Modalidades" (online, a domicilio en
       Quilpué/Villa Alemana/Viña del Mar, y presencial en Viña del
       Mar) y un selector de modalidad en el formulario de Agenda.
@@ -83,7 +112,17 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="Matilde Pizarro Toro | Fonoaudióloga en Quilpué, Villa Alemana y Viña del Mar">
 <meta property="og:description" content="Evaluación y tratamiento de lenguaje, habla, voz y deglución para niños y adultos. Online, a domicilio y presencial. Reserva tu hora en línea.">
+<meta property="og:image" content="assets/img/matilde-foto.jpg">
 <meta property="og:locale" content="es_CL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Matilde Pizarro Toro | Fonoaudióloga en Quilpué, Villa Alemana y Viña del Mar">
+<meta name="twitter:description" content="Evaluación y tratamiento de lenguaje, habla, voz y deglución para niños y adultos. Online, a domicilio y presencial.">
+<meta name="twitter:image" content="assets/img/matilde-foto.jpg">
+<!-- Cuando tengas el dominio final publicado, reemplaza estas 4 líneas por
+     la URL absoluta (ej: https://tudominio.cl/assets/img/matilde-foto.jpg)
+     — las redes sociales no siempre leen bien las imágenes con ruta
+     relativa. También puedes agregar aquí <link rel="canonical" ...>
+     con la URL definitiva del sitio. -->
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='48' fill='%23D6447E'/%3E%3Cpath d='M20 50 L35 50 L42 30 L50 70 L58 40 L65 50 L80 50' stroke='%23FDF1F6' stroke-width='6' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -110,7 +149,32 @@
   },
   "telephone": "+56 9 7171 0225",
   "email": "matildepizarrotoro@gmail.com",
-  "medicalSpecialty": "SpeechAndLanguagePathology"
+  "medicalSpecialty": "SpeechAndLanguagePathology",
+  "availableLanguage": ["Spanish", "English"]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "¿Necesito una derivación médica para agendar?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No es obligatorio. Se puede agendar directamente una evaluación; si se necesita el apoyo de otro especialista, se coordina durante el proceso." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cuánto dura la primera sesión?",
+      "acceptedAnswer": { "@type": "Answer", "text": "La primera sesión es de evaluación y dura aproximadamente 45 a 60 minutos, según la edad y el motivo de consulta." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Hacen sesiones en inglés?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí, la atención está disponible en español e inglés (certificación B1 TOEIC Bridge)." }
+    }
+  ]
 }
 </script>
 
@@ -327,6 +391,25 @@ section[id]{scroll-margin-top:84px;}
 .day-btn-weekend{position:relative;}
 .day-btn-weekend::after{content:'';position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--amber);}
 .day-btn-weekend.is-selected::after{background:#fff;}
+.day-btn-blocked{position:relative;opacity:.55;}
+.day-btn-blocked::after{content:'';position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--voice-deep);}
+.day-btn-blocked.is-selected{opacity:1;}
+.slot-blocked{font-style:normal;font-weight:600;color:var(--voice-deep);}
+
+/* FAQ */
+.faq-list{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:.7rem;}
+.faq-item{background:var(--paper-alt);border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:.2rem 1.2rem;}
+.faq-item summary{cursor:pointer;padding:1rem 0;font-weight:600;color:var(--ink);list-style:none;position:relative;padding-right:2rem;}
+.faq-item summary::-webkit-details-marker{display:none;}
+.faq-item summary::after{content:'+';position:absolute;right:0;top:.9rem;font-size:1.3rem;color:var(--voice);line-height:1;}
+.faq-item[open] summary::after{content:'−';}
+.faq-item p{padding-bottom:1.1rem;color:var(--ink-soft);margin:0;}
+
+/* Botón flotante de WhatsApp */
+.whatsapp-float{position:fixed;bottom:1.3rem;right:1.3rem;width:58px;height:58px;border-radius:50%;background:#25D366;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 10px 26px -8px rgba(0,0,0,.4);z-index:250;transition:transform .2s ease;}
+.whatsapp-float:hover{transform:scale(1.08);}
+.whatsapp-float svg{width:30px;height:30px;}
+@media (max-width:480px){.whatsapp-float{width:52px;height:52px;bottom:1rem;right:1rem;}}
 
 .booking-slots{margin-top:1.4rem;padding-top:1.4rem;border-top:1px dashed var(--line);}
 .booking-slots-label{font-size:.88rem;color:var(--ink-soft);margin-bottom:.85rem;}
@@ -395,6 +478,10 @@ section[id]{scroll-margin-top:84px;}
 <body>
 <a class="skip-link" href="#main-content">Saltar al contenido principal</a>
 
+<a class="whatsapp-float" href="https://wa.me/56971710225" target="_blank" rel="noopener noreferrer" aria-label="Escribir por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.87.51 3.62 1.4 5.13L2 22l5.13-1.47a9.8 9.8 0 0 0 4.9 1.32h.01c5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2Zm5.83 14.02c-.25.7-1.45 1.35-2 1.44-.53.09-1.02.13-1.6-.1-.37-.14-.85-.31-1.46-.6-2.57-1.14-4.24-3.75-4.37-3.93-.13-.18-1.05-1.42-1.05-2.7s.66-1.9.9-2.16c.24-.26.52-.32.7-.32.18 0 .35 0 .5.01.16.01.38-.06.6.46.24.57.8 1.98.87 2.12.07.14.11.31.02.5-.09.19-.14.3-.28.46-.14.16-.29.36-.42.48-.14.13-.28.27-.12.54.16.27.72 1.19 1.55 1.93 1.06.95 1.96 1.24 2.24 1.38.28.14.44.12.61-.05.17-.17.68-.79.86-1.06.18-.27.36-.22.6-.13.24.09 1.53.72 1.79.85.26.13.43.19.5.3.06.11.06.65-.19 1.35Z"></path></svg>
+</a>
+
 <header class="site-header">
   <div class="nav-inner container">
     <a class="brand" href="#inicio">
@@ -409,6 +496,7 @@ section[id]{scroll-margin-top:84px;}
       <li><a href="#testimonios">Testimonios</a></li>
       <li><a href="#agenda">Agenda</a></li>
       <li><a href="#ubicacion">Ubicación</a></li>
+      <li><a href="#faq">Preguntas frecuentes</a></li>
       <li><a href="#contacto">Contacto</a></li>
       <li class="nav-cta-mobile">
         <a class="btn btn-primary btn-sm" href="#agenda">Reservar hora</a>
@@ -455,6 +543,7 @@ section[id]{scroll-margin-top:84px;}
         <div class="stat"><span class="stat-label">ATENCIÓN</span><span class="stat-value">Niños y adultos</span></div>
         <div class="stat"><span class="stat-label">MODALIDAD</span><span class="stat-value">Online · Domicilio · Presencial</span></div>
         <div class="stat"><span class="stat-label">UBICACIÓN</span><span class="stat-value">Quilpué · Villa Alemana · Viña del Mar</span></div>
+        <div class="stat"><span class="stat-label">IDIOMAS</span><span class="stat-value">Español · Inglés (certificación B1 TOEIC Bridge)</span></div>
       </div>
     </div>
   </section>
@@ -512,13 +601,14 @@ section[id]{scroll-margin-top:84px;}
     <div class="container about-grid">
       <div class="about-photo reveal">
         <div class="photo-frame">
-          <img src="assets/img/matilde-foto.jpg" alt="Matilde Pizarro Toro, Fonoaudióloga" width="230" height="230" loading="lazy">
+          <img src="assets/img/matilde-foto.jpg" alt="Matilde Pizarro Toro, Fonoaudióloga" width="800" height="783" loading="lazy">
         </div>
       </div>
       <div class="about-content reveal">
         <p class="eyebrow">Sobre mí</p>
         <h2 class="section-title">Hola, soy Matilde</h2>
-        <p class="section-lead">Soy Matilde Pizarro Toro, Fonoaudióloga. Trabajo con un enfoque cercano y personalizado, adaptando cada sesión a las necesidades de quien tengo enfrente — sea un niño dando sus primeros pasos en el lenguaje o un adulto que busca recuperar su voz.</p>
+        <p class="section-lead">Soy Matilde Pizarro Toro, Fonoaudióloga. Trabajo con un enfoque cercano y personalizado, adaptando cada sesión a las necesidades de quien tengo enfrente sea un niño dando sus primeros pasos en el lenguaje o un adulto que busca recuperar su voz.</p>
+        <p class="section-lead"</p>
       </div>
     </div>
   </section>
@@ -784,7 +874,52 @@ section[id]{scroll-margin-top:84px;}
     </div>
   </section>
 
+  <!-- ============ PREGUNTAS FRECUENTES ============ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Preguntas frecuentes</p>
+        <h2 class="section-title">Antes de agendar</h2>
+        <p class="section-lead">Algunas dudas que suelen surgir antes de la primera sesión. Si tienes otra, escríbeme por <a href="#contacto">Contacto</a>.</p>
+      </div>
+      <div class="faq-list reveal">
+
+        <details class="faq-item">
+          <summary>¿Necesito una derivación médica para agendar?</summary>
+          <p>No es obligatorio. Puedes agendar directamente una evaluación conmigo; si durante el proceso se necesita el apoyo de otro especialista (otorrino, neurólogo, etc.), te lo indico y podemos coordinarlo en conjunto.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Atienden con Fonasa o alguna Isapre?</summary>
+          <p><span class="fill-me">Actualmente las sesiones se pagan de forma particular (boleta disponible); no hay convenio directo con Fonasa o Isapres.</span> Escríbeme por WhatsApp si tienes dudas sobre reembolsos con tu previsión.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Cuánto dura la primera sesión?</summary>
+          <p>La primera sesión es de evaluación: conversamos sobre el motivo de consulta, hago las pruebas necesarias según el caso y te cuento un plan de trabajo sugerido. Dura aproximadamente <span class="fill-me">45 a 60 minutos</span>, según la edad y el motivo de consulta.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Puedo cancelar o reprogramar mi hora?</summary>
+          <p>Sí, solo avísame con la mayor anticipación posible por WhatsApp para liberar el horario y coordinar uno nuevo.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Hacen sesiones en inglés?</summary>
+          <p>Sí, atiendo en español e inglés (certificación B1 TOEIC Bridge). Puedes indicarlo al agendar o comentármelo directo por WhatsApp.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Qué necesito para una sesión online?</summary>
+          <p>Solo un celular, tablet o computador con cámara, buena conexión a internet y, si es para un niño o niña, idealmente un adulto acompañando durante la sesión.</p>
+        </details>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CONTACTO ============ -->
+
   <section class="section section-dark" id="contacto">
     <div class="container contacto-inner">
       <div class="reveal">
@@ -826,6 +961,7 @@ section[id]{scroll-margin-top:84px;}
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#testimonios">Testimonios</a>
       <a href="#agenda">Agenda</a>
+      <a href="#faq">Preguntas frecuentes</a>
       <a href="#contacto">Contacto</a>
     </nav>
   </div>
@@ -913,6 +1049,30 @@ var BOOKING_CONFIG = {
   // Horas que se muestran sábado y domingo: agenda abierta solo para
   // lavado de oídos a domicilio.
   weekendSlots: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'],
+  // ============================================================
+  // DÍAS BLOQUEADOS (sin horas disponibles).
+  // Llave: fecha en formato 'YYYY-MM-DD'. Valor: mensaje que se
+  // muestra en la agenda en vez de los horarios de ese día.
+  // Se usan para: días puntuales que pediste cerrar (9, 10 y 11
+  // de julio 2026), tu cumpleaños (14 de agosto 2026, con mensaje
+  // especial) y los feriados de la lista que enviaste. El día
+  // sigue apareciendo en la tira de fechas (no desaparece), pero
+  // al elegirlo se muestra el mensaje y no hay horarios para
+  // seleccionar, así que no se puede agendar.
+  // ============================================================
+  blockedDates: {
+    '2026-07-09': 'No hay horas disponibles este día.',
+    '2026-07-10': 'No hay horas disponibles este día.',
+    '2026-07-11': 'No hay horas disponibles este día.',
+    '2026-08-14': 'Hoy es el cumpleaños de tu fonoaudióloga 🎂 No hay horas disponibles.',
+    '2026-08-15': 'Feriado — no hay horas disponibles.',
+    '2026-09-18': 'Feriado — no hay horas disponibles.',
+    '2026-09-19': 'Feriado — no hay horas disponibles.',
+    '2026-10-31': 'Feriado — no hay horas disponibles.',
+    '2026-11-01': 'Feriado — no hay horas disponibles.',
+    '2026-12-08': 'Feriado — no hay horas disponibles.',
+    '2026-12-25': 'Feriado — no hay horas disponibles.'
+  },
   // Cuántos días se muestran a la vez en la tira de fechas.
   daysPerPage: 7,
   // ============================================================
@@ -1059,6 +1219,11 @@ function initBookingWidget() {
         btn.classList.add('day-btn-weekend');
         btn.title = 'Online o a domicilio (sin presencial)';
       }
+      var blockedMsg = BOOKING_CONFIG.blockedDates[isoDate(d)];
+      if (isOpen && blockedMsg) {
+        btn.classList.add('day-btn-blocked');
+        btn.title = blockedMsg;
+      }
       if (selectedDate && sameDay(selectedDate, d)) {
         btn.classList.add('is-selected');
       }
@@ -1108,10 +1273,21 @@ function initBookingWidget() {
 
     selectedDateLabel.textContent = formatLongDate(selectedDate);
 
+    var dateIso = isoDate(selectedDate);
+    var blockedMsg = BOOKING_CONFIG.blockedDates[dateIso];
+    if (blockedMsg) {
+      if (weekendNote) weekendNote.hidden = true;
+      var blockedP = document.createElement('p');
+      blockedP.className = 'slot-empty slot-blocked';
+      blockedP.textContent = blockedMsg;
+      slotGrid.appendChild(blockedP);
+      if (selectedTime) selectedTime = null;
+      return;
+    }
+
     var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
     if (weekendNote) weekendNote.hidden = !isWeekendDay;
     var activeSlots = isWeekendDay ? BOOKING_CONFIG.weekendSlots : BOOKING_CONFIG.slots;
-    var dateIso = isoDate(selectedDate);
 
     activeSlots.forEach(function (time) {
       var btn = document.createElement('button');
