@@ -5,7 +5,25 @@
   ============================================================
   SITIO WEB — Matilde Pizarro Toro, Fonoaudióloga
   ============================================================
-  Última actualización:
+  Última actualización (14 de julio de 2026):
+    - Agenda: se agregó un aviso visible con los datos de abono
+      ($10.000 a la cuenta Matilde Pizarro Toro, Banco de Chile,
+      Cuenta Vista N° 00-000-11210-20) que se pide para confirmar
+      atenciones presenciales u online. Aparece en la tarjeta de
+      Agenda (antes del calendario), se repite bajo el formulario
+      y se agregó como pregunta nueva en "Preguntas frecuentes"
+      (con su entrada correspondiente en el esquema FAQPage).
+    - Agenda: se bloquearon las atenciones presenciales y a domicilio
+      del jueves 16 al domingo 19 de julio de 2026 por temporal de
+      lluvias — esos días solo se atiende online. Los días se marcan
+      en el calendario con un puntito azul y, al elegirlos, el
+      formulario deja fija la modalidad en "Online" (se deshabilitan
+      "A domicilio" y "Presencial") y se muestra un aviso explicando
+      el motivo. Esto se controla en BOOKING_CONFIG.onlineOnlyDates,
+      al final del archivo — para agregar o quitar fechas de este
+      bloqueo por lluvia, solo edita ese objeto.
+
+  Actualización anterior:
     - Se agregó un botón flotante de WhatsApp (esquina inferior
       derecha, visible en todas las secciones) para que agendar o
       preguntar sea más directo, sobre todo en celular.
@@ -173,6 +191,11 @@
       "@type": "Question",
       "name": "¿Hacen sesiones en inglés?",
       "acceptedAnswer": { "@type": "Answer", "text": "Sí, la atención está disponible en español e inglés (certificación B1 TOEIC Bridge)." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito pagar un abono para confirmar mi hora?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí, para atenciones presenciales u online se solicita un abono de $10.000 a la cuenta Matilde Pizarro Toro, Banco de Chile, Cuenta Vista N° 00-000-11210-20. Con el abono realizado, la hora queda confirmada." }
     }
   ]
 }
@@ -394,6 +417,9 @@ section[id]{scroll-margin-top:84px;}
 .day-btn-blocked{position:relative;opacity:.55;}
 .day-btn-blocked::after{content:'';position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:var(--voice-deep);}
 .day-btn-blocked.is-selected{opacity:1;}
+.day-btn-weather{position:relative;}
+.day-btn-weather::after{content:'';position:absolute;top:6px;right:6px;width:6px;height:6px;border-radius:50%;background:#3E7CB1;}
+.day-btn-weather.is-selected::after{background:#fff;}
 .slot-blocked{font-style:normal;font-weight:600;color:var(--voice-deep);}
 
 /* FAQ */
@@ -416,6 +442,14 @@ section[id]{scroll-margin-top:84px;}
 .booking-slots-label strong{color:var(--ink);}
 .weekend-note{margin:0 0 .9rem;font-size:.83rem;color:var(--voice);background:rgba(214,68,126,0.08);border:1px solid rgba(214,68,126,0.25);border-radius:var(--radius-sm);padding:.6rem .8rem;}
 .weekend-note strong{font-weight:700;}
+.weather-note{margin:0 0 .9rem;font-size:.83rem;color:#2C5C82;background:rgba(62,124,177,0.1);border:1px solid rgba(62,124,177,0.3);border-radius:var(--radius-sm);padding:.6rem .8rem;}
+.weather-note strong{font-weight:700;}
+.deposit-note{margin:0 0 1.25rem;font-size:.9rem;line-height:1.5;color:var(--ink);background:rgba(217,138,61,0.08);border:1px solid rgba(217,138,61,0.35);border-radius:var(--radius-sm);padding:.9rem 1.1rem;}
+.deposit-note strong{color:var(--amber-deep);font-weight:700;}
+.deposit-note .deposit-title{display:block;font-weight:700;color:var(--voice-deep);margin-bottom:.4rem;}
+.deposit-note ul{margin:.5rem 0 .6rem;padding-left:1.1rem;}
+.deposit-note li{margin:.15rem 0;}
+.deposit-note .deposit-foot{margin:.4rem 0 0;font-size:.85rem;color:var(--ink-soft);}
 .slot-grid{display:flex;flex-wrap:wrap;gap:.6rem;}
 .slot-btn{font-family:var(--font-mono);font-size:.85rem;padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line);background:var(--paper-alt);color:var(--ink);cursor:pointer;transition:border-color .2s ease,background-color .2s ease,color .2s ease;}
 .slot-btn:hover{border-color:var(--amber);}
@@ -787,6 +821,21 @@ section[id]{scroll-margin-top:84px;}
 
         <p class="agenda-schedule-note">Lunes a viernes de 08:00 a 18:00: todas las modalidades. Lunes a viernes de 19:00 a 21:00 y sábados y domingos de 09:00 a 14:00: <strong>online o a domicilio</strong> (sin presencial).</p>
 
+        <p class="agenda-schedule-note" id="rainScheduleNote"><strong>Aviso por temporal de lluvias:</strong> del jueves 16 al domingo 19 de julio se atenderá <strong>solo de forma online</strong>; las atenciones presenciales y a domicilio quedan pausadas esos días.</p>
+
+        <div class="deposit-note" id="depositNote">
+          <span class="deposit-title">💳 Abono para confirmar tu hora</span>
+          Para atenciones <strong>presenciales</strong> u <strong>online</strong> se solicita un abono de <strong>$10.000</strong> a la siguiente cuenta:
+          <ul>
+            <li>Nombre: Matilde Pizarro Toro</li>
+            <li>RUT: 19.487.764-1</li>
+            <li>Banco de Chile — Cuenta Vista</li>
+            <li>N° de cuenta: 00-000-11210-20</li>
+            <li>Correo: matildepizarrotoro@gmail.com</li>
+          </ul>
+          <p class="deposit-foot">Con el abono realizado, tu hora queda confirmada. Envía el comprobante por WhatsApp o correo junto con tu solicitud.</p>
+        </div>
+
         <div class="booking-widget" id="bookingWidget">
           <div class="booking-calendar">
             <div class="booking-cal-head">
@@ -800,6 +849,7 @@ section[id]{scroll-margin-top:84px;}
           <div class="booking-slots">
             <p class="booking-slots-label">Horas para el <strong id="selectedDateLabel">día seleccionado</strong></p>
             <p class="weekend-note" id="weekendNote" hidden>Elegiste un fin de semana: la agenda está disponible para <strong>online o a domicilio</strong> (no presencial).</p>
+            <p class="weather-note" id="weatherNote" hidden>Por temporal de lluvias, este día se atiende <strong>solo de forma online</strong> (sin presencial ni a domicilio).</p>
             <div class="slot-grid" id="slotGrid"><p class="slot-empty">Elige primero un día arriba.</p></div>
           </div>
 
@@ -854,7 +904,7 @@ section[id]{scroll-margin-top:84px;}
           </form>
         </div>
 
-        <p class="agenda-note">Esto es una <strong>solicitud</strong> de hora, no una reserva confirmada de inmediato: reviso mi agenda real y te confirmo por correo o WhatsApp.</p>
+        <p class="agenda-note">Esto es una <strong>solicitud</strong> de hora, no una reserva confirmada de inmediato: reviso mi agenda real y te confirmo por correo o WhatsApp. Recuerda que para atenciones presenciales u online tu hora queda confirmada una vez recibido el <strong>abono de $10.000</strong> (ver detalles de la cuenta más arriba).</p>
       </div>
     </div>
   </section>
@@ -912,6 +962,11 @@ section[id]{scroll-margin-top:84px;}
         <details class="faq-item">
           <summary>¿Qué necesito para una sesión online?</summary>
           <p>Solo un celular, tablet o computador con cámara, buena conexión a internet y, si es para un niño o niña, idealmente un adulto acompañando durante la sesión.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Necesito pagar un abono para confirmar mi hora?</summary>
+          <p>Sí. Para atenciones presenciales u online se solicita un abono de <span class="fill-me">$10.000</span> a la cuenta Matilde Pizarro Toro, RUT 19.487.764-1, Banco de Chile, Cuenta Vista N° 00-000-11210-20 (matildepizarrotoro@gmail.com). Con el abono realizado y el comprobante enviado por WhatsApp o correo, tu hora queda confirmada.</p>
         </details>
 
       </div>
@@ -1073,6 +1128,23 @@ var BOOKING_CONFIG = {
     '2026-12-08': 'Feriado — no hay horas disponibles.',
     '2026-12-25': 'Feriado — no hay horas disponibles.'
   },
+  // ============================================================
+  // DÍAS "SOLO ONLINE" (agenda presencial y a domicilio pausada).
+  // Llave: fecha 'YYYY-MM-DD'. Valor: mensaje que se muestra al
+  // elegir ese día. A diferencia de blockedDates, estos días SÍ
+  // quedan disponibles para agendar, pero solo en modalidad
+  // "Online": las opciones "A domicilio" y "Presencial" se
+  // deshabilitan automáticamente en el formulario.
+  // Se usa para el bloqueo del 16 al 19 de julio de 2026 por
+  // temporal de lluvias (avisado por Matilde). Para agregar o quitar
+  // fechas de este bloqueo, edita solo este objeto.
+  // ============================================================
+  onlineOnlyDates: {
+    '2026-07-16': 'Por temporal de lluvias, este día se atiende solo de forma online.',
+    '2026-07-17': 'Por temporal de lluvias, este día se atiende solo de forma online.',
+    '2026-07-18': 'Por temporal de lluvias, este día se atiende solo de forma online.',
+    '2026-07-19': 'Por temporal de lluvias, este día se atiende solo de forma online.'
+  },
   // Cuántos días se muestran a la vez en la tira de fechas.
   daysPerPage: 7,
   // ============================================================
@@ -1099,6 +1171,7 @@ function initBookingWidget() {
   var calNext = document.getElementById('calNext');
   var slotGrid = document.getElementById('slotGrid');
   var weekendNote = document.getElementById('weekendNote');
+  var weatherNote = document.getElementById('weatherNote');
   var selectedDateLabel = document.getElementById('selectedDateLabel');
   var bookingSummary = document.getElementById('bookingSummary');
   var form = document.getElementById('bookingForm');
@@ -1224,6 +1297,11 @@ function initBookingWidget() {
         btn.classList.add('day-btn-blocked');
         btn.title = blockedMsg;
       }
+      var onlineOnlyMsg = BOOKING_CONFIG.onlineOnlyDates[isoDate(d)];
+      if (isOpen && !blockedMsg && onlineOnlyMsg) {
+        btn.classList.add('day-btn-weather');
+        btn.title = onlineOnlyMsg;
+      }
       if (selectedDate && sameDay(selectedDate, d)) {
         btn.classList.add('is-selected');
       }
@@ -1264,6 +1342,7 @@ function initBookingWidget() {
     if (!selectedDate) {
       selectedDateLabel.textContent = 'día seleccionado';
       if (weekendNote) weekendNote.hidden = true;
+      if (weatherNote) weatherNote.hidden = true;
       var emptyMsg = document.createElement('p');
       emptyMsg.className = 'slot-empty';
       emptyMsg.textContent = 'Elige primero un día arriba.';
@@ -1277,6 +1356,7 @@ function initBookingWidget() {
     var blockedMsg = BOOKING_CONFIG.blockedDates[dateIso];
     if (blockedMsg) {
       if (weekendNote) weekendNote.hidden = true;
+      if (weatherNote) weatherNote.hidden = true;
       var blockedP = document.createElement('p');
       blockedP.className = 'slot-empty slot-blocked';
       blockedP.textContent = blockedMsg;
@@ -1286,7 +1366,9 @@ function initBookingWidget() {
     }
 
     var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
-    if (weekendNote) weekendNote.hidden = !isWeekendDay;
+    var isOnlineOnlyDay = !!BOOKING_CONFIG.onlineOnlyDates[dateIso];
+    if (weekendNote) weekendNote.hidden = !isWeekendDay || isOnlineOnlyDay;
+    if (weatherNote) weatherNote.hidden = !isOnlineOnlyDay;
     var activeSlots = isWeekendDay ? BOOKING_CONFIG.weekendSlots : BOOKING_CONFIG.slots;
 
     activeSlots.forEach(function (time) {
@@ -1295,7 +1377,7 @@ function initBookingWidget() {
       btn.className = 'slot-btn';
 
       var isBooked = !!bookedSlots[slotKey(dateIso, time)];
-      var isHomeOnlyTime = !isWeekendDay && BOOKING_CONFIG.homeOnlySlots.indexOf(time) !== -1;
+      var isHomeOnlyTime = !isWeekendDay && !isOnlineOnlyDay && BOOKING_CONFIG.homeOnlySlots.indexOf(time) !== -1;
       if (isBooked) {
         btn.classList.add('is-booked');
         btn.disabled = true;
@@ -1320,6 +1402,26 @@ function initBookingWidget() {
 
   function syncModalidadWithSelectedDate() {
     if (!selectedDate || !formModalidad) return;
+    var dateIso = isoDate(selectedDate);
+    var isOnlineOnlyDay = !!BOOKING_CONFIG.onlineOnlyDates[dateIso];
+
+    if (isOnlineOnlyDay) {
+      // Temporal de lluvias: solo se atiende online estos días, tanto
+      // "A domicilio" como "Presencial" quedan deshabilitados.
+      if (optOnline) optOnline.disabled = false;
+      if (optDomicilio) optDomicilio.disabled = true;
+      if (optPresencial) optPresencial.disabled = true;
+      if (formModalidad.value === 'Presencial' || formModalidad.value === 'A domicilio') {
+        formModalidad.value = '';
+      }
+      formModalidad.value = 'Online';
+      if (modalidadHint) {
+        modalidadHint.hidden = false;
+        modalidadHint.innerHTML = 'Por temporal de lluvias, estos días solo se atiende <strong>online</strong>.';
+      }
+      return;
+    }
+
     var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
     var isHomeOnlyTime = !isWeekendDay && selectedTime && BOOKING_CONFIG.homeOnlySlots.indexOf(selectedTime) !== -1;
     var noPresencial = isWeekendDay || isHomeOnlyTime;
@@ -1348,13 +1450,16 @@ function initBookingWidget() {
   function updateSummary() {
     if (selectedDate && selectedTime) {
       var dateText = formatLongDate(selectedDate);
+      var dateIso = isoDate(selectedDate);
+      var isOnlineOnlyDay = !!BOOKING_CONFIG.onlineOnlyDates[dateIso];
       var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
-      var isHomeOnlyTime = !isWeekendDay && BOOKING_CONFIG.homeOnlySlots.indexOf(selectedTime) !== -1;
+      var isHomeOnlyTime = !isWeekendDay && !isOnlineOnlyDay && BOOKING_CONFIG.homeOnlySlots.indexOf(selectedTime) !== -1;
       var noPresencial = isWeekendDay || isHomeOnlyTime;
-      bookingSummary.innerHTML = 'Vas a solicitar el <strong>' + dateText + ', ' + selectedTime + ' hrs</strong>' + (noPresencial ? ' — <strong>online o a domicilio</strong>' : '') + '.';
+      var modalidadTag = isOnlineOnlyDay ? ' — <strong>solo online</strong> (temporal de lluvias)' : (noPresencial ? ' — <strong>online o a domicilio</strong>' : '');
+      bookingSummary.innerHTML = 'Vas a solicitar el <strong>' + dateText + ', ' + selectedTime + ' hrs</strong>' + modalidadTag + '.';
       formDate.value = dateText;
       formTime.value = selectedTime;
-      var subjectTag = isWeekendDay ? '[Fin de semana] ' : (isHomeOnlyTime ? '[Horario online/domicilio] ' : '');
+      var subjectTag = isOnlineOnlyDay ? '[Solo online — temporal de lluvias] ' : (isWeekendDay ? '[Fin de semana] ' : (isHomeOnlyTime ? '[Horario online/domicilio] ' : ''));
       formSubject.value = subjectTag + 'Nueva solicitud de hora — ' + dateText + ' ' + selectedTime + ' hrs';
     } else {
       bookingSummary.textContent = 'Aún no has elegido día ni hora.';
