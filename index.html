@@ -5,7 +5,34 @@
   ============================================================
   SITIO WEB — Matilde Pizarro Toro, Fonoaudióloga
   ============================================================
-  Última actualización (14 de julio de 2026):
+  Última actualización (16 de julio de 2026):
+    - Aviso de temporal de lluvias: se extendió el bloqueo de
+      atenciones presenciales y a domicilio hasta el martes 21 de
+      julio (antes llegaba solo al domingo 19). El aviso fijo de la
+      tarjeta de Agenda ("rainScheduleNote") ahora se OCULTA SOLO,
+      sin tocar el HTML, a partir del 22 de julio de 2026 (buscar
+      "rainNoticeUntil" en el <script> final si algún día hay que
+      cambiar esa fecha por otro temporal). El bloqueo por día en
+      el calendario (BOOKING_CONFIG.onlineOnlyDates) ya se ajusta
+      solo, porque el calendario nunca muestra días pasados.
+    - Servicios: se agregó una tarjeta específica "Voz cantada y
+      uso profesional de la voz" para dejar explícito el trabajo
+      con cantantes, locutores, profesores y otras personas que
+      usan la voz de forma profesional o artística. También se
+      sumó una mención a esta especialidad en "Sobre mí" (se
+      corrigió además un párrafo vacío que había quedado ahí) y
+      una pregunta nueva en "Preguntas frecuentes" con su entrada
+      correspondiente en el esquema FAQPage.
+    - Nueva sección "Gift Cards" (entre Testimonios y Agenda, con
+      su propio link en el menú): dos tarjetas — Evaluación Vocal
+      ($20.000) y 10 Sesiones ($170.000) — con botón directo a
+      WhatsApp para coordinar el regalo. Se agregó también una
+      pregunta en el FAQ explicando cómo comprarlas.
+    - Ubicación: se agregó el nombre del edificio y el piso
+      (Edificio Contemporáneo, Piso 7) junto a la oficina 702, en
+      el texto de la sección y en el JSON-LD de dirección.
+
+  Actualización anterior (14 de julio de 2026):
     - Agenda: se agregó un aviso visible con los datos de abono
       ($10.000 a la cuenta Matilde Pizarro Toro, Banco de Chile,
       Cuenta Vista N° 00-000-11210-20) que se pide para confirmar
@@ -155,7 +182,7 @@
   "areaServed": ["Viña del Mar", "Quilpué", "Villa Alemana"],
   "address": {
     "@type": "PostalAddress",
-    "streetAddress": "C. Limache 1724, oficina 702",
+    "streetAddress": "C. Limache 1724, Edificio Contemporáneo, Piso 7, Oficina 702",
     "addressLocality": "Viña del Mar",
     "addressRegion": "Valparaíso",
     "addressCountry": "CL"
@@ -189,6 +216,11 @@
     },
     {
       "@type": "Question",
+      "name": "¿Trabajas con cantantes o personas que usan la voz de forma profesional?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí, trabajo con cantantes y con personas que usan su voz de forma profesional o artística (locutores, profesores, médicos, abogados), ayudándolas a mejorar su rendimiento vocal, prevenir lesiones y resolver la disfonía, la voz cansada o las dificultades al cantar." }
+    },
+    {
+      "@type": "Question",
       "name": "¿Hacen sesiones en inglés?",
       "acceptedAnswer": { "@type": "Answer", "text": "Sí, la atención está disponible en español e inglés (certificación B1 TOEIC Bridge)." }
     },
@@ -196,6 +228,11 @@
       "@type": "Question",
       "name": "¿Necesito pagar un abono para confirmar mi hora?",
       "acceptedAnswer": { "@type": "Answer", "text": "Sí, para atenciones presenciales u online se solicita un abono de $10.000 a la cuenta Matilde Pizarro Toro, Banco de Chile, Cuenta Vista N° 00-000-11210-20. Con el abono realizado, la hora queda confirmada." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Cómo compro o regalo una Gift Card?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Se coordina por WhatsApp: se elige entre la Gift Card de Evaluación Vocal o la de 10 Sesiones, se paga por transferencia y se entrega la gift card con su fecha de emisión y vigencia de 3 meses." }
     }
   ]
 }
@@ -450,6 +487,17 @@ section[id]{scroll-margin-top:84px;}
 .deposit-note ul{margin:.5rem 0 .6rem;padding-left:1.1rem;}
 .deposit-note li{margin:.15rem 0;}
 .deposit-note .deposit-foot{margin:.4rem 0 0;font-size:.85rem;color:var(--ink-soft);}
+.giftcard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.75rem;}
+.giftcard{position:relative;background:var(--paper-alt);border:1.5px solid var(--line);border-radius:var(--radius-md);padding:clamp(1.6rem,2.4vw,2.2rem);display:flex;flex-direction:column;box-shadow:var(--shadow-soft);}
+.giftcard-ribbon{position:absolute;top:1.4rem;right:-0.1rem;background:var(--voice);color:#fff;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .8rem;border-radius:6px 0 0 6px;}
+.giftcard h3{margin:0 0 .6rem;font-size:1.25rem;}
+.giftcard-price{font-family:var(--font-mono);font-size:1.6rem;font-weight:600;color:var(--voice-deep);margin:.2rem 0 1rem;}
+.giftcard-price span{font-size:.85rem;font-weight:500;color:var(--ink-soft);margin-left:.35rem;}
+.giftcard p{color:var(--ink-soft);font-size:.94rem;margin:0 0 .6rem;}
+.giftcard ul{margin:0 0 1rem;padding-left:1.1rem;color:var(--ink-soft);font-size:.9rem;}
+.giftcard li{margin:.25rem 0;}
+.giftcard-meta{font-size:.82rem;color:var(--ink-soft);background:var(--paper);border:1px dashed var(--line);border-radius:var(--radius-sm);padding:.6rem .8rem;margin:0 0 1.2rem;}
+.giftcard .btn{margin-top:auto;align-self:flex-start;}
 .slot-grid{display:flex;flex-wrap:wrap;gap:.6rem;}
 .slot-btn{font-family:var(--font-mono);font-size:.85rem;padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line);background:var(--paper-alt);color:var(--ink);cursor:pointer;transition:border-color .2s ease,background-color .2s ease,color .2s ease;}
 .slot-btn:hover{border-color:var(--amber);}
@@ -528,6 +576,7 @@ section[id]{scroll-margin-top:84px;}
       <li><a href="#sobre-mi">Sobre mí</a></li>
       <li><a href="#servicios">Servicios</a></li>
       <li><a href="#testimonios">Testimonios</a></li>
+      <li><a href="#gift-cards">Gift Cards</a></li>
       <li><a href="#agenda">Agenda</a></li>
       <li><a href="#ubicacion">Ubicación</a></li>
       <li><a href="#faq">Preguntas frecuentes</a></li>
@@ -642,7 +691,7 @@ section[id]{scroll-margin-top:84px;}
         <p class="eyebrow">Sobre mí</p>
         <h2 class="section-title">Hola, soy Matilde</h2>
         <p class="section-lead">Soy Matilde Pizarro Toro, Fonoaudióloga. Trabajo con un enfoque cercano y personalizado, adaptando cada sesión a las necesidades de quien tengo enfrente sea un niño dando sus primeros pasos en el lenguaje o un adulto que busca recuperar su voz.</p>
-        <p class="section-lead"</p>
+        <p class="section-lead">Tengo un foco especial en la voz hablada y cantada: trabajo con cantantes y con personas que usan su voz de forma profesional o artística —locutores, profesores, médicos, abogados—, ayudándolas a mejorar su rendimiento vocal, prevenir lesiones y resolver la disfonía, la voz cansada o las dificultades al cantar, con un enfoque biopsicosocial y basado en evidencia científica actual.</p>
       </div>
     </div>
   </section>
@@ -686,7 +735,7 @@ section[id]{scroll-margin-top:84px;}
             </svg>
           </div>
           <h3>Terapia de voz</h3>
-          <p>Rehabilitación vocal para disfonías y manejo de síntomas vocales. Entrenamiento en voz profesional para docentes, cantantes y locutores.</p>
+          <p>Rehabilitación vocal para disfonías y manejo de síntomas vocales en la voz hablada, con seguimiento personalizado en cada sesión.</p>
         </div>
 
         <div class="service-card reveal">
@@ -698,6 +747,18 @@ section[id]{scroll-margin-top:84px;}
           </div>
           <h3>Deglución (disfagia)</h3>
           <p>Evaluación y manejo de dificultades para tragar, tanto en niños como en personas mayores.</p>
+        </div>
+
+        <div class="service-card reveal">
+          <div class="icon-badge">
+            <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="16" y="6" width="8" height="16" rx="4"></rect>
+              <path d="M11 18v2a9 9 0 0 0 18 0v-2"></path>
+              <path d="M20 29v5M15 34h10"></path>
+            </svg>
+          </div>
+          <h3>Voz cantada y uso profesional de la voz</h3>
+          <p>Trabajo con cantantes y con quienes usan su voz para vivir —locutores, profesores, médicos, abogados— para mejorar el rendimiento vocal, prevenir lesiones y resolver la voz cansada, la disfonía o las dificultades al cantar. Enfoque biopsicosocial, basado en evidencia y 100% personalizado según tus objetivos vocales.</p>
         </div>
 
         <div class="service-card reveal">
@@ -790,6 +851,39 @@ section[id]{scroll-margin-top:84px;}
     </div>
   </section>
 
+  <!-- ============ GIFT CARDS ============ -->
+  <section class="section section-alt" id="gift-cards">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Gift Cards</p>
+        <h2 class="section-title">Regala una sesión o un proceso completo</h2>
+        <p class="section-lead">Una gift card de fonotrans es un buen regalo para quien quiere empezar a cuidar su voz, ya sea con una evaluación puntual o con un proceso de acompañamiento más largo. Disponibles en modalidad online o presencial.</p>
+      </div>
+
+      <div class="giftcard-grid">
+
+        <div class="giftcard reveal">
+          <span class="giftcard-ribbon">Evaluación</span>
+          <h3>Gift Card Evaluación Vocal</h3>
+          <div class="giftcard-price">$20.000</div>
+          <p>Un regalo ideal para quien quiere partir por conocer bien su voz. Incluye una evaluación vocal completa, cualitativa y cuantitativa, con una conversación inicial para entender los hábitos vocales y el contexto en el que esa persona usa su voz, además de un análisis acústico con el software Praat. Si lo solicitan, entrego un informe con los resultados.</p>
+          <p class="giftcard-meta">Online o presencial · Válida desde la fecha de emisión hasta 3 meses después.</p>
+          <a class="btn btn-ghost" href="https://wa.me/56971710225?text=Hola%20Matilde%2C%20quiero%20regalar%20una%20Gift%20Card%20de%20Evaluaci%C3%B3n%20Vocal" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp →</a>
+        </div>
+
+        <div class="giftcard reveal">
+          <span class="giftcard-ribbon">Proceso completo</span>
+          <h3>Gift Card 10 Sesiones</h3>
+          <div class="giftcard-price">$170.000 <span>por las 10 sesiones</span></div>
+          <p>Para regalar un proceso completo de principio a fin. La primera sesión es la misma evaluación vocal completa —cualitativa, cuantitativa y con análisis acústico Praat, informe a petición— y las 9 sesiones siguientes se destinan a poner en marcha el plan de intervención vocal diseñado a partir de esa evaluación.</p>
+          <p class="giftcard-meta">Online o presencial · Válida desde la fecha de emisión hasta 3 meses después.</p>
+          <a class="btn btn-ghost" href="https://wa.me/56971710225?text=Hola%20Matilde%2C%20quiero%20regalar%20una%20Gift%20Card%20de%2010%20Sesiones" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ============ AGENDA ============ -->
   <section class="section" id="agenda">
     <div class="container">
@@ -821,7 +915,7 @@ section[id]{scroll-margin-top:84px;}
 
         <p class="agenda-schedule-note">Lunes a viernes de 08:00 a 18:00: todas las modalidades. Lunes a viernes de 19:00 a 21:00 y sábados y domingos de 09:00 a 14:00: <strong>online o a domicilio</strong> (sin presencial).</p>
 
-        <p class="agenda-schedule-note" id="rainScheduleNote"><strong>Aviso por temporal de lluvias:</strong> del jueves 16 al domingo 19 de julio se atenderá <strong>solo de forma online</strong>; las atenciones presenciales y a domicilio quedan pausadas esos días.</p>
+        <p class="agenda-schedule-note" id="rainScheduleNote"><strong>Aviso por temporal de lluvias:</strong> del jueves 16 al martes 21 de julio se atenderá <strong>solo de forma online</strong>; las atenciones presenciales y a domicilio quedan pausadas esos días.</p>
 
         <div class="deposit-note" id="depositNote">
           <span class="deposit-title">💳 Abono para confirmar tu hora</span>
@@ -915,7 +1009,7 @@ section[id]{scroll-margin-top:84px;}
       <div class="reveal">
         <p class="eyebrow">Ubicación</p>
         <h2 class="section-title">Online, a domicilio o presencial: tú eliges</h2>
-        <p class="section-lead">Hago sesiones online por videollamada y a domicilio en Quilpué, Villa Alemana y Viña del Mar. Para la atención presencial en Viña del Mar, arriendo de forma independiente un box en Centro Brainland — C. Limache 1724, oficina 702 — frente al Hospital Clínico Viña del Mar y a pasos del Hospital Gustavo Fricke y el Metro Hospital, con estacionamientos y comercios cercanos.</p>
+        <p class="section-lead">Hago sesiones online por videollamada y a domicilio en Quilpué, Villa Alemana y Viña del Mar. Para la atención presencial en Viña del Mar, arriendo de forma independiente un box en Centro Brainland — C. Limache 1724, Edificio Contemporáneo, Piso 7, Oficina 702 — frente al Hospital Clínico Viña del Mar y a pasos del Hospital Gustavo Fricke y el Metro Hospital, con estacionamientos y comercios cercanos.</p>
         <a class="btn btn-ghost" href="https://maps.google.com/?q=-33.02921659999999,-71.53960959999999" target="_blank" rel="noopener noreferrer">Cómo llegar →</a>
       </div>
       <div class="map-frame reveal">
@@ -955,6 +1049,11 @@ section[id]{scroll-margin-top:84px;}
         </details>
 
         <details class="faq-item">
+          <summary>¿Trabajas con cantantes o personas que usan la voz de forma profesional?</summary>
+          <p>Sí, es uno de mis focos de trabajo. Ayudo a cantantes y a personas que usan la voz para vivir —locutores, profesores, médicos, abogados— cuando pierden la voz al ensayar o presentarse, sienten tensión o dolor al cantar, o quieren potenciar su técnica vocal desde un enfoque de salud. Las sesiones son 100% personalizadas según tus objetivos vocales.</p>
+        </details>
+
+        <details class="faq-item">
           <summary>¿Hacen sesiones en inglés?</summary>
           <p>Sí, atiendo en español e inglés (certificación B1 TOEIC Bridge). Puedes indicarlo al agendar o comentármelo directo por WhatsApp.</p>
         </details>
@@ -967,6 +1066,11 @@ section[id]{scroll-margin-top:84px;}
         <details class="faq-item">
           <summary>¿Necesito pagar un abono para confirmar mi hora?</summary>
           <p>Sí. Para atenciones presenciales u online se solicita un abono de <span class="fill-me">$10.000</span> a la cuenta Matilde Pizarro Toro, RUT 19.487.764-1, Banco de Chile, Cuenta Vista N° 00-000-11210-20 (matildepizarrotoro@gmail.com). Con el abono realizado y el comprobante enviado por WhatsApp o correo, tu hora queda confirmada.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Cómo compro o regalo una Gift Card?</summary>
+          <p>Escríbeme por WhatsApp indicando cuál de las <a href="#gift-cards">Gift Cards ↓</a> te interesa, coordinamos el pago por transferencia (mismos datos de la cuenta que aparecen en Agenda) y te envío la gift card lista para regalar, con su fecha de emisión y vigencia de 3 meses.</p>
         </details>
 
       </div>
@@ -1068,6 +1172,18 @@ document.addEventListener('DOMContentLoaded', function () {
   var yearEl = document.getElementById('year');
   if (yearEl) { yearEl.textContent = new Date().getFullYear(); }
 
+  // Aviso de temporal de lluvias (Agenda): se oculta solo a partir del
+  // 22 de julio de 2026, sin necesidad de tocar el HTML. Si se agrega
+  // otro temporal más adelante, basta con actualizar el texto y esta
+  // fecha límite (rainNoticeUntil) más abajo.
+  var rainScheduleNote = document.getElementById('rainScheduleNote');
+  if (rainScheduleNote) {
+    var rainNoticeUntil = new Date(2026, 6, 22); // 22 de julio de 2026 (mes 6 = julio, base 0)
+    if (new Date() >= rainNoticeUntil) {
+      rainScheduleNote.remove();
+    }
+  }
+
   drawWaveform();
   initBookingWidget();
 });
@@ -1143,7 +1259,9 @@ var BOOKING_CONFIG = {
     '2026-07-16': 'Por temporal de lluvias, este día se atiende solo de forma online.',
     '2026-07-17': 'Por temporal de lluvias, este día se atiende solo de forma online.',
     '2026-07-18': 'Por temporal de lluvias, este día se atiende solo de forma online.',
-    '2026-07-19': 'Por temporal de lluvias, este día se atiende solo de forma online.'
+    '2026-07-19': 'Por temporal de lluvias, este día se atiende solo de forma online.',
+    '2026-07-20': 'Por temporal de lluvias, este día se atiende solo de forma online.',
+    '2026-07-21': 'Por temporal de lluvias, este día se atiende solo de forma online.'
   },
   // Cuántos días se muestran a la vez en la tira de fechas.
   daysPerPage: 7,
