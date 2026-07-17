@@ -217,7 +217,7 @@
     {
       "@type": "Question",
       "name": "¿Trabajas con cantantes o personas que usan la voz de forma profesional?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Sí, trabajo con cantantes y con personas que usan su voz de forma profesional o artística (locutores, profesores, médicos, abogados), ayudándolas a mejorar su rendimiento vocal, prevenir lesiones y resolver la disfonía, la voz cansada o las dificultades al cantar." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí, trabajo con artistas, creadores de contenido y profesionales de la voz: cantantes, streamers, youtubers, podcasters, actores, locutores, raperos, comediantes de stand-up, narradores de eSports, docentes, médicos, abogados y cualquier persona que dependa de su voz para comunicar, interpretar o trabajar, con planes personalizados de prevención, entrenamiento y rehabilitación vocal." }
     },
     {
       "@type": "Question",
@@ -233,6 +233,26 @@
       "@type": "Question",
       "name": "¿Cómo compro o regalo una Gift Card?",
       "acceptedAnswer": { "@type": "Answer", "text": "Se coordina por WhatsApp: se elige entre la Gift Card de Evaluación Vocal o la de 10 Sesiones, se paga por transferencia y se entrega la gift card con su fecha de emisión y vigencia de 3 meses." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Puedo usar la Gift Card en cualquier modalidad?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Sí, la gift card se puede usar en modalidad online, presencial en Viña del Mar o a domicilio en Quilpué, Villa Alemana y Viña del Mar." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Desde qué edad atienden a niños y niñas?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Se atiende desde la primera infancia hasta la adolescencia, además de adultos y personas mayores." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Qué pasa con mi hora si hay mal tiempo (temporal, lluvia intensa)?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Si un temporal restringe las atenciones presenciales o a domicilio, se avisa con anticipación y se ofrece cambiar la sesión a modalidad online o reprogramarla." }
+    },
+    {
+      "@type": "Question",
+      "name": "¿Necesito llevar algo a la primera sesión presencial o a domicilio?",
+      "acceptedAnswer": { "@type": "Answer", "text": "No es necesario, aunque informes o exámenes previos relacionados con el motivo de consulta pueden ser útiles de traer o enviar antes por WhatsApp." }
     }
   ]
 }
@@ -487,17 +507,23 @@ section[id]{scroll-margin-top:84px;}
 .deposit-note ul{margin:.5rem 0 .6rem;padding-left:1.1rem;}
 .deposit-note li{margin:.15rem 0;}
 .deposit-note .deposit-foot{margin:.4rem 0 0;font-size:.85rem;color:var(--ink-soft);}
-.giftcard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.75rem;}
-.giftcard{position:relative;background:var(--paper-alt);border:1.5px solid var(--line);border-radius:var(--radius-md);padding:clamp(1.6rem,2.4vw,2.2rem);display:flex;flex-direction:column;box-shadow:var(--shadow-soft);}
-.giftcard-ribbon{position:absolute;top:1.4rem;right:-0.1rem;background:var(--voice);color:#fff;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .8rem;border-radius:6px 0 0 6px;}
-.giftcard h3{margin:0 0 .6rem;font-size:1.25rem;}
-.giftcard-price{font-family:var(--font-mono);font-size:1.6rem;font-weight:600;color:var(--voice-deep);margin:.2rem 0 1rem;}
-.giftcard-price span{font-size:.85rem;font-weight:500;color:var(--ink-soft);margin-left:.35rem;}
-.giftcard p{color:var(--ink-soft);font-size:.94rem;margin:0 0 .6rem;}
-.giftcard ul{margin:0 0 1rem;padding-left:1.1rem;color:var(--ink-soft);font-size:.9rem;}
+.giftcard-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;}
+.giftcard{position:relative;background:linear-gradient(150deg,var(--voice-deep) 0%,var(--voice) 55%,var(--amber-deep) 130%);border-radius:var(--radius-md);padding:clamp(1.8rem,2.6vw,2.4rem);display:flex;flex-direction:column;box-shadow:0 22px 46px -20px rgba(165,47,96,0.45);color:#fff;overflow:hidden;isolation:isolate;}
+.giftcard::before{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(circle,rgba(255,255,255,.16) 1.5px,transparent 1.5px);background-size:16px 16px;opacity:.5;}
+.giftcard::after{content:"";position:absolute;left:-14px;top:50%;width:28px;height:28px;background:var(--paper);border-radius:50%;box-shadow:calc(100% + 8px) 0 0 var(--paper);}
+.giftcard-ribbon{position:absolute;top:1.5rem;right:1.5rem;background:rgba(255,255,255,.22);backdrop-filter:blur(2px);color:#fff;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;padding:.35rem .85rem;border-radius:999px;border:1px solid rgba(255,255,255,.35);}
+.giftcard-kicker{font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.75);margin:0 0 .9rem;}
+.giftcard h3{margin:0 0 .6rem;font-size:1.3rem;font-family:var(--font-display);padding-right:5.5rem;}
+.giftcard-price{font-family:var(--font-mono);font-size:1.9rem;font-weight:600;color:#fff;margin:.2rem 0 1.1rem;}
+.giftcard-price span{font-size:.85rem;font-weight:500;color:rgba(255,255,255,.8);margin-left:.35rem;}
+.giftcard p{color:rgba(255,255,255,.92);font-size:.94rem;margin:0 0 .6rem;}
+.giftcard ul{margin:0 0 1rem;padding-left:1.1rem;color:rgba(255,255,255,.92);font-size:.9rem;}
 .giftcard li{margin:.25rem 0;}
-.giftcard-meta{font-size:.82rem;color:var(--ink-soft);background:var(--paper);border:1px dashed var(--line);border-radius:var(--radius-sm);padding:.6rem .8rem;margin:0 0 1.2rem;}
+.giftcard-divider{border:none;border-top:1.5px dashed rgba(255,255,255,.45);margin:.4rem 0 1.1rem;}
+.giftcard-meta{font-size:.82rem;color:#fff;background:rgba(255,255,255,.14);border:1px dashed rgba(255,255,255,.5);border-radius:var(--radius-sm);padding:.6rem .8rem;margin:0 0 1.2rem;}
 .giftcard .btn{margin-top:auto;align-self:flex-start;}
+.giftcard .btn-ghost{color:#fff;border-color:#fff;}
+.giftcard .btn-ghost:hover{background:#fff;color:var(--voice-deep);}
 .slot-grid{display:flex;flex-wrap:wrap;gap:.6rem;}
 .slot-btn{font-family:var(--font-mono);font-size:.85rem;padding:.55rem 1rem;border-radius:999px;border:1.5px solid var(--line);background:var(--paper-alt);color:var(--ink);cursor:pointer;transition:border-color .2s ease,background-color .2s ease,color .2s ease;}
 .slot-btn:hover{border-color:var(--amber);}
@@ -576,9 +602,9 @@ section[id]{scroll-margin-top:84px;}
       <li><a href="#sobre-mi">Sobre mí</a></li>
       <li><a href="#servicios">Servicios</a></li>
       <li><a href="#testimonios">Testimonios</a></li>
-      <li><a href="#gift-cards">Gift Cards</a></li>
       <li><a href="#agenda">Agenda</a></li>
       <li><a href="#ubicacion">Ubicación</a></li>
+      <li><a href="#gift-cards">Gift Cards</a></li>
       <li><a href="#faq">Preguntas frecuentes</a></li>
       <li><a href="#contacto">Contacto</a></li>
       <li class="nav-cta-mobile">
@@ -690,8 +716,7 @@ section[id]{scroll-margin-top:84px;}
       <div class="about-content reveal">
         <p class="eyebrow">Sobre mí</p>
         <h2 class="section-title">Hola, soy Matilde</h2>
-        <p class="section-lead">Soy Matilde Pizarro Toro, Fonoaudióloga. Trabajo con un enfoque cercano y personalizado, adaptando cada sesión a las necesidades de quien tengo enfrente sea un niño dando sus primeros pasos en el lenguaje o un adulto que busca recuperar su voz.</p>
-        <p class="section-lead">Tengo un foco especial en la voz hablada y cantada: trabajo con cantantes y con personas que usan su voz de forma profesional o artística —locutores, profesores, médicos, abogados—, ayudándolas a mejorar su rendimiento vocal, prevenir lesiones y resolver la disfonía, la voz cansada o las dificultades al cantar, con un enfoque biopsicosocial y basado en evidencia científica actual.</p>
+        <p class="section-lead">Soy Matilde Pizarro Toro, Fonoaudióloga. Trabajo con un enfoque cercano y personalizado, adaptando cada sesión a las necesidades de quien tengo enfrente, sea un niño dando sus primeros pasos en el lenguaje o un adulto que busca recuperar su voz. Además, me especializo en voz hablada y cantada, acompañamiento vocal afirmativo y salud vocal para cantantes y otros profesionales de la voz.</p>
       </div>
     </div>
   </section>
@@ -758,7 +783,7 @@ section[id]{scroll-margin-top:84px;}
             </svg>
           </div>
           <h3>Voz cantada y uso profesional de la voz</h3>
-          <p>Trabajo con cantantes y con quienes usan su voz para vivir —locutores, profesores, médicos, abogados— para mejorar el rendimiento vocal, prevenir lesiones y resolver la voz cansada, la disfonía o las dificultades al cantar. Enfoque biopsicosocial, basado en evidencia y 100% personalizado según tus objetivos vocales.</p>
+          <p>Trabajo con artistas, creadores de contenido y profesionales de la voz: cantantes, streamers, youtubers, podcasters, actores, locutores, raperos, comediantes de stand-up, narradores de eSports, docentes, médicos, abogados y cualquier persona que dependa de su voz para comunicar, interpretar o trabajar. Cada plan es personalizado y combina prevención, entrenamiento y rehabilitación vocal desde un enfoque biopsicosocial basado en evidencia científica.</p>
         </div>
 
         <div class="service-card reveal">
@@ -848,39 +873,6 @@ section[id]{scroll-margin-top:84px;}
 
       </div>
       <p class="testi-note">Gracias infinitas a quienes compartieron su voz y su proceso para este espacio. 💗</p>
-    </div>
-  </section>
-
-  <!-- ============ GIFT CARDS ============ -->
-  <section class="section section-alt" id="gift-cards">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Gift Cards</p>
-        <h2 class="section-title">Regala una sesión o un proceso completo</h2>
-        <p class="section-lead">Una gift card de fonotrans es un buen regalo para quien quiere empezar a cuidar su voz, ya sea con una evaluación puntual o con un proceso de acompañamiento más largo. Disponibles en modalidad online o presencial.</p>
-      </div>
-
-      <div class="giftcard-grid">
-
-        <div class="giftcard reveal">
-          <span class="giftcard-ribbon">Evaluación</span>
-          <h3>Gift Card Evaluación Vocal</h3>
-          <div class="giftcard-price">$20.000</div>
-          <p>Un regalo ideal para quien quiere partir por conocer bien su voz. Incluye una evaluación vocal completa, cualitativa y cuantitativa, con una conversación inicial para entender los hábitos vocales y el contexto en el que esa persona usa su voz, además de un análisis acústico con el software Praat. Si lo solicitan, entrego un informe con los resultados.</p>
-          <p class="giftcard-meta">Online o presencial · Válida desde la fecha de emisión hasta 3 meses después.</p>
-          <a class="btn btn-ghost" href="https://wa.me/56971710225?text=Hola%20Matilde%2C%20quiero%20regalar%20una%20Gift%20Card%20de%20Evaluaci%C3%B3n%20Vocal" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp →</a>
-        </div>
-
-        <div class="giftcard reveal">
-          <span class="giftcard-ribbon">Proceso completo</span>
-          <h3>Gift Card 10 Sesiones</h3>
-          <div class="giftcard-price">$170.000 <span>por las 10 sesiones</span></div>
-          <p>Para regalar un proceso completo de principio a fin. La primera sesión es la misma evaluación vocal completa —cualitativa, cuantitativa y con análisis acústico Praat, informe a petición— y las 9 sesiones siguientes se destinan a poner en marcha el plan de intervención vocal diseñado a partir de esa evaluación.</p>
-          <p class="giftcard-meta">Online o presencial · Válida desde la fecha de emisión hasta 3 meses después.</p>
-          <a class="btn btn-ghost" href="https://wa.me/56971710225?text=Hola%20Matilde%2C%20quiero%20regalar%20una%20Gift%20Card%20de%2010%20Sesiones" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp →</a>
-        </div>
-
-      </div>
     </div>
   </section>
 
@@ -1018,6 +1010,43 @@ section[id]{scroll-margin-top:84px;}
     </div>
   </section>
 
+  <!-- ============ GIFT CARDS ============ -->
+  <section class="section" id="gift-cards">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Gift Cards</p>
+        <h2 class="section-title">Regala una sesión o un proceso completo</h2>
+        <p class="section-lead">Una gift card de Fonoaudiología es un buen regalo para quien quiere empezar a cuidar su voz, ya sea con una evaluación puntual o con un proceso de acompañamiento más largo. Disponibles en modalidad online, presencial y a domicilio.</p>
+      </div>
+
+      <div class="giftcard-grid">
+
+        <div class="giftcard reveal">
+          <span class="giftcard-ribbon">Evaluación</span>
+          <p class="giftcard-kicker">Gift Card · Fonoaudiología</p>
+          <h3>Evaluación Vocal</h3>
+          <div class="giftcard-price">$20.000</div>
+          <p>Un regalo ideal para quien quiere partir por conocer bien su voz. Incluye una evaluación vocal completa, cualitativa y cuantitativa, con una conversación inicial para entender los hábitos vocales y el contexto en el que esa persona usa su voz, además de un análisis acústico con el software Praat. Si lo solicitan, entrego un informe con los resultados.</p>
+          <hr class="giftcard-divider">
+          <p class="giftcard-meta">Online, presencial o a domicilio · Válida desde la fecha de emisión hasta 3 meses después.</p>
+          <a class="btn btn-ghost" href="https://wa.me/56971710225?text=Hola%20Matilde%2C%20quiero%20regalar%20una%20Gift%20Card%20de%20Evaluaci%C3%B3n%20Vocal" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp →</a>
+        </div>
+
+        <div class="giftcard reveal">
+          <span class="giftcard-ribbon">Proceso completo</span>
+          <p class="giftcard-kicker">Gift Card · Fonoaudiología</p>
+          <h3>10 Sesiones</h3>
+          <div class="giftcard-price">$170.000 <span>por las 10 sesiones</span></div>
+          <p>Para regalar un proceso completo de principio a fin. La primera sesión es la misma evaluación vocal completa —cualitativa, cuantitativa y con análisis acústico Praat, informe a petición— y las 9 sesiones siguientes se destinan a poner en marcha el plan de intervención vocal diseñado a partir de esa evaluación.</p>
+          <hr class="giftcard-divider">
+          <p class="giftcard-meta">Online, presencial o a domicilio · Válida desde la fecha de emisión hasta 3 meses después.</p>
+          <a class="btn btn-ghost" href="https://wa.me/56971710225?text=Hola%20Matilde%2C%20quiero%20regalar%20una%20Gift%20Card%20de%2010%20Sesiones" target="_blank" rel="noopener noreferrer">Consultar por WhatsApp →</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- ============ PREGUNTAS FRECUENTES ============ -->
   <section class="section" id="faq">
     <div class="container">
@@ -1073,6 +1102,26 @@ section[id]{scroll-margin-top:84px;}
           <p>Escríbeme por WhatsApp indicando cuál de las <a href="#gift-cards">Gift Cards ↓</a> te interesa, coordinamos el pago por transferencia (mismos datos de la cuenta que aparecen en Agenda) y te envío la gift card lista para regalar, con su fecha de emisión y vigencia de 3 meses.</p>
         </details>
 
+        <details class="faq-item">
+          <summary>¿Puedo usar la Gift Card en cualquier modalidad?</summary>
+          <p>Sí. Quien la recibe puede usarla en modalidad online, presencial en Viña del Mar o a domicilio en Quilpué, Villa Alemana y Viña del Mar, según lo que le acomode al momento de agendar.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Desde qué edad atienden a niños y niñas?</summary>
+          <p>Trabajo con niños desde la primera infancia, apenas se detecta una señal de alerta en el desarrollo del lenguaje o el habla, hasta la adolescencia. También atiendo adultos y personas mayores.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Qué pasa con mi hora si hay mal tiempo (temporal, lluvia intensa)?</summary>
+          <p>Si por un temporal se restringen las atenciones presenciales o a domicilio, te aviso con anticipación y se ofrece cambiar la sesión a modalidad online sin costo adicional, o reprogramarla para cuando las condiciones mejoren.</p>
+        </details>
+
+        <details class="faq-item">
+          <summary>¿Necesito llevar algo a la primera sesión presencial o a domicilio?</summary>
+          <p>No es necesario, aunque si tienes informes, exámenes o indicaciones de otro especialista relacionados con el motivo de consulta, es útil traerlos o enviármelos antes por WhatsApp.</p>
+        </details>
+
       </div>
     </div>
   </section>
@@ -1120,6 +1169,8 @@ section[id]{scroll-margin-top:84px;}
       <a href="#sobre-mi">Sobre mí</a>
       <a href="#testimonios">Testimonios</a>
       <a href="#agenda">Agenda</a>
+      <a href="#ubicacion">Ubicación</a>
+      <a href="#gift-cards">Gift Cards</a>
       <a href="#faq">Preguntas frecuentes</a>
       <a href="#contacto">Contacto</a>
     </nav>
