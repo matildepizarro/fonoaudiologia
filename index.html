@@ -5,16 +5,18 @@
   ============================================================
   SITIO WEB — Matilde Pizarro Toro, Fonoaudióloga
   ============================================================
-  Última actualización (16 de julio de 2026):
+  Última actualización (21 de julio de 2026):
     - Aviso de temporal de lluvias: se extendió el bloqueo de
-      atenciones presenciales y a domicilio hasta el martes 21 de
-      julio (antes llegaba solo al domingo 19). El aviso fijo de la
+      atenciones presenciales y a domicilio hasta el jueves 23 de
+      julio (antes llegaba solo al martes 21). El aviso fijo de la
       tarjeta de Agenda ("rainScheduleNote") ahora se OCULTA SOLO,
-      sin tocar el HTML, a partir del 22 de julio de 2026 (buscar
+      sin tocar el HTML, a partir del 24 de julio de 2026 (buscar
       "rainNoticeUntil" en el <script> final si algún día hay que
       cambiar esa fecha por otro temporal). El bloqueo por día en
       el calendario (BOOKING_CONFIG.onlineOnlyDates) ya se ajusta
       solo, porque el calendario nunca muestra días pasados.
+    - Servicios: se corrigió el texto de la tarjeta "Voz cantada y
+      uso profesional de la voz" para dejarlo más breve y directo.
     - Servicios: se agregó una tarjeta específica "Voz cantada y
       uso profesional de la voz" para dejar explícito el trabajo
       con cantantes, locutores, profesores y otras personas que
@@ -783,7 +785,7 @@ section[id]{scroll-margin-top:84px;}
             </svg>
           </div>
           <h3>Voz cantada y uso profesional de la voz</h3>
-          <p>Trabajo con artistas, creadores de contenido y profesionales de la voz: cantantes, streamers, youtubers, podcasters, actores, locutores, raperos, comediantes de stand-up, narradores de eSports, docentes, médicos, abogados y cualquier persona que dependa de su voz para comunicar, interpretar o trabajar. Cada plan es personalizado y combina prevención, entrenamiento y rehabilitación vocal desde un enfoque biopsicosocial basado en evidencia científica.</p>
+          <p>Trabajo con artistas, creadores de contenido y profesionales que utilizan su voz como herramienta de trabajo, como cantantes, streamers, youtubers, podcasters, actores, locutores, docentes, médicos, abogados y otros usuarios de voz profesional, mediante programas personalizados orientados a la prevención de trastornos vocales, la optimización del rendimiento vocal y la rehabilitación de la función vocal.</p>
         </div>
 
         <div class="service-card reveal">
@@ -907,7 +909,7 @@ section[id]{scroll-margin-top:84px;}
 
         <p class="agenda-schedule-note">Lunes a viernes de 08:00 a 18:00: todas las modalidades. Lunes a viernes de 19:00 a 21:00 y sábados y domingos de 09:00 a 14:00: <strong>online o a domicilio</strong> (sin presencial).</p>
 
-        <p class="agenda-schedule-note" id="rainScheduleNote"><strong>Aviso por temporal de lluvias:</strong> del jueves 16 al martes 21 de julio se atenderá <strong>solo de forma online</strong>; las atenciones presenciales y a domicilio quedan pausadas esos días.</p>
+        <p class="agenda-schedule-note" id="rainScheduleNote"><strong>Aviso por temporal de lluvias:</strong> del jueves 16 al jueves 23 de julio se atenderá <strong>solo de forma online</strong>; las atenciones presenciales y a domicilio quedan pausadas esos días.</p>
 
         <div class="deposit-note" id="depositNote">
           <span class="deposit-title">💳 Abono para confirmar tu hora</span>
@@ -1229,7 +1231,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // fecha límite (rainNoticeUntil) más abajo.
   var rainScheduleNote = document.getElementById('rainScheduleNote');
   if (rainScheduleNote) {
-    var rainNoticeUntil = new Date(2026, 6, 22); // 22 de julio de 2026 (mes 6 = julio, base 0)
+    var rainNoticeUntil = new Date(2026, 6, 24); // 24 de julio de 2026 (mes 6 = julio, base 0)
     if (new Date() >= rainNoticeUntil) {
       rainScheduleNote.remove();
     }
@@ -1312,7 +1314,9 @@ var BOOKING_CONFIG = {
     '2026-07-18': 'Por temporal de lluvias, este día se atiende solo de forma online.',
     '2026-07-19': 'Por temporal de lluvias, este día se atiende solo de forma online.',
     '2026-07-20': 'Por temporal de lluvias, este día se atiende solo de forma online.',
-    '2026-07-21': 'Por temporal de lluvias, este día se atiende solo de forma online.'
+    '2026-07-21': 'Por temporal de lluvias, este día se atiende solo de forma online.',
+    '2026-07-22': 'Por temporal de lluvias, este día se atiende solo de forma online.',
+    '2026-07-23': 'Por temporal de lluvias, este día se atiende solo de forma online.'
   },
   // Cuántos días se muestran a la vez en la tira de fechas.
   daysPerPage: 7,
