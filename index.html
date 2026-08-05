@@ -1334,6 +1334,8 @@ var DYN_I18N = {
   selectedDatePlaceholder: { es: 'día seleccionado', en: 'selected day' },
   bookedTooltip: { es: 'Este horario ya fue reservado por otra persona', en: 'This time slot has already been booked by someone else' },
   bookedTag: { es: 'Reservado', en: 'Booked' },
+  tooSoonTooltip: { es: 'Este horario ya no está disponible: se necesitan al menos 24 horas de anticipación', en: 'This time slot is no longer available: at least 24 hours notice is required' },
+  tooSoonTag: { es: 'No disponible', en: 'Not available' },
   homeOnlyTooltip: { es: 'Este horario está disponible para atención online o a domicilio (no presencial)', en: 'This time slot is available for online sessions or home visits (no in-person)' },
   homeOnlyTag: { es: 'Online / domicilio', en: 'Online / home visit' },
   hintRain: { es: 'Estos días solo se atiende <strong>online</strong>.', en: 'Only <strong>online</strong> sessions are available these days.' },
@@ -1497,6 +1499,11 @@ document.addEventListener('DOMContentLoaded', function () {
    para que tú la confirmes a mano contra tu agenda real.
    ============================================================ */
 var BOOKING_CONFIG = {
+  // Cuántas horas mínimas de anticipación se piden para agendar una
+  // hora el mismo día (o muy próxima). Si son las 12:00 y esto está
+  // en 24, ya no se pueden elegir horarios antes de mañana a las
+  // 12:00. Cambia solo este número si quieres más o menos margen.
+  minHoursAhead: 24,
   // Cuántos días hacia adelante se pueden elegir desde hoy.
   // 365 = la agenda queda abierta "todo el año" en forma rodante: cada
   // vez que alguien entra a la página puede agendar hasta 12 meses
@@ -1804,6 +1811,7 @@ function initBookingWidget() {
     if (weekendNote) weekendNote.hidden = !isWeekendDay || isOnlineOnlyDay;
     if (weatherNote) weatherNote.hidden = !isOnlineOnlyDay;
     var activeSlots = isWeekendDay ? BOOKING_CONFIG.weekendSlots : BOOKING_CONFIG.slots;
+    var minBookableTime = new Date(Date.now() + BOOKING_CONFIG.minHoursAhead * 60 * 60 * 1000);
 
     activeSlots.forEach(function (time) {
       var btn = document.createElement('button');
@@ -1812,12 +1820,21 @@ function initBookingWidget() {
 
       var isBooked = !!bookedSlots[slotKey(dateIso, time)];
       var isHomeOnlyTime = !isWeekendDay && !isOnlineOnlyDay && BOOKING_CONFIG.homeOnlySlots.indexOf(time) !== -1;
+      var timeParts = time.split(':');
+      var slotDateTime = new Date(selectedDate.getFullYear(), selectedDate.getMonth(), selectedDate.getDate(), parseInt(timeParts[0], 10), parseInt(timeParts[1], 10));
+      var isTooSoon = slotDateTime.getTime() < minBookableTime.getTime();
       if (isBooked) {
         btn.classList.add('is-booked');
         btn.disabled = true;
         btn.title = D('bookedTooltip');
         btn.innerHTML = time + '<span class="slot-tag">' + D('bookedTag') + '</span>';
         // Por si el horario que tenías elegido se acaba de ocupar.
+        if (selectedTime === time) selectedTime = null;
+      } else if (isTooSoon) {
+        btn.classList.add('is-booked');
+        btn.disabled = true;
+        btn.title = D('tooSoonTooltip');
+        btn.innerHTML = time + '<span class="slot-tag">' + D('tooSoonTag') + '</span>';
         if (selectedTime === time) selectedTime = null;
       } else {
         btn.innerHTML = isHomeOnlyTime ? (time + '<span class="slot-tag slot-tag-home">' + D('homeOnlyTag') + '</span>') : time;
