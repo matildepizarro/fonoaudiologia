@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://matildepizarro.github.io/fonoaudiologia/sitemap.xml
