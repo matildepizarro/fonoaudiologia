@@ -468,6 +468,17 @@ section[id]{scroll-margin-top:84px;}
    BOOKING WIDGET (solicitud de hora — calendario propio + form)
    ============================================================ */
 .booking-widget{background:var(--paper-alt);border:1px solid var(--line);border-radius:var(--radius-md);box-shadow:var(--shadow-soft);padding:clamp(1.1rem,2.5vw,1.75rem);}
+.session-picker{margin-bottom:1.4rem;padding-bottom:1.4rem;border-bottom:1px dashed var(--line);display:grid;gap:.9rem;}
+.session-picker .form-row{display:grid;gap:.4rem;}
+.session-picker select{padding:.6rem .8rem;border:1px solid var(--line);border-radius:var(--radius-sm);background:var(--paper);font:inherit;color:var(--ink);}
+.session-later-toggle{display:flex;align-items:center;gap:.6rem;font-size:.88rem;color:var(--ink-soft);cursor:pointer;}
+.session-later-toggle input{width:1.1rem;height:1.1rem;flex-shrink:0;}
+.booking-session-tabs{display:flex;gap:.5rem;overflow-x:auto;padding-bottom:.2rem;}
+.session-tab-btn{flex-shrink:0;padding:.5rem .9rem;border:1px solid var(--line);border-radius:999px;background:var(--paper);font:inherit;font-size:.85rem;color:var(--ink-soft);cursor:pointer;white-space:nowrap;}
+.session-tab-btn.is-active{border-color:var(--voice);color:var(--voice);font-weight:600;background:var(--paper-alt);}
+.session-tab-btn.is-filled::after{content:' ✓';color:var(--sage);}
+.booking-selected-summary .session-summary-line{display:block;}
+.booking-selected-summary .session-summary-pending{display:block;margin-top:.4rem;color:var(--ink-soft);}
 
 .booking-cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;}
 .booking-cal-head .cal-month{font-family:var(--font-mono);font-size:.85rem;letter-spacing:.04em;text-transform:capitalize;color:var(--ink);font-weight:500;}
@@ -645,7 +656,7 @@ section[id]{scroll-margin-top:84px;}
       <p data-i18n="t15" class="eyebrow reveal">Fonoaudióloga · Online, a domicilio y presencial</p>
       <h1 class="hero-title reveal" data-i18n-html="h6">Para que cada palabra <em>encuentre</em> su camino</h1>
       <p data-i18n="t17" class="hero-sub reveal">Matilde Pizarro Toro · Lenguaje, habla, voz y deglución para niños y adultos.</p>
-      <p data-i18n="t18" class="hero-desc reveal">Sesiones online, a domicilio en Quilpué, Villa Alemana y Viña del Mar, y también presenciales en Viña del Mar. Elige el día y la hora que más te acomode y te confirmo en menos de 24 horas.</p>
+      <p data-i18n="t18" class="hero-desc reveal">Sesiones online y a domicilio en Quilpué, Villa Alemana y Viña del Mar todos los días, y presenciales en Viña del Mar los días martes y jueves. Elige el día y la hora que más te acomode y te confirmo en menos de 24 horas.</p>
       <div class="hero-actions reveal">
         <a data-i18n="t19" class="btn btn-primary" href="#agenda">Solicitar hora →</a>
         <a data-i18n="t20" class="btn btn-ghost" href="#servicios">Ver especialidades</a>
@@ -952,7 +963,7 @@ section[id]{scroll-margin-top:84px;}
       <ol class="steps-list reveal">
         <li class="step">
           <span class="step-num">01</span>
-          <div><h3 data-i18n="t105">Elige día y hora</h3><p data-i18n="t106">Selecciona el día y el horario que prefieras. Lunes a viernes de 08:00 a 18:00 atiendo todas las modalidades; de 19:00 a 21:00 y los fines de semana, online o a domicilio (sin presencial).</p></div>
+          <div><h3 data-i18n="t105">Elige día y hora</h3><p data-i18n="t106">Selecciona el día y el horario que prefieras. La atención presencial en Viña del Mar está disponible los días martes y jueves; lunes, miércoles y viernes atiendo solo online o a domicilio, y los fines de semana también solo online o a domicilio.</p></div>
         </li>
         <li class="step">
           <span class="step-num">02</span>
@@ -969,12 +980,15 @@ section[id]{scroll-margin-top:84px;}
           <span class="badge-live"><span class="live-dot"></span>Respondo en menos de 24 horas</span>
         </div>
 
-        <p class="agenda-schedule-note" data-i18n-html="h3">Lunes a viernes de 08:00 a 18:00: todas las modalidades. Lunes a viernes de 19:00 a 21:00 y sábados y domingos de 09:00 a 14:00: <strong>online o a domicilio</strong> (sin presencial).</p>
+        <p class="agenda-schedule-note" data-i18n-html="h3"><strong>Martes y jueves</strong>: todas las modalidades, incluida la atención <strong>presencial en Viña del Mar</strong>. <strong>Lunes, miércoles y viernes</strong>, y <strong>sábados y domingos</strong>: <strong>online o a domicilio</strong> (sin presencial).</p>
+
+        <p class="agenda-schedule-note" data-i18n-html="h7">¿Necesitas una hora <strong>presencial</strong> un lunes, miércoles o viernes? Igual puede haber disponibilidad excepcional esos días — <a href="https://wa.me/56971710225?text=Hola%20Matilde%2C%20quiero%20consultar%20disponibilidad%20presencial%20fuera%20de%20martes%20o%20jueves" target="_blank" rel="noopener noreferrer">escríbeme por WhatsApp</a> y lo coordinamos.</p>
 
         <p class="agenda-schedule-note" id="rainScheduleNote" data-i18n-html="h4"><strong>Aviso por temporal de lluvias:</strong> del jueves 16 al jueves 23 de julio se atenderá <strong>solo de forma online</strong>; las atenciones presenciales y a domicilio quedan pausadas esos días.</p>
 
         <div class="deposit-note" id="depositNote">
           <span data-i18n="t114" class="deposit-title">💳 Abono para confirmar tu hora</span>
+          <span data-i18n-html="h8">El valor de la sesión completa (60 minutos) es de <strong>$20.000</strong>. Para confirmar cada hora se solicita un <strong>abono de $10.000</strong>, que se descuenta del valor total de la sesión.</span>
           <span data-i18n-html="h2">Para atenciones <strong>presenciales</strong> u <strong>online</strong> se solicita un abono de <strong>$10.000</strong> a la siguiente cuenta:</span>
           <ul>
             <li data-i18n="t117">Nombre: Matilde Pizarro Toro</li>
@@ -987,6 +1001,31 @@ section[id]{scroll-margin-top:84px;}
         </div>
 
         <div class="booking-widget" id="bookingWidget">
+          <div class="session-picker" id="sessionPicker">
+            <div class="form-row">
+              <label for="sessionCount" data-i18n="t400">¿Cuántas sesiones quieres agendar?</label>
+              <select id="sessionCount">
+                <option value="1" data-i18n="t401">1 sesión</option>
+                <option value="3" data-i18n="t402">3 sesiones</option>
+                <option value="4" data-i18n="t403">4 sesiones</option>
+                <option value="5" data-i18n="t404">5 sesiones</option>
+                <option value="6" data-i18n="t405">6 sesiones</option>
+                <option value="8" data-i18n="t406">8 sesiones</option>
+                <option value="10" data-i18n="t407">10 sesiones</option>
+                <option value="15" data-i18n="t408">15 sesiones</option>
+                <option value="20" data-i18n="t409">20 sesiones</option>
+                <option value="25" data-i18n="t410">25 sesiones</option>
+                <option value="30" data-i18n="t411">30 sesiones</option>
+              </select>
+              <p class="form-hint" data-i18n="t412">Puedes agendar hasta 30 sesiones de una vez. El valor y el abono de cada sesión se detallan más abajo.</p>
+            </div>
+            <label class="session-later-toggle" id="scheduleLaterRow" hidden>
+              <input type="checkbox" id="scheduleLaterToggle">
+              <span data-i18n="t413">Agendar las siguientes sesiones luego (coordinamos las fechas por WhatsApp)</span>
+            </label>
+            <div class="booking-session-tabs" id="sessionTabs" hidden></div>
+          </div>
+
           <div class="booking-calendar">
             <div class="booking-cal-head">
               <button type="button" class="cal-nav" id="calPrev" data-i18n-aria="t215" aria-label="Días anteriores">‹</button>
@@ -1018,6 +1057,8 @@ section[id]{scroll-margin-top:84px;}
             <input type="hidden" name="_subject" id="formSubject" value="Nueva solicitud de hora — Matilde Pizarro Toro">
             <input type="hidden" name="dia_solicitado" id="formDate" value="">
             <input type="hidden" name="hora_solicitada" id="formTime" value="">
+            <input type="hidden" name="cantidad_sesiones" id="formSessionCount" value="1">
+            <input type="hidden" name="sesiones_solicitadas" id="formSessionsSummary" value="">
             <input type="text" name="_gotcha" class="visually-hidden" tabindex="-1" autocomplete="off">
 
             <p data-i18n="t127" class="booking-selected-summary" id="bookingSummary">Aún no has elegido día ni hora.</p>
@@ -1142,6 +1183,11 @@ section[id]{scroll-margin-top:84px;}
         </details>
 
         <details class="faq-item">
+          <summary data-i18n="t220">¿Qué días atienden presencial en Viña del Mar?</summary>
+          <p data-i18n-html="h9">La atención presencial en Viña del Mar está disponible los días <strong>martes y jueves</strong>. Lunes, miércoles y viernes atiendo solo online o a domicilio. Si necesitas una hora presencial fuera de martes o jueves, escríbeme por WhatsApp: igual puede haber disponibilidad excepcional esos días.</p>
+        </details>
+
+        <details class="faq-item">
           <summary data-i18n="t168">¿Trabajas con cantantes o personas que usan la voz de forma profesional?</summary>
           <p data-i18n="t169">Sí, es uno de mis focos de trabajo. Ayudo a cantantes y a personas que usan la voz para vivir —locutores, profesores, médicos, abogados— cuando pierden la voz al ensayar o presentarse, sienten tensión o dolor al cantar, o quieren potenciar su técnica vocal desde un enfoque de salud. Las sesiones son 100% personalizadas según tus objetivos vocales.</p>
         </details>
@@ -1261,7 +1307,7 @@ section[id]{scroll-margin-top:84px;}
 </footer>
 
 <script>
-var I18N_STATIC = {"text": {"t1": {"es": "Matilde Pizarro", "en": "Matilde Pizarro"}, "t2": {"es": "Fonoaudióloga", "en": "Speech-Language Pathologist"}, "t3": {"es": "Modalidades", "en": "Modalities"}, "t4": {"es": "Sobre mí", "en": "About me"}, "t5": {"es": "Servicios", "en": "Services"}, "t6": {"es": "Especialidades", "en": "Specialties"}, "t7": {"es": "Testimonios", "en": "Testimonials"}, "t8": {"es": "Agenda", "en": "Book online"}, "t9": {"es": "Ubicación", "en": "Location"}, "t10": {"es": "Gift Cards", "en": "Gift Cards"}, "t11": {"es": "FAQ", "en": "FAQ"}, "t12": {"es": "Contacto", "en": "Contact"}, "t13": {"es": "Reservar hora", "en": "Book a session"}, "t14": {"es": "Reservar hora", "en": "Book a session"}, "t15": {"es": "Fonoaudióloga · Online, a domicilio y presencial", "en": "Speech-Language Pathologist · Online, home visits and in-person"}, "t17": {"es": "Matilde Pizarro Toro · Lenguaje, habla, voz y deglución para niños y adultos.", "en": "Matilde Pizarro Toro · Language, speech, voice and swallowing for children and adults."}, "t18": {"es": "Sesiones online, a domicilio en Quilpué, Villa Alemana y Viña del Mar, y también presenciales en Viña del Mar. Elige el día y la hora que más te acomode y te confirmo en menos de 24 horas.", "en": "Online sessions, home visits in Quilpué, Villa Alemana and Viña del Mar, and in-person sessions in Viña del Mar. Choose the day and time that suits you best and I'll confirm within 24 hours."}, "t19": {"es": "Solicitar hora →", "en": "Book a session →"}, "t20": {"es": "Ver especialidades", "en": "See specialties"}, "t21": {"es": "ATENCIÓN", "en": "CARE FOR"}, "t22": {"es": "Niños y adultos", "en": "Children and adults"}, "t23": {"es": "MODALIDAD", "en": "MODALITY"}, "t24": {"es": "Online · Domicilio · Presencial", "en": "Online · Home visit · In-person"}, "t25": {"es": "UBICACIÓN", "en": "LOCATION"}, "t26": {"es": "Quilpué · Villa Alemana · Viña del Mar", "en": "Quilpué · Villa Alemana · Viña del Mar"}, "t27": {"es": "IDIOMAS", "en": "LANGUAGES"}, "t28": {"es": "Español · Inglés (certificación B1 TOEIC Bridge)", "en": "Spanish · English (B1 TOEIC Bridge certification)"}, "t29": {"es": "Modalidades", "en": "Modalities"}, "t30": {"es": "Elige cómo prefieres atenderte", "en": "Choose how you'd like to be seen"}, "t31": {"es": "Trabajo de forma online, a domicilio y presencial, para que la terapia se adapte a tu rutina y no al revés.", "en": "I work online, through home visits, and in person, so therapy adapts to your routine — not the other way around."}, "t32": {"es": "Online", "en": "Online"}, "t33": {"es": "Sesiones por videollamada, ideales si prefieres atenderte desde casa o estás fuera de Quilpué, Villa Alemana o Viña del Mar.", "en": "Video call sessions, ideal if you'd rather be seen from home or live outside Quilpué, Villa Alemana or Viña del Mar."}, "t34": {"es": "A domicilio", "en": "Home visits"}, "t35": {"es": "Voy a tu casa en Quilpué, Villa Alemana y Viña del Mar — ideal si te complica trasladarte o prefieres un ambiente conocido.", "en": "I come to your home in Quilpué, Villa Alemana and Viña del Mar — ideal if getting around is difficult or you prefer a familiar setting."}, "t36": {"es": "Presencial", "en": "In-person"}, "t37": {"es": "Ubicación ↓", "en": "Location ↓"}, "t38": {"es": "Sobre mí", "en": "About me"}, "t39": {"es": "Hola, soy Matilde", "en": "Hi, I'm Matilde"}, "t40": {"es": "Soy Matilde Pizarro Toro, Fonoaudióloga. Trabajo con un enfoque cercano y personalizado, adaptando cada sesión a las necesidades de quien tengo enfrente, sea un niño dando sus primeros pasos en el lenguaje o un adulto que busca recuperar su voz. Además, me especializo en voz hablada y cantada, acompañamiento vocal afirmativo y salud vocal para cantantes y otros profesionales de la voz.", "en": "I'm Matilde Pizarro Toro, a Speech-Language Pathologist. I work with a close, personalized approach, adapting each session to the needs of the person in front of me, whether a child taking their first steps in language or an adult looking to recover their voice. I also specialize in spoken and singing voice, gender-affirming voice care, and vocal health for singers and other voice professionals."}, "t41": {"es": "Servicios", "en": "Services"}, "t42": {"es": "¿En qué puedo ayudarte?", "en": "How can I help you?"}, "t43": {"es": "Evaluación, diagnóstico y tratamiento fonoaudiológico integral a lo largo de todo el ciclo vital.", "en": "Comprehensive speech-language evaluation, diagnosis and treatment across the entire life span."}, "t44": {"es": "Lenguaje infantil", "en": "Child language"}, "t45": {"es": "Evaluación y estimulación temprana del lenguaje en niños con retraso o trastorno específico del lenguaje (TEL).", "en": "Assessment and early stimulation of language in children with delayed development or specific language impairment (SLI)."}, "t46": {"es": "Trastornos del habla", "en": "Speech disorders"}, "t47": {"es": "Tratamiento de dislalias, trastornos fonológicos y dificultades en la articulación de sonidos.", "en": "Treatment of dyslalia, phonological disorders, and difficulties with sound articulation."}, "t48": {"es": "Terapia de voz", "en": "Voice therapy"}, "t49": {"es": "Rehabilitación vocal para disfonías y manejo de síntomas vocales en la voz hablada, con seguimiento personalizado en cada sesión.", "en": "Vocal rehabilitation for dysphonia and management of vocal symptoms in the spoken voice, with personalized follow-up in every session."}, "t50": {"es": "Deglución (disfagia)", "en": "Swallowing (dysphagia)"}, "t51": {"es": "Evaluación y manejo de dificultades para tragar, tanto en niños como en personas mayores.", "en": "Assessment and management of swallowing difficulties, in both children and older adults."}, "t52": {"es": "Voz cantada y uso profesional de la voz", "en": "Singing voice and professional voice use"}, "t53": {"es": "Trabajo con artistas, creadores de contenido y profesionales que utilizan su voz como herramienta de trabajo, como cantantes, streamers, youtubers, podcasters, actores, locutores, docentes, médicos, abogados y otros usuarios de voz profesional, mediante programas personalizados orientados a la prevención de trastornos vocales, la optimización del rendimiento vocal y la rehabilitación de la función vocal.", "en": "I work with artists, content creators and professionals who use their voice as a work tool — singers, streamers, YouTubers, podcasters, actors, broadcasters, teachers, doctors, lawyers and other professional voice users — through personalized programs focused on preventing vocal disorders, optimizing vocal performance, and rehabilitating vocal function."}, "t54": {"es": "Rehabilitación neurológica", "en": "Neurological rehabilitation"}, "t55": {"es": "Terapia de lenguaje y comunicación tras un ACV, TEC u otra condición neurológica, incluyendo apoyo en Parkinson y Alzheimer con estimulación cognitiva y de la memoria.", "en": "Language and communication therapy following a stroke, traumatic brain injury or other neurological condition, including support for Parkinson's and Alzheimer's with cognitive and memory stimulation."}, "t56": {"es": "Otoscopia y lavado de oídos", "en": "Otoscopy and ear cleaning"}, "t57": {"es": "Revisión otoscópica y extracción de cerumen en box equipado especialmente para este procedimiento.", "en": "Otoscopic examination and earwax removal in a room specially equipped for this procedure."}, "t58": {"es": "Acompañamiento vocal afirmativo", "en": "Gender-affirming voice care"}, "t59": {"es": "Acompañamiento vocal afirmativo para personas trans y de género diverso, en un espacio cercano y respetuoso.", "en": "Gender-affirming voice care for trans and gender-diverse people, in a warm and respectful space."}, "t60": {"es": "Especialidades", "en": "Specialties"}, "t61": {"es": "Condiciones y diagnósticos que atiendo", "en": "Conditions and diagnoses I treat"}, "t62": {"es": "Trabajo con niños, jóvenes y adultos en un amplio rango de condiciones del lenguaje, el habla, la voz, la audición y la deglución. Esta lista es solo una referencia: si tu diagnóstico no aparece aquí, igual puedes escribirme para conversarlo.", "en": "I work with children, teens and adults across a wide range of language, speech, voice, hearing and swallowing conditions. This list is only a reference: if your diagnosis isn't listed here, you can still reach out to discuss it."}, "t63": {"es": "Afasia", "en": "Aphasia"}, "t64": {"es": "Deglución atípica", "en": "Atypical swallowing"}, "t65": {"es": "Disartria", "en": "Dysarthria"}, "t66": {"es": "Discapacidad intelectual", "en": "Intellectual disability"}, "t67": {"es": "Disfagia", "en": "Dysphagia"}, "t68": {"es": "Disfemia", "en": "Stuttering (dysphemia)"}, "t69": {"es": "Disfonía", "en": "Dysphonia"}, "t70": {"es": "Dislalia", "en": "Dyslalia"}, "t71": {"es": "Edema de Reinke", "en": "Reinke's edema"}, "t72": {"es": "Hipoacusia", "en": "Hearing loss"}, "t73": {"es": "Lesiones cancerosas de laringe", "en": "Cancerous lesions of the larynx"}, "t74": {"es": "Nódulos en las cuerdas vocales", "en": "Vocal cord nodules"}, "t75": {"es": "Parálisis de cuerda vocal", "en": "Vocal cord paralysis"}, "t76": {"es": "Pólipos, nódulos o quistes en cuerdas vocales", "en": "Polyps, nodules or cysts on the vocal cords"}, "t77": {"es": "Problemas de audición en niños", "en": "Hearing problems in children"}, "t78": {"es": "Reflujo laringo-faríngeo", "en": "Laryngopharyngeal reflux"}, "t79": {"es": "Respiración bucal", "en": "Mouth breathing"}, "t80": {"es": "Retraso en el desarrollo del lenguaje", "en": "Delayed language development"}, "t81": {"es": "Síndrome de Down", "en": "Down syndrome"}, "t82": {"es": "Sordera", "en": "Deafness"}, "t83": {"es": "Tartamudez", "en": "Stuttering"}, "t84": {"es": "Trastorno del espectro autista (TEA)", "en": "Autism spectrum disorder (ASD)"}, "t85": {"es": "Trastorno específico del lenguaje", "en": "Specific language impairment"}, "t86": {"es": "Trastorno fonológico", "en": "Phonological disorder"}, "t87": {"es": "Trastorno generalizado del desarrollo (TGD)", "en": "Pervasive developmental disorder (PDD)"}, "t88": {"es": "Trastornos de la voz", "en": "Voice disorders"}, "t89": {"es": "Trastornos del habla y de la comunicación", "en": "Speech and communication disorders"}, "t90": {"es": "Trastornos secundarios del lenguaje", "en": "Secondary language disorders"}, "t91": {"es": "Escríbeme", "en": "Write to me"}, "t92": {"es": "preguntas frecuentes", "en": "FAQ"}, "t93": {"es": "Testimonios", "en": "Testimonials"}, "t94": {"es": "Voces que encontraron su camino", "en": "Voices that found their way"}, "t95": {"es": "Relatos reales de personas que han vivido un proceso de acompañamiento vocal conmigo, compartidos con su permiso.", "en": "Real stories from people who have gone through a voice-care process with me, shared with their permission."}, "t96": {"es": "«Hubo un momento en que pensé que no iba a poder cantar igual otra vez.»", "en": "«There was a moment when I thought I'd never be able to sing the same way again.»"}, "t97": {"es": "«Este proceso me ha ayudado a sentirme más cerca de mi identidad y de mi voz.»", "en": "«This process has helped me feel closer to my identity and my voice.»"}, "t98": {"es": "Un momento real registrado durante una sesión de acompañamiento vocal afirmativo en consulta.", "en": "A real moment recorded during a gender-affirming voice care session in the office."}, "t99": {"es": "Gracias infinitas a quienes compartieron su voz y su proceso para este espacio. 💗", "en": "Endless thanks to those who shared their voice and their journey for this space. 💗"}, "t100": {"es": "También puedes leer opiniones de pacientes verificadas en mi perfil de Doctoralia.", "en": "You can also read verified patient reviews on my Doctoralia profile."}, "t101": {"es": "Ver reseñas en Doctoralia →", "en": "See reviews on Doctoralia →"}, "t102": {"es": "Agenda en línea", "en": "Online scheduling"}, "t103": {"es": "Reserva tu hora cuando te acomode", "en": "Book your session whenever suits you"}, "t104": {"es": "Elige el día y la hora que más te acomoden y completa tus datos. Te confirmo por correo o WhatsApp en menos de 24 horas si el horario solicitado está disponible.", "en": "Choose the day and time that works best for you and fill in your details. I'll confirm by email or WhatsApp within 24 hours if the requested time is available."}, "t105": {"es": "Elige día y hora", "en": "Choose day and time"}, "t106": {"es": "Selecciona el día y el horario que prefieras. Lunes a viernes de 08:00 a 18:00 atiendo todas las modalidades; de 19:00 a 21:00 y los fines de semana, online o a domicilio (sin presencial).", "en": "Select the day and time you prefer. Monday to Friday from 8:00 am to 6:00 pm I offer all modalities; from 7:00 pm to 9:00 pm and on weekends, online or home visits only (no in-person)."}, "t107": {"es": "Completa tus datos", "en": "Fill in your details"}, "t108": {"es": "Ingresa tu nombre y datos de contacto para que pueda escribirte.", "en": "Enter your name and contact details so I can reach you."}, "t109": {"es": "Te confirmo la hora", "en": "I confirm your session"}, "t110": {"es": "Reviso la disponibilidad real y te confirmo por correo o WhatsApp en menos de 24 horas.", "en": "I check real availability and confirm by email or WhatsApp within 24 hours."}, "t111": {"es": "online o a domicilio", "en": "online or home visit"}, "t112": {"es": "Aviso por temporal de lluvias:", "en": "Rainy-season notice:"}, "t113": {"es": "solo de forma online", "en": "online only"}, "t114": {"es": "💳 Abono para confirmar tu hora", "en": "💳 Deposit to confirm your session"}, "t115": {"es": "presenciales", "en": "in-person"}, "t116": {"es": "online", "en": "online"}, "t117": {"es": "Nombre: Matilde Pizarro Toro", "en": "Name: Matilde Pizarro Toro"}, "t118": {"es": "RUT: 19.487.764-1", "en": "Tax ID (RUT): 19.487.764-1"}, "t119": {"es": "Banco de Chile — Cuenta Vista", "en": "Banco de Chile — Checking Account"}, "t120": {"es": "N° de cuenta: 00-000-11210-20", "en": "Account number: 00-000-11210-20"}, "t121": {"es": "Correo: matildepizarrotoro@gmail.com", "en": "Email: matildepizarrotoro@gmail.com"}, "t122": {"es": "Con el abono realizado, tu hora queda confirmada. Envía el comprobante por WhatsApp o correo junto con tu solicitud.", "en": "Once the deposit is made, your session is confirmed. Send the receipt by WhatsApp or email along with your request."}, "t123": {"es": "día seleccionado", "en": "selected day"}, "t124": {"es": "online o a domicilio", "en": "online or home visit"}, "t125": {"es": "solo de forma online", "en": "online only"}, "t126": {"es": "Elige primero un día arriba.", "en": "Choose a day above first."}, "t127": {"es": "Aún no has elegido día ni hora.", "en": "You haven't chosen a day or time yet."}, "t128": {"es": "Modalidad", "en": "Modality"}, "t129": {"es": "Los sábados y domingos atiendo online o a domicilio (no presencial).", "en": "On Saturdays and Sundays I offer online sessions or home visits (no in-person)."}, "t130": {"es": "Nombre completo", "en": "Full name"}, "t131": {"es": "Correo electrónico", "en": "Email address"}, "t132": {"es": "WhatsApp / Teléfono", "en": "WhatsApp / Phone"}, "t133": {"es": "Mensaje (opcional)", "en": "Message (optional)"}, "t134": {"es": "Enviar solicitud de hora →", "en": "Send request →"}, "t135": {"es": "solicitud", "en": "request"}, "t136": {"es": "abono de $10.000", "en": "$10,000 deposit"}, "t137": {"es": "Ubicación", "en": "Location"}, "t138": {"es": "Online, a domicilio o presencial: tú eliges", "en": "Online, home visit or in-person: you choose"}, "t139": {"es": "Hago sesiones online por videollamada y a domicilio en Quilpué, Villa Alemana y Viña del Mar. Para la atención presencial en Viña del Mar, arriendo de forma independiente un box en Centro Brainland — C. Limache 1724, Edificio Contemporáneo, Piso 7, Oficina 702 — frente al Hospital Clínico Viña del Mar y a pasos del Hospital Gustavo Fricke y el Metro Hospital, con estacionamientos y comercios cercanos.", "en": "I offer online sessions by video call and home visits in Quilpué, Villa Alemana and Viña del Mar. For in-person care in Viña del Mar, I independently rent an office at Centro Brainland — C. Limache 1724, Edificio Contemporáneo, 7th Floor, Office 702 — across from Hospital Clínico Viña del Mar and steps from Hospital Gustavo Fricke and the Metro Hospital station, with nearby parking and shops."}, "t140": {"es": "Cómo llegar →", "en": "Get directions →"}, "t141": {"es": "Gift Cards", "en": "Gift Cards"}, "t142": {"es": "Regala una sesión o un proceso completo", "en": "Gift a session or a full process"}, "t143": {"es": "Una gift card de Fonoaudiología es un buen regalo para quien quiere empezar a cuidar su voz, ya sea con una evaluación puntual o con un proceso de acompañamiento más largo. Disponibles en modalidad online, presencial y a domicilio.", "en": "A Speech Therapy gift card is a great gift for anyone who wants to start taking care of their voice, whether with a one-off evaluation or a longer accompaniment process. Available online, in person and via home visits."}, "t144": {"es": "Evaluación", "en": "Evaluation"}, "t145": {"es": "Gift Card · Fonoaudiología", "en": "Gift Card · Speech Therapy"}, "t146": {"es": "Evaluación Vocal", "en": "Vocal Evaluation"}, "t147": {"es": "Un regalo ideal para quien quiere partir por conocer bien su voz. Incluye una evaluación vocal completa, cualitativa y cuantitativa, con una conversación inicial para entender los hábitos vocales y el contexto en el que esa persona usa su voz, además de un análisis acústico con el software Praat. Si lo solicitan, entrego un informe con los resultados.", "en": "An ideal gift for anyone who wants to start by really getting to know their voice. Includes a complete qualitative and quantitative vocal evaluation, with an initial conversation to understand vocal habits and the context in which that person uses their voice, plus an acoustic analysis using Praat software. A report with the results is provided on request."}, "t148": {"es": "Online, presencial o a domicilio · Válida desde la fecha de emisión hasta 3 meses después.", "en": "Online, in person or home visit · Valid for 3 months from the date of issue."}, "t149": {"es": "Consultar por WhatsApp →", "en": "Ask on WhatsApp →"}, "t150": {"es": "Proceso completo", "en": "Full process"}, "t151": {"es": "Gift Card · Fonoaudiología", "en": "Gift Card · Speech Therapy"}, "t152": {"es": "10 Sesiones", "en": "10 Sessions"}, "t153": {"es": "por las 10 sesiones", "en": "for all 10 sessions"}, "t154": {"es": "Para regalar un proceso completo de principio a fin. La primera sesión es la misma evaluación vocal completa —cualitativa, cuantitativa y con análisis acústico Praat, informe a petición— y las 9 sesiones siguientes se destinan a poner en marcha el plan de intervención vocal diseñado a partir de esa evaluación.", "en": "To gift a complete process from start to finish. The first session is the same complete vocal evaluation — qualitative, quantitative and with Praat acoustic analysis, report on request — and the following 9 sessions are used to carry out the vocal intervention plan designed from that evaluation."}, "t155": {"es": "Online, presencial o a domicilio · Válida desde la fecha de emisión hasta 3 meses después.", "en": "Online, in person or home visit · Valid for 3 months from the date of issue."}, "t156": {"es": "Consultar por WhatsApp →", "en": "Ask on WhatsApp →"}, "t157": {"es": "Preguntas frecuentes", "en": "FAQ"}, "t158": {"es": "Antes de agendar", "en": "Before you book"}, "t159": {"es": "Contacto", "en": "Contact"}, "t160": {"es": "¿Necesito una derivación médica para agendar?", "en": "Do I need a medical referral to book a session?"}, "t161": {"es": "No es obligatorio. Puedes agendar directamente una evaluación conmigo; si durante el proceso se necesita el apoyo de otro especialista (otorrino, neurólogo, etc.), te lo indico y podemos coordinarlo en conjunto.", "en": "It's not required. You can book an evaluation with me directly; if the support of another specialist is needed during the process (ENT, neurologist, etc.), I'll let you know and we can coordinate it together."}, "t162": {"es": "¿Atienden con Fonasa o alguna Isapre?", "en": "Do you accept Fonasa or any Isapre (health insurance)?"}, "t163": {"es": "Actualmente las sesiones se pagan de forma particular (boleta disponible); no hay convenio directo con Fonasa o Isapres.", "en": "Sessions are currently paid privately (receipt available); there is no direct agreement with Fonasa or Isapres."}, "t164": {"es": "¿Cuánto dura la primera sesión?", "en": "How long does the first session last?"}, "t165": {"es": "45 a 60 minutos", "en": "45 to 60 minutes"}, "t166": {"es": "¿Puedo cancelar o reprogramar mi hora?", "en": "Can I cancel or reschedule my session?"}, "t167": {"es": "Sí, solo avísame con la mayor anticipación posible por WhatsApp para liberar el horario y coordinar uno nuevo.", "en": "Yes, just let me know as far in advance as possible by WhatsApp so I can free up the slot and arrange a new one."}, "t168": {"es": "¿Trabajas con cantantes o personas que usan la voz de forma profesional?", "en": "Do you work with singers or people who use their voice professionally?"}, "t169": {"es": "Sí, es uno de mis focos de trabajo. Ayudo a cantantes y a personas que usan la voz para vivir —locutores, profesores, médicos, abogados— cuando pierden la voz al ensayar o presentarse, sienten tensión o dolor al cantar, o quieren potenciar su técnica vocal desde un enfoque de salud. Las sesiones son 100% personalizadas según tus objetivos vocales.", "en": "Yes, it's one of my main focuses. I help singers and people who rely on their voice for a living — broadcasters, teachers, doctors, lawyers — when they lose their voice while rehearsing or performing, feel tension or pain while singing, or want to improve their vocal technique from a health-focused approach. Sessions are 100% tailored to your vocal goals."}, "t170": {"es": "¿Hacen sesiones en inglés?", "en": "Do you offer sessions in English?"}, "t171": {"es": "Sí, atiendo en español e inglés (certificación B1 TOEIC Bridge). Puedes indicarlo al agendar o comentármelo directo por WhatsApp.", "en": "Yes, I see patients in Spanish and English (B1 TOEIC Bridge certification). You can mention it when booking or tell me directly on WhatsApp."}, "t172": {"es": "¿Qué necesito para una sesión online?", "en": "What do I need for an online session?"}, "t173": {"es": "Solo un celular, tablet o computador con cámara, buena conexión a internet y, si es para un niño o niña, idealmente un adulto acompañando durante la sesión.", "en": "Just a phone, tablet or computer with a camera, a good internet connection, and, for a child, ideally an adult accompanying them during the session."}, "t174": {"es": "¿Necesito pagar un abono para confirmar mi hora?", "en": "Do I need to pay a deposit to confirm my session?"}, "t175": {"es": "¿Cómo compro o regalo una Gift Card?", "en": "How do I buy or gift a Gift Card?"}, "t176": {"es": "Gift Cards ↓", "en": "Gift Cards ↓"}, "t177": {"es": "¿Puedo usar la Gift Card en cualquier modalidad?", "en": "Can I use the Gift Card for any modality?"}, "t178": {"es": "Sí. Quien la recibe puede usarla en modalidad online, presencial en Viña del Mar o a domicilio en Quilpué, Villa Alemana y Viña del Mar, según lo que le acomode al momento de agendar.", "en": "Yes. The recipient can use it online, in person in Viña del Mar, or via home visit in Quilpué, Villa Alemana and Viña del Mar, depending on what suits them when booking."}, "t179": {"es": "¿Desde qué edad atienden a niños y niñas?", "en": "From what age do you see children?"}, "t180": {"es": "Trabajo con niños desde la primera infancia, apenas se detecta una señal de alerta en el desarrollo del lenguaje o el habla, hasta la adolescencia. También atiendo adultos y personas mayores.", "en": "I work with children from early childhood, as soon as a warning sign appears in language or speech development, through adolescence. I also see adults and older people."}, "t181": {"es": "¿Qué pasa con mi hora si hay mal tiempo (temporal, lluvia intensa)?", "en": "What happens to my session if there's bad weather (storm, heavy rain)?"}, "t182": {"es": "Si por un temporal se restringen las atenciones presenciales o a domicilio, te aviso con anticipación y se ofrece cambiar la sesión a modalidad online sin costo adicional, o reprogramarla para cuando las condiciones mejoren.", "en": "If a storm restricts in-person or home-visit care, I'll let you know in advance and offer to switch the session to online at no extra cost, or reschedule it for when conditions improve."}, "t183": {"es": "¿Necesito llevar algo a la primera sesión presencial o a domicilio?", "en": "Do I need to bring anything to my first in-person or home-visit session?"}, "t184": {"es": "No es necesario, aunque si tienes informes, exámenes o indicaciones de otro especialista relacionados con el motivo de consulta, es útil traerlos o enviármelos antes por WhatsApp.", "en": "It's not necessary, although if you have reports, test results or notes from another specialist related to the reason for your visit, it's helpful to bring them or send them beforehand via WhatsApp."}, "t185": {"es": "¿Qué enfermedades o condiciones atiendes?", "en": "What conditions do you treat?"}, "t186": {"es": "Especialidades ↓", "en": "Specialties ↓"}, "t187": {"es": "¿Dónde puedo leer opiniones de otros pacientes?", "en": "Where can I read other patients' reviews?"}, "t188": {"es": "testimonios en video", "en": "video testimonials"}, "t189": {"es": "perfil de Doctoralia", "en": "Doctoralia profile"}, "t190": {"es": "Contacto", "en": "Contact"}, "t191": {"es": "¿Tienes dudas? Escríbeme", "en": "Have questions? Write to me"}, "t192": {"es": "Si necesitas más información antes de reservar, puedes escribirme directamente.", "en": "If you need more information before booking, you can write to me directly."}, "t193": {"es": "WhatsApp", "en": "WhatsApp"}, "t194": {"es": "Correo", "en": "Email"}, "t195": {"es": "matildepizarrotoro@gmail.com", "en": "matildepizarrotoro@gmail.com"}, "t196": {"es": "Instagram", "en": "Instagram"}, "t197": {"es": "@fonotrans", "en": "@fonotrans"}, "t198": {"es": "Doctoralia", "en": "Doctoralia"}, "t199": {"es": "Reseñas de pacientes", "en": "Patient reviews"}, "t200": {"es": "Solicitar hora →", "en": "Book a session →"}, "t201": {"es": "Fonoaudióloga · Online, a domicilio y presencial", "en": "Speech-Language Pathologist · Online, home visits and in-person"}, "t202": {"es": "Modalidades", "en": "Modalities"}, "t203": {"es": "Servicios", "en": "Services"}, "t204": {"es": "Especialidades", "en": "Specialties"}, "t205": {"es": "Sobre mí", "en": "About me"}, "t206": {"es": "Testimonios", "en": "Testimonials"}, "t207": {"es": "Agenda", "en": "Book online"}, "t208": {"es": "Ubicación", "en": "Location"}, "t209": {"es": "Gift Cards", "en": "Gift Cards"}, "t210": {"es": "Preguntas frecuentes", "en": "FAQ"}, "t211": {"es": "Contacto", "en": "Contact"}, "t212": {"es": "Quilpué · Villa Alemana · Viña del Mar", "en": "Quilpué · Villa Alemana · Viña del Mar"}, "t213": {"es": "Cuéntame brevemente el motivo de la consulta", "en": "Briefly tell me the reason for your visit"}, "t214": {"es": "Abrir menú", "en": "Open menu"}, "t215": {"es": "Días anteriores", "en": "Previous days"}, "t216": {"es": "Más días", "en": "More days"}, "t217": {"es": "Enlaces del pie de página", "en": "Footer links"}, "t300": {"es": "Online", "en": "Online"}, "t301": {"es": "A domicilio (Quilpué, Villa Alemana o Viña del Mar)", "en": "Home visit (Quilpué, Villa Alemana or Viña del Mar)"}, "t302": {"es": "Presencial en Viña del Mar", "en": "In person in Viña del Mar"}, "t303": {"es": "Selecciona una opción", "en": "Select an option"}}, "html": {"h1": {"es": "Sí. Para atenciones presenciales u online se solicita un abono de <span class=\"fill-me\">$10.000</span> a la cuenta Matilde Pizarro Toro, RUT 19.487.764-1, Banco de Chile, Cuenta Vista N° 00-000-11210-20 (matildepizarrotoro@gmail.com). Con el abono realizado y el comprobante enviado por WhatsApp o correo, tu hora queda confirmada.", "en": "Yes. For in-person or online sessions a <span class=\"fill-me\">$10,000</span> deposit is requested to the account of Matilde Pizarro Toro, Tax ID (RUT) 19.487.764-1, Banco de Chile, Checking Account No. 00-000-11210-20 (matildepizarrotoro@gmail.com). Once the deposit is made and the receipt sent by WhatsApp or email, your session is confirmed."}, "h2": {"es": "Para atenciones <strong>presenciales</strong> u <strong>online</strong> se solicita un abono de <strong>$10.000</strong> a la siguiente cuenta:", "en": "For <strong>in-person</strong> or <strong>online</strong> sessions a <strong>$10,000</strong> deposit is requested to the following account:"}, "h3": {"es": "Lunes a viernes de 08:00 a 18:00: todas las modalidades. Lunes a viernes de 19:00 a 21:00 y sábados y domingos de 09:00 a 14:00: <strong>online o a domicilio</strong> (sin presencial).", "en": "Monday to Friday from 8:00 am to 6:00 pm: all modalities. Monday to Friday from 7:00 pm to 9:00 pm and Saturdays and Sundays from 9:00 am to 2:00 pm: <strong>online or home visit</strong> (no in-person)."}, "h4": {"es": "<strong>Aviso por temporal de lluvias:</strong> del jueves 16 al jueves 23 de julio se atenderá <strong>solo de forma online</strong>; las atenciones presenciales y a domicilio quedan pausadas esos días.", "en": "<strong>Rainy-season notice:</strong> from Thursday July 16 to Thursday July 23, care will be <strong>online only</strong>; in-person and home-visit sessions are paused those days."}, "h5": {"es": "Esto es una <strong>solicitud</strong> de hora, no una reserva confirmada de inmediato: reviso mi agenda real y te confirmo por correo o WhatsApp. Recuerda que para atenciones presenciales u online tu hora queda confirmada una vez recibido el <strong>abono de $10.000</strong> (ver detalles de la cuenta más arriba).", "en": "This is a <strong>request</strong> for a session, not an immediately confirmed booking: I check my real schedule and confirm by email or WhatsApp. Remember that for in-person or online sessions your booking is confirmed once the <strong>$10,000 deposit</strong> is received (see account details above)."}, "h6": {"es": "Para que cada palabra <em>encuentre</em> su camino", "en": "Where every word <em>finds</em> its way"}}};
+var I18N_STATIC = {"text": {"t1": {"es": "Matilde Pizarro", "en": "Matilde Pizarro"}, "t2": {"es": "Fonoaudióloga", "en": "Speech-Language Pathologist"}, "t3": {"es": "Modalidades", "en": "Modalities"}, "t4": {"es": "Sobre mí", "en": "About me"}, "t5": {"es": "Servicios", "en": "Services"}, "t6": {"es": "Especialidades", "en": "Specialties"}, "t7": {"es": "Testimonios", "en": "Testimonials"}, "t8": {"es": "Agenda", "en": "Book online"}, "t9": {"es": "Ubicación", "en": "Location"}, "t10": {"es": "Gift Cards", "en": "Gift Cards"}, "t11": {"es": "FAQ", "en": "FAQ"}, "t12": {"es": "Contacto", "en": "Contact"}, "t13": {"es": "Reservar hora", "en": "Book a session"}, "t14": {"es": "Reservar hora", "en": "Book a session"}, "t15": {"es": "Fonoaudióloga · Online, a domicilio y presencial", "en": "Speech-Language Pathologist · Online, home visits and in-person"}, "t17": {"es": "Matilde Pizarro Toro · Lenguaje, habla, voz y deglución para niños y adultos.", "en": "Matilde Pizarro Toro · Language, speech, voice and swallowing for children and adults."}, "t18": {"es": "Sesiones online y a domicilio en Quilpué, Villa Alemana y Viña del Mar todos los días, y presenciales en Viña del Mar los días martes y jueves. Elige el día y la hora que más te acomode y te confirmo en menos de 24 horas.", "en": "Online and home-visit sessions in Quilpué, Villa Alemana and Viña del Mar every day, and in-person sessions in Viña del Mar on Tuesdays and Thursdays. Choose the day and time that suits you best and I'll confirm within 24 hours."}, "t19": {"es": "Solicitar hora →", "en": "Book a session →"}, "t20": {"es": "Ver especialidades", "en": "See specialties"}, "t21": {"es": "ATENCIÓN", "en": "CARE FOR"}, "t22": {"es": "Niños y adultos", "en": "Children and adults"}, "t23": {"es": "MODALIDAD", "en": "MODALITY"}, "t24": {"es": "Online · Domicilio · Presencial", "en": "Online · Home visit · In-person"}, "t25": {"es": "UBICACIÓN", "en": "LOCATION"}, "t26": {"es": "Quilpué · Villa Alemana · Viña del Mar", "en": "Quilpué · Villa Alemana · Viña del Mar"}, "t27": {"es": "IDIOMAS", "en": "LANGUAGES"}, "t28": {"es": "Español · Inglés (certificación B1 TOEIC Bridge)", "en": "Spanish · English (B1 TOEIC Bridge certification)"}, "t29": {"es": "Modalidades", "en": "Modalities"}, "t30": {"es": "Elige cómo prefieres atenderte", "en": "Choose how you'd like to be seen"}, "t31": {"es": "Trabajo de forma online, a domicilio y presencial, para que la terapia se adapte a tu rutina y no al revés.", "en": "I work online, through home visits, and in person, so therapy adapts to your routine — not the other way around."}, "t32": {"es": "Online", "en": "Online"}, "t33": {"es": "Sesiones por videollamada, ideales si prefieres atenderte desde casa o estás fuera de Quilpué, Villa Alemana o Viña del Mar.", "en": "Video call sessions, ideal if you'd rather be seen from home or live outside Quilpué, Villa Alemana or Viña del Mar."}, "t34": {"es": "A domicilio", "en": "Home visits"}, "t35": {"es": "Voy a tu casa en Quilpué, Villa Alemana y Viña del Mar — ideal si te complica trasladarte o prefieres un ambiente conocido.", "en": "I come to your home in Quilpué, Villa Alemana and Viña del Mar — ideal if getting around is difficult or you prefer a familiar setting."}, "t36": {"es": "Presencial", "en": "In-person"}, "t37": {"es": "Ubicación ↓", "en": "Location ↓"}, "t38": {"es": "Sobre mí", "en": "About me"}, "t39": {"es": "Hola, soy Matilde", "en": "Hi, I'm Matilde"}, "t40": {"es": "Soy Matilde Pizarro Toro, Fonoaudióloga. Trabajo con un enfoque cercano y personalizado, adaptando cada sesión a las necesidades de quien tengo enfrente, sea un niño dando sus primeros pasos en el lenguaje o un adulto que busca recuperar su voz. Además, me especializo en voz hablada y cantada, acompañamiento vocal afirmativo y salud vocal para cantantes y otros profesionales de la voz.", "en": "I'm Matilde Pizarro Toro, a Speech-Language Pathologist. I work with a close, personalized approach, adapting each session to the needs of the person in front of me, whether a child taking their first steps in language or an adult looking to recover their voice. I also specialize in spoken and singing voice, gender-affirming voice care, and vocal health for singers and other voice professionals."}, "t41": {"es": "Servicios", "en": "Services"}, "t42": {"es": "¿En qué puedo ayudarte?", "en": "How can I help you?"}, "t43": {"es": "Evaluación, diagnóstico y tratamiento fonoaudiológico integral a lo largo de todo el ciclo vital.", "en": "Comprehensive speech-language evaluation, diagnosis and treatment across the entire life span."}, "t44": {"es": "Lenguaje infantil", "en": "Child language"}, "t45": {"es": "Evaluación y estimulación temprana del lenguaje en niños con retraso o trastorno específico del lenguaje (TEL).", "en": "Assessment and early stimulation of language in children with delayed development or specific language impairment (SLI)."}, "t46": {"es": "Trastornos del habla", "en": "Speech disorders"}, "t47": {"es": "Tratamiento de dislalias, trastornos fonológicos y dificultades en la articulación de sonidos.", "en": "Treatment of dyslalia, phonological disorders, and difficulties with sound articulation."}, "t48": {"es": "Terapia de voz", "en": "Voice therapy"}, "t49": {"es": "Rehabilitación vocal para disfonías y manejo de síntomas vocales en la voz hablada, con seguimiento personalizado en cada sesión.", "en": "Vocal rehabilitation for dysphonia and management of vocal symptoms in the spoken voice, with personalized follow-up in every session."}, "t50": {"es": "Deglución (disfagia)", "en": "Swallowing (dysphagia)"}, "t51": {"es": "Evaluación y manejo de dificultades para tragar, tanto en niños como en personas mayores.", "en": "Assessment and management of swallowing difficulties, in both children and older adults."}, "t52": {"es": "Voz cantada y uso profesional de la voz", "en": "Singing voice and professional voice use"}, "t53": {"es": "Trabajo con artistas, creadores de contenido y profesionales que utilizan su voz como herramienta de trabajo, como cantantes, streamers, youtubers, podcasters, actores, locutores, docentes, médicos, abogados y otros usuarios de voz profesional, mediante programas personalizados orientados a la prevención de trastornos vocales, la optimización del rendimiento vocal y la rehabilitación de la función vocal.", "en": "I work with artists, content creators and professionals who use their voice as a work tool — singers, streamers, YouTubers, podcasters, actors, broadcasters, teachers, doctors, lawyers and other professional voice users — through personalized programs focused on preventing vocal disorders, optimizing vocal performance, and rehabilitating vocal function."}, "t54": {"es": "Rehabilitación neurológica", "en": "Neurological rehabilitation"}, "t55": {"es": "Terapia de lenguaje y comunicación tras un ACV, TEC u otra condición neurológica, incluyendo apoyo en Parkinson y Alzheimer con estimulación cognitiva y de la memoria.", "en": "Language and communication therapy following a stroke, traumatic brain injury or other neurological condition, including support for Parkinson's and Alzheimer's with cognitive and memory stimulation."}, "t56": {"es": "Otoscopia y lavado de oídos", "en": "Otoscopy and ear cleaning"}, "t57": {"es": "Revisión otoscópica y extracción de cerumen en box equipado especialmente para este procedimiento.", "en": "Otoscopic examination and earwax removal in a room specially equipped for this procedure."}, "t58": {"es": "Acompañamiento vocal afirmativo", "en": "Gender-affirming voice care"}, "t59": {"es": "Acompañamiento vocal afirmativo para personas trans y de género diverso, en un espacio cercano y respetuoso.", "en": "Gender-affirming voice care for trans and gender-diverse people, in a warm and respectful space."}, "t60": {"es": "Especialidades", "en": "Specialties"}, "t61": {"es": "Condiciones y diagnósticos que atiendo", "en": "Conditions and diagnoses I treat"}, "t62": {"es": "Trabajo con niños, jóvenes y adultos en un amplio rango de condiciones del lenguaje, el habla, la voz, la audición y la deglución. Esta lista es solo una referencia: si tu diagnóstico no aparece aquí, igual puedes escribirme para conversarlo.", "en": "I work with children, teens and adults across a wide range of language, speech, voice, hearing and swallowing conditions. This list is only a reference: if your diagnosis isn't listed here, you can still reach out to discuss it."}, "t63": {"es": "Afasia", "en": "Aphasia"}, "t64": {"es": "Deglución atípica", "en": "Atypical swallowing"}, "t65": {"es": "Disartria", "en": "Dysarthria"}, "t66": {"es": "Discapacidad intelectual", "en": "Intellectual disability"}, "t67": {"es": "Disfagia", "en": "Dysphagia"}, "t68": {"es": "Disfemia", "en": "Stuttering (dysphemia)"}, "t69": {"es": "Disfonía", "en": "Dysphonia"}, "t70": {"es": "Dislalia", "en": "Dyslalia"}, "t71": {"es": "Edema de Reinke", "en": "Reinke's edema"}, "t72": {"es": "Hipoacusia", "en": "Hearing loss"}, "t73": {"es": "Lesiones cancerosas de laringe", "en": "Cancerous lesions of the larynx"}, "t74": {"es": "Nódulos en las cuerdas vocales", "en": "Vocal cord nodules"}, "t75": {"es": "Parálisis de cuerda vocal", "en": "Vocal cord paralysis"}, "t76": {"es": "Pólipos, nódulos o quistes en cuerdas vocales", "en": "Polyps, nodules or cysts on the vocal cords"}, "t77": {"es": "Problemas de audición en niños", "en": "Hearing problems in children"}, "t78": {"es": "Reflujo laringo-faríngeo", "en": "Laryngopharyngeal reflux"}, "t79": {"es": "Respiración bucal", "en": "Mouth breathing"}, "t80": {"es": "Retraso en el desarrollo del lenguaje", "en": "Delayed language development"}, "t81": {"es": "Síndrome de Down", "en": "Down syndrome"}, "t82": {"es": "Sordera", "en": "Deafness"}, "t83": {"es": "Tartamudez", "en": "Stuttering"}, "t84": {"es": "Trastorno del espectro autista (TEA)", "en": "Autism spectrum disorder (ASD)"}, "t85": {"es": "Trastorno específico del lenguaje", "en": "Specific language impairment"}, "t86": {"es": "Trastorno fonológico", "en": "Phonological disorder"}, "t87": {"es": "Trastorno generalizado del desarrollo (TGD)", "en": "Pervasive developmental disorder (PDD)"}, "t88": {"es": "Trastornos de la voz", "en": "Voice disorders"}, "t89": {"es": "Trastornos del habla y de la comunicación", "en": "Speech and communication disorders"}, "t90": {"es": "Trastornos secundarios del lenguaje", "en": "Secondary language disorders"}, "t91": {"es": "Escríbeme", "en": "Write to me"}, "t92": {"es": "preguntas frecuentes", "en": "FAQ"}, "t93": {"es": "Testimonios", "en": "Testimonials"}, "t94": {"es": "Voces que encontraron su camino", "en": "Voices that found their way"}, "t95": {"es": "Relatos reales de personas que han vivido un proceso de acompañamiento vocal conmigo, compartidos con su permiso.", "en": "Real stories from people who have gone through a voice-care process with me, shared with their permission."}, "t96": {"es": "«Hubo un momento en que pensé que no iba a poder cantar igual otra vez.»", "en": "«There was a moment when I thought I'd never be able to sing the same way again.»"}, "t97": {"es": "«Este proceso me ha ayudado a sentirme más cerca de mi identidad y de mi voz.»", "en": "«This process has helped me feel closer to my identity and my voice.»"}, "t98": {"es": "Un momento real registrado durante una sesión de acompañamiento vocal afirmativo en consulta.", "en": "A real moment recorded during a gender-affirming voice care session in the office."}, "t99": {"es": "Gracias infinitas a quienes compartieron su voz y su proceso para este espacio. 💗", "en": "Endless thanks to those who shared their voice and their journey for this space. 💗"}, "t100": {"es": "También puedes leer opiniones de pacientes verificadas en mi perfil de Doctoralia.", "en": "You can also read verified patient reviews on my Doctoralia profile."}, "t101": {"es": "Ver reseñas en Doctoralia →", "en": "See reviews on Doctoralia →"}, "t102": {"es": "Agenda en línea", "en": "Online scheduling"}, "t103": {"es": "Reserva tu hora cuando te acomode", "en": "Book your session whenever suits you"}, "t104": {"es": "Elige el día y la hora que más te acomoden y completa tus datos. Te confirmo por correo o WhatsApp en menos de 24 horas si el horario solicitado está disponible.", "en": "Choose the day and time that works best for you and fill in your details. I'll confirm by email or WhatsApp within 24 hours if the requested time is available."}, "t105": {"es": "Elige día y hora", "en": "Choose day and time"}, "t106": {"es": "Selecciona el día y el horario que prefieras. La atención presencial en Viña del Mar está disponible los días martes y jueves; lunes, miércoles y viernes atiendo solo online o a domicilio, y los fines de semana también solo online o a domicilio.", "en": "Select the day and time you prefer. In-person care in Viña del Mar is available on Tuesdays and Thursdays; Mondays, Wednesdays and Fridays I offer online or home visits only, and weekends are online or home visits only as well."}, "t107": {"es": "Completa tus datos", "en": "Fill in your details"}, "t108": {"es": "Ingresa tu nombre y datos de contacto para que pueda escribirte.", "en": "Enter your name and contact details so I can reach you."}, "t109": {"es": "Te confirmo la hora", "en": "I confirm your session"}, "t110": {"es": "Reviso la disponibilidad real y te confirmo por correo o WhatsApp en menos de 24 horas.", "en": "I check real availability and confirm by email or WhatsApp within 24 hours."}, "t111": {"es": "online o a domicilio", "en": "online or home visit"}, "t112": {"es": "Aviso por temporal de lluvias:", "en": "Rainy-season notice:"}, "t113": {"es": "solo de forma online", "en": "online only"}, "t114": {"es": "💳 Abono para confirmar tu hora", "en": "💳 Deposit to confirm your session"}, "t115": {"es": "presenciales", "en": "in-person"}, "t116": {"es": "online", "en": "online"}, "t117": {"es": "Nombre: Matilde Pizarro Toro", "en": "Name: Matilde Pizarro Toro"}, "t118": {"es": "RUT: 19.487.764-1", "en": "Tax ID (RUT): 19.487.764-1"}, "t119": {"es": "Banco de Chile — Cuenta Vista", "en": "Banco de Chile — Checking Account"}, "t120": {"es": "N° de cuenta: 00-000-11210-20", "en": "Account number: 00-000-11210-20"}, "t121": {"es": "Correo: matildepizarrotoro@gmail.com", "en": "Email: matildepizarrotoro@gmail.com"}, "t122": {"es": "Con el abono realizado, tu hora queda confirmada. Envía el comprobante por WhatsApp o correo junto con tu solicitud.", "en": "Once the deposit is made, your session is confirmed. Send the receipt by WhatsApp or email along with your request."}, "t123": {"es": "día seleccionado", "en": "selected day"}, "t124": {"es": "online o a domicilio", "en": "online or home visit"}, "t125": {"es": "solo de forma online", "en": "online only"}, "t126": {"es": "Elige primero un día arriba.", "en": "Choose a day above first."}, "t127": {"es": "Aún no has elegido día ni hora.", "en": "You haven't chosen a day or time yet."}, "t128": {"es": "Modalidad", "en": "Modality"}, "t129": {"es": "Los sábados y domingos atiendo online o a domicilio (no presencial).", "en": "On Saturdays and Sundays I offer online sessions or home visits (no in-person)."}, "t130": {"es": "Nombre completo", "en": "Full name"}, "t131": {"es": "Correo electrónico", "en": "Email address"}, "t132": {"es": "WhatsApp / Teléfono", "en": "WhatsApp / Phone"}, "t133": {"es": "Mensaje (opcional)", "en": "Message (optional)"}, "t134": {"es": "Enviar solicitud de hora →", "en": "Send request →"}, "t135": {"es": "solicitud", "en": "request"}, "t136": {"es": "abono de $10.000", "en": "$10,000 deposit"}, "t137": {"es": "Ubicación", "en": "Location"}, "t138": {"es": "Online, a domicilio o presencial: tú eliges", "en": "Online, home visit or in-person: you choose"}, "t139": {"es": "Hago sesiones online por videollamada y a domicilio en Quilpué, Villa Alemana y Viña del Mar, todos los días de la semana. La atención presencial en Viña del Mar está disponible los días martes y jueves (si necesitas presencial un lunes, miércoles o viernes, escríbeme por WhatsApp para consultar disponibilidad excepcional); arriendo de forma independiente un box en Centro Brainland — C. Limache 1724, Edificio Contemporáneo, Piso 7, Oficina 702 — frente al Hospital Clínico Viña del Mar y a pasos del Hospital Gustavo Fricke y el Metro Hospital, con estacionamientos y comercios cercanos.", "en": "I offer online sessions by video call and home visits in Quilpué, Villa Alemana and Viña del Mar every day of the week. In-person care in Viña del Mar is available on Tuesdays and Thursdays (if you need an in-person session on a Monday, Wednesday or Friday, write to me on WhatsApp to check for exceptional availability); I independently rent an office at Centro Brainland — C. Limache 1724, Edificio Contemporáneo, 7th Floor, Office 702 — across from Hospital Clínico Viña del Mar and steps from Hospital Gustavo Fricke and the Metro Hospital station, with nearby parking and shops."}, "t140": {"es": "Cómo llegar →", "en": "Get directions →"}, "t141": {"es": "Gift Cards", "en": "Gift Cards"}, "t142": {"es": "Regala una sesión o un proceso completo", "en": "Gift a session or a full process"}, "t143": {"es": "Una gift card de Fonoaudiología es un buen regalo para quien quiere empezar a cuidar su voz, ya sea con una evaluación puntual o con un proceso de acompañamiento más largo. Disponibles en modalidad online, presencial y a domicilio.", "en": "A Speech Therapy gift card is a great gift for anyone who wants to start taking care of their voice, whether with a one-off evaluation or a longer accompaniment process. Available online, in person and via home visits."}, "t144": {"es": "Evaluación", "en": "Evaluation"}, "t145": {"es": "Gift Card · Fonoaudiología", "en": "Gift Card · Speech Therapy"}, "t146": {"es": "Evaluación Vocal", "en": "Vocal Evaluation"}, "t147": {"es": "Un regalo ideal para quien quiere partir por conocer bien su voz. Incluye una evaluación vocal completa, cualitativa y cuantitativa, con una conversación inicial para entender los hábitos vocales y el contexto en el que esa persona usa su voz, además de un análisis acústico con el software Praat. Si lo solicitan, entrego un informe con los resultados.", "en": "An ideal gift for anyone who wants to start by really getting to know their voice. Includes a complete qualitative and quantitative vocal evaluation, with an initial conversation to understand vocal habits and the context in which that person uses their voice, plus an acoustic analysis using Praat software. A report with the results is provided on request."}, "t148": {"es": "Online, presencial o a domicilio · Válida desde la fecha de emisión hasta 3 meses después.", "en": "Online, in person or home visit · Valid for 3 months from the date of issue."}, "t149": {"es": "Consultar por WhatsApp →", "en": "Ask on WhatsApp →"}, "t150": {"es": "Proceso completo", "en": "Full process"}, "t151": {"es": "Gift Card · Fonoaudiología", "en": "Gift Card · Speech Therapy"}, "t152": {"es": "10 Sesiones", "en": "10 Sessions"}, "t153": {"es": "por las 10 sesiones", "en": "for all 10 sessions"}, "t154": {"es": "Para regalar un proceso completo de principio a fin. La primera sesión es la misma evaluación vocal completa —cualitativa, cuantitativa y con análisis acústico Praat, informe a petición— y las 9 sesiones siguientes se destinan a poner en marcha el plan de intervención vocal diseñado a partir de esa evaluación.", "en": "To gift a complete process from start to finish. The first session is the same complete vocal evaluation — qualitative, quantitative and with Praat acoustic analysis, report on request — and the following 9 sessions are used to carry out the vocal intervention plan designed from that evaluation."}, "t155": {"es": "Online, presencial o a domicilio · Válida desde la fecha de emisión hasta 3 meses después.", "en": "Online, in person or home visit · Valid for 3 months from the date of issue."}, "t156": {"es": "Consultar por WhatsApp →", "en": "Ask on WhatsApp →"}, "t157": {"es": "Preguntas frecuentes", "en": "FAQ"}, "t158": {"es": "Antes de agendar", "en": "Before you book"}, "t159": {"es": "Contacto", "en": "Contact"}, "t160": {"es": "¿Necesito una derivación médica para agendar?", "en": "Do I need a medical referral to book a session?"}, "t161": {"es": "No es obligatorio. Puedes agendar directamente una evaluación conmigo; si durante el proceso se necesita el apoyo de otro especialista (otorrino, neurólogo, etc.), te lo indico y podemos coordinarlo en conjunto.", "en": "It's not required. You can book an evaluation with me directly; if the support of another specialist is needed during the process (ENT, neurologist, etc.), I'll let you know and we can coordinate it together."}, "t162": {"es": "¿Atienden con Fonasa o alguna Isapre?", "en": "Do you accept Fonasa or any Isapre (health insurance)?"}, "t163": {"es": "Actualmente las sesiones se pagan de forma particular (boleta disponible); no hay convenio directo con Fonasa o Isapres.", "en": "Sessions are currently paid privately (receipt available); there is no direct agreement with Fonasa or Isapres."}, "t164": {"es": "¿Cuánto dura la primera sesión?", "en": "How long does the first session last?"}, "t165": {"es": "45 a 60 minutos", "en": "45 to 60 minutes"}, "t166": {"es": "¿Puedo cancelar o reprogramar mi hora?", "en": "Can I cancel or reschedule my session?"}, "t167": {"es": "Sí, solo avísame con la mayor anticipación posible por WhatsApp para liberar el horario y coordinar uno nuevo.", "en": "Yes, just let me know as far in advance as possible by WhatsApp so I can free up the slot and arrange a new one."}, "t168": {"es": "¿Trabajas con cantantes o personas que usan la voz de forma profesional?", "en": "Do you work with singers or people who use their voice professionally?"}, "t169": {"es": "Sí, es uno de mis focos de trabajo. Ayudo a cantantes y a personas que usan la voz para vivir —locutores, profesores, médicos, abogados— cuando pierden la voz al ensayar o presentarse, sienten tensión o dolor al cantar, o quieren potenciar su técnica vocal desde un enfoque de salud. Las sesiones son 100% personalizadas según tus objetivos vocales.", "en": "Yes, it's one of my main focuses. I help singers and people who rely on their voice for a living — broadcasters, teachers, doctors, lawyers — when they lose their voice while rehearsing or performing, feel tension or pain while singing, or want to improve their vocal technique from a health-focused approach. Sessions are 100% tailored to your vocal goals."}, "t170": {"es": "¿Hacen sesiones en inglés?", "en": "Do you offer sessions in English?"}, "t171": {"es": "Sí, atiendo en español e inglés (certificación B1 TOEIC Bridge). Puedes indicarlo al agendar o comentármelo directo por WhatsApp.", "en": "Yes, I see patients in Spanish and English (B1 TOEIC Bridge certification). You can mention it when booking or tell me directly on WhatsApp."}, "t172": {"es": "¿Qué necesito para una sesión online?", "en": "What do I need for an online session?"}, "t173": {"es": "Solo un celular, tablet o computador con cámara, buena conexión a internet y, si es para un niño o niña, idealmente un adulto acompañando durante la sesión.", "en": "Just a phone, tablet or computer with a camera, a good internet connection, and, for a child, ideally an adult accompanying them during the session."}, "t174": {"es": "¿Necesito pagar un abono para confirmar mi hora?", "en": "Do I need to pay a deposit to confirm my session?"}, "t175": {"es": "¿Cómo compro o regalo una Gift Card?", "en": "How do I buy or gift a Gift Card?"}, "t176": {"es": "Gift Cards ↓", "en": "Gift Cards ↓"}, "t177": {"es": "¿Puedo usar la Gift Card en cualquier modalidad?", "en": "Can I use the Gift Card for any modality?"}, "t178": {"es": "Sí. Quien la recibe puede usarla en modalidad online, presencial en Viña del Mar o a domicilio en Quilpué, Villa Alemana y Viña del Mar, según lo que le acomode al momento de agendar.", "en": "Yes. The recipient can use it online, in person in Viña del Mar, or via home visit in Quilpué, Villa Alemana and Viña del Mar, depending on what suits them when booking."}, "t179": {"es": "¿Desde qué edad atienden a niños y niñas?", "en": "From what age do you see children?"}, "t180": {"es": "Trabajo con niños desde la primera infancia, apenas se detecta una señal de alerta en el desarrollo del lenguaje o el habla, hasta la adolescencia. También atiendo adultos y personas mayores.", "en": "I work with children from early childhood, as soon as a warning sign appears in language or speech development, through adolescence. I also see adults and older people."}, "t181": {"es": "¿Qué pasa con mi hora si hay mal tiempo (temporal, lluvia intensa)?", "en": "What happens to my session if there's bad weather (storm, heavy rain)?"}, "t182": {"es": "Si por un temporal se restringen las atenciones presenciales o a domicilio, te aviso con anticipación y se ofrece cambiar la sesión a modalidad online sin costo adicional, o reprogramarla para cuando las condiciones mejoren.", "en": "If a storm restricts in-person or home-visit care, I'll let you know in advance and offer to switch the session to online at no extra cost, or reschedule it for when conditions improve."}, "t183": {"es": "¿Necesito llevar algo a la primera sesión presencial o a domicilio?", "en": "Do I need to bring anything to my first in-person or home-visit session?"}, "t184": {"es": "No es necesario, aunque si tienes informes, exámenes o indicaciones de otro especialista relacionados con el motivo de consulta, es útil traerlos o enviármelos antes por WhatsApp.", "en": "It's not necessary, although if you have reports, test results or notes from another specialist related to the reason for your visit, it's helpful to bring them or send them beforehand via WhatsApp."}, "t185": {"es": "¿Qué enfermedades o condiciones atiendes?", "en": "What conditions do you treat?"}, "t186": {"es": "Especialidades ↓", "en": "Specialties ↓"}, "t187": {"es": "¿Dónde puedo leer opiniones de otros pacientes?", "en": "Where can I read other patients' reviews?"}, "t188": {"es": "testimonios en video", "en": "video testimonials"}, "t189": {"es": "perfil de Doctoralia", "en": "Doctoralia profile"}, "t190": {"es": "Contacto", "en": "Contact"}, "t191": {"es": "¿Tienes dudas? Escríbeme", "en": "Have questions? Write to me"}, "t192": {"es": "Si necesitas más información antes de reservar, puedes escribirme directamente.", "en": "If you need more information before booking, you can write to me directly."}, "t193": {"es": "WhatsApp", "en": "WhatsApp"}, "t194": {"es": "Correo", "en": "Email"}, "t195": {"es": "matildepizarrotoro@gmail.com", "en": "matildepizarrotoro@gmail.com"}, "t196": {"es": "Instagram", "en": "Instagram"}, "t197": {"es": "@fonotrans", "en": "@fonotrans"}, "t198": {"es": "Doctoralia", "en": "Doctoralia"}, "t199": {"es": "Reseñas de pacientes", "en": "Patient reviews"}, "t200": {"es": "Solicitar hora →", "en": "Book a session →"}, "t201": {"es": "Fonoaudióloga · Online, a domicilio y presencial", "en": "Speech-Language Pathologist · Online, home visits and in-person"}, "t202": {"es": "Modalidades", "en": "Modalities"}, "t203": {"es": "Servicios", "en": "Services"}, "t204": {"es": "Especialidades", "en": "Specialties"}, "t205": {"es": "Sobre mí", "en": "About me"}, "t206": {"es": "Testimonios", "en": "Testimonials"}, "t207": {"es": "Agenda", "en": "Book online"}, "t208": {"es": "Ubicación", "en": "Location"}, "t209": {"es": "Gift Cards", "en": "Gift Cards"}, "t210": {"es": "Preguntas frecuentes", "en": "FAQ"}, "t211": {"es": "Contacto", "en": "Contact"}, "t212": {"es": "Quilpué · Villa Alemana · Viña del Mar", "en": "Quilpué · Villa Alemana · Viña del Mar"}, "t213": {"es": "Cuéntame brevemente el motivo de la consulta", "en": "Briefly tell me the reason for your visit"}, "t214": {"es": "Abrir menú", "en": "Open menu"}, "t215": {"es": "Días anteriores", "en": "Previous days"}, "t216": {"es": "Más días", "en": "More days"}, "t217": {"es": "Enlaces del pie de página", "en": "Footer links"}, "t220": {"es": "¿Qué días atienden presencial en Viña del Mar?", "en": "Which days do you offer in-person care in Viña del Mar?"}, "t300": {"es": "Online", "en": "Online"}, "t301": {"es": "A domicilio (Quilpué, Villa Alemana o Viña del Mar)", "en": "Home visit (Quilpué, Villa Alemana or Viña del Mar)"}, "t302": {"es": "Presencial en Viña del Mar", "en": "In person in Viña del Mar"}, "t303": {"es": "Selecciona una opción", "en": "Select an option"}, "t400": {"es": "¿Cuántas sesiones quieres agendar?", "en": "How many sessions would you like to book?"}, "t401": {"es": "1 sesión", "en": "1 session"}, "t402": {"es": "3 sesiones", "en": "3 sessions"}, "t403": {"es": "4 sesiones", "en": "4 sessions"}, "t404": {"es": "5 sesiones", "en": "5 sessions"}, "t405": {"es": "6 sesiones", "en": "6 sessions"}, "t406": {"es": "8 sesiones", "en": "8 sessions"}, "t407": {"es": "10 sesiones", "en": "10 sessions"}, "t408": {"es": "15 sesiones", "en": "15 sessions"}, "t409": {"es": "20 sesiones", "en": "20 sessions"}, "t410": {"es": "25 sesiones", "en": "25 sessions"}, "t411": {"es": "30 sesiones", "en": "30 sessions"}, "t412": {"es": "Puedes agendar hasta 30 sesiones de una vez. El valor y el abono de cada sesión se detallan más abajo.", "en": "You can book up to 30 sessions at once. Each session's price and deposit are detailed below."}, "t413": {"es": "Agendar las siguientes sesiones luego (coordinamos las fechas por WhatsApp)", "en": "Schedule the remaining sessions later (we'll coordinate the dates via WhatsApp)"}}, "html": {"h1": {"es": "Sí. Para atenciones presenciales u online se solicita un abono de <span class=\"fill-me\">$10.000</span> a la cuenta Matilde Pizarro Toro, RUT 19.487.764-1, Banco de Chile, Cuenta Vista N° 00-000-11210-20 (matildepizarrotoro@gmail.com). Con el abono realizado y el comprobante enviado por WhatsApp o correo, tu hora queda confirmada.", "en": "Yes. For in-person or online sessions a <span class=\"fill-me\">$10,000</span> deposit is requested to the account of Matilde Pizarro Toro, Tax ID (RUT) 19.487.764-1, Banco de Chile, Checking Account No. 00-000-11210-20 (matildepizarrotoro@gmail.com). Once the deposit is made and the receipt sent by WhatsApp or email, your session is confirmed."}, "h2": {"es": "Para atenciones <strong>presenciales</strong> u <strong>online</strong> se solicita un abono de <strong>$10.000</strong> a la siguiente cuenta:", "en": "For <strong>in-person</strong> or <strong>online</strong> sessions a <strong>$10,000</strong> deposit is requested to the following account:"}, "h3": {"es": "<strong>Martes y jueves</strong>: todas las modalidades, incluida la atención <strong>presencial en Viña del Mar</strong>. <strong>Lunes, miércoles y viernes</strong>, y <strong>sábados y domingos</strong>: <strong>online o a domicilio</strong> (sin presencial).", "en": "<strong>Tuesdays and Thursdays</strong>: all modalities, including <strong>in-person care in Viña del Mar</strong>. <strong>Mondays, Wednesdays and Fridays</strong>, and <strong>Saturdays and Sundays</strong>: <strong>online or home visit</strong> (no in-person)."}, "h4": {"es": "<strong>Aviso por temporal de lluvias:</strong> del jueves 16 al jueves 23 de julio se atenderá <strong>solo de forma online</strong>; las atenciones presenciales y a domicilio quedan pausadas esos días.", "en": "<strong>Rainy-season notice:</strong> from Thursday July 16 to Thursday July 23, care will be <strong>online only</strong>; in-person and home-visit sessions are paused those days."}, "h7": {"es": "¿Necesitas una hora <strong>presencial</strong> un lunes, miércoles o viernes? Igual puede haber disponibilidad excepcional esos días — <a href=\"https://wa.me/56971710225?text=Hola%20Matilde%2C%20quiero%20consultar%20disponibilidad%20presencial%20fuera%20de%20martes%20o%20jueves\" target=\"_blank\" rel=\"noopener noreferrer\">escríbeme por WhatsApp</a> y lo coordinamos.", "en": "Need an <strong>in-person</strong> session on a Monday, Wednesday or Friday? There may still be exceptional availability those days — <a href=\"https://wa.me/56971710225?text=Hi%20Matilde%2C%20I%27d%20like%20to%20ask%20about%20in-person%20availability%20outside%20Tuesday%20or%20Thursday\" target=\"_blank\" rel=\"noopener noreferrer\">write to me on WhatsApp</a> and we'll coordinate."}, "h8": {"es": "El valor de la sesión completa (60 minutos) es de <strong>$20.000</strong>. Para confirmar cada hora se solicita un <strong>abono de $10.000</strong>, que se descuenta del valor total de la sesión.", "en": "The full session (60 minutes) costs <strong>$20,000</strong>. To confirm each session a <strong>$10,000 deposit</strong> is requested, which is deducted from the total session price."}, "h9": {"es": "La atención presencial en Viña del Mar está disponible los días <strong>martes y jueves</strong>. Lunes, miércoles y viernes atiendo solo online o a domicilio. Si necesitas una hora presencial fuera de martes o jueves, escríbeme por WhatsApp: igual puede haber disponibilidad excepcional esos días.", "en": "In-person care in Viña del Mar is available on <strong>Tuesdays and Thursdays</strong>. Mondays, Wednesdays and Fridays I offer online or home visits only. If you need an in-person session outside of Tuesday or Thursday, write to me on WhatsApp — there may still be exceptional availability those days."}, "h5": {"es": "Esto es una <strong>solicitud</strong> de hora, no una reserva confirmada de inmediato: reviso mi agenda real y te confirmo por correo o WhatsApp. Recuerda que para atenciones presenciales u online tu hora queda confirmada una vez recibido el <strong>abono de $10.000</strong> (ver detalles de la cuenta más arriba).", "en": "This is a <strong>request</strong> for a session, not an immediately confirmed booking: I check my real schedule and confirm by email or WhatsApp. Remember that for in-person or online sessions your booking is confirmed once the <strong>$10,000 deposit</strong> is received (see account details above)."}, "h6": {"es": "Para que cada palabra <em>encuentre</em> su camino", "en": "Where every word <em>finds</em> its way"}}};
 </script>
 <script>
 /* ============================================================
@@ -1343,6 +1389,7 @@ var DYN_I18N = {
   hintRain: { es: 'Estos días solo se atiende <strong>online</strong>.', en: 'Only <strong>online</strong> sessions are available these days.' },
   hintWeekend: { es: 'Los sábados y domingos atiendo online o a domicilio (no presencial).', en: 'On Saturdays and Sundays I offer online sessions or home visits (no in-person).' },
   hintEvening: { es: 'A partir de las 19:00 entre semana atiendo online o a domicilio (no presencial).', en: 'From 7:00 pm on weekdays I offer online sessions or home visits (no in-person).' },
+  hintNoPresencialDay: { es: 'Este día no hay atención presencial (la presencial es solo martes y jueves). Puedes elegir online o a domicilio, o escribirme por WhatsApp para consultar si hay disponibilidad presencial excepcional.', en: 'There is no in-person care this day (in-person is only on Tuesdays and Thursdays). You can choose online or home visit, or write to me on WhatsApp to check for exceptional in-person availability.' },
   summaryPrefix: { es: 'Vas a solicitar el ', en: 'You are about to request ' },
   summaryHrs: { es: ' hrs', en: '' },
   summaryOnlineOnly: { es: ' — <strong>solo online</strong> (temporal de lluvias)', en: ' — <strong>online only</strong> (heavy rain)' },
@@ -1353,7 +1400,11 @@ var DYN_I18N = {
   statusChooseFirst: { es: 'Por favor elige un día y una hora antes de enviar.', en: 'Please choose a day and time before sending.' },
   statusJustTaken: { es: 'Justo se acaba de ocupar ese día y hora. Por favor elige otro horario.', en: 'That day and time was just taken. Please choose another time.' },
   statusSuccess: { es: '¡Listo! Recibí tu solicitud y te escribo pronto para confirmar.', en: 'All set! I received your request and will write to you soon to confirm.' },
-  statusError: { es: 'No se pudo enviar la solicitud. Intenta de nuevo o escríbeme directo por WhatsApp.', en: 'The request could not be sent. Please try again or message me directly on WhatsApp.' }
+  statusError: { es: 'No se pudo enviar la solicitud. Intenta de nuevo o escríbeme directo por WhatsApp.', en: 'The request could not be sent. Please try again or message me directly on WhatsApp.' },
+  sessionLabel: { es: 'Sesión', en: 'Session' },
+  sessionUnchosen: { es: '(sin elegir)', en: '(not chosen)' },
+  sessionsPendingWhatsapp: { es: 'Las demás sesiones se coordinan por WhatsApp.', en: 'The remaining sessions will be coordinated via WhatsApp.' },
+  statusChooseAllSessions: { es: 'Elige el día y la hora de cada sesión antes de enviar (o activa "agendar las siguientes sesiones luego").', en: 'Choose the day and time for each session before sending (or turn on "schedule the remaining sessions later").' }
 };
 
 function D(key) {
@@ -1530,6 +1581,14 @@ var BOOKING_CONFIG = {
   // lavado de oídos a domicilio.
   weekendSlots: ['09:00', '10:00', '11:00', '12:00', '13:00', '14:00'],
   // ============================================================
+  // DÍAS CON ATENCIÓN PRESENCIAL EN VIÑA DEL MAR.
+  // 0=domingo, 1=lunes, 2=martes, 3=miércoles, 4=jueves, 5=viernes, 6=sábado.
+  // Fuera de estos días la opción "Presencial" queda deshabilitada en el
+  // formulario (solo se puede elegir Online o A domicilio). Si alguna vez
+  // cambias tu horario presencial, solo tienes que editar esta lista.
+  // ============================================================
+  presencialDays: [2, 4],
+  // ============================================================
   // DÍAS BLOQUEADOS (sin horas disponibles).
   // Llave: fecha en formato 'YYYY-MM-DD'. Valor: mensaje que se
   // muestra en la agenda en vez de los horarios de ese día.
@@ -1620,6 +1679,12 @@ function initBookingWidget() {
   var optPresencial = document.getElementById('opt-presencial');
   var submitBtn = document.getElementById('bookingSubmit');
   var statusEl = document.getElementById('bookingStatus');
+  var sessionCountSelect = document.getElementById('sessionCount');
+  var scheduleLaterToggle = document.getElementById('scheduleLaterToggle');
+  var scheduleLaterRow = document.getElementById('scheduleLaterRow');
+  var sessionTabsEl = document.getElementById('sessionTabs');
+  var formSessionCount = document.getElementById('formSessionCount');
+  var formSessionsSummary = document.getElementById('formSessionsSummary');
 
   var todayBase = new Date();
   todayBase.setHours(0, 0, 0, 0);
@@ -1628,6 +1693,20 @@ function initBookingWidget() {
   var maxOffset = Math.max(0, Math.ceil(BOOKING_CONFIG.daysAheadToShow / BOOKING_CONFIG.daysPerPage) - 1);
   var selectedDate = null; // Date object, sin hora
   var selectedTime = null; // string '09:00'
+
+  // ============================================================
+  // AGENDAR VARIAS SESIONES DE UNA VEZ
+  // ============================================================
+  // "sessions" guarda, para cada sesión del plan elegido, la fecha y hora
+  // que la persona va escogiendo (una por una, cambiando de pestaña).
+  // activeSessionIndex indica cuál de esas sesiones se está editando ahora
+  // mismo en el calendario/horarios de arriba (selectedDate/selectedTime
+  // siempre reflejan la sesión activa).
+  // ============================================================
+  var sessionCount = 1;
+  var scheduleLater = false;
+  var sessions = [{ date: null, time: null }];
+  var activeSessionIndex = 0;
 
   // ============================================================
   // DISPONIBILIDAD REAL (Google Sheets + Google Apps Script)
@@ -1763,10 +1842,12 @@ function initBookingWidget() {
         btn.addEventListener('click', function () {
           selectedDate = dateForBtn;
           selectedTime = null;
+          sessions[activeSessionIndex] = { date: selectedDate, time: null };
           renderDays();
           renderSlots();
           updateSummary();
           syncModalidadWithSelectedDate();
+          renderSessionTabs();
         });
       })(d);
 
@@ -1844,12 +1925,102 @@ function initBookingWidget() {
         if (selectedTime === time) btn.classList.add('is-selected');
         btn.addEventListener('click', function () {
           selectedTime = time;
+          sessions[activeSessionIndex] = { date: selectedDate, time: selectedTime };
           renderSlots();
           updateSummary();
           syncModalidadWithSelectedDate();
+          renderSessionTabs();
         });
       }
       slotGrid.appendChild(btn);
+    });
+  }
+
+  // ============================================================
+  // PESTAÑAS DE SESIÓN (1/N, 2/N, ...) cuando se agenda más de una
+  // sesión de una vez. Cada pestaña guarda su propia fecha y hora;
+  // cambiar de pestaña carga esa fecha/hora en el calendario de arriba.
+  // ============================================================
+  function renderSessionTabs() {
+    if (!sessionTabsEl) return;
+    if (sessionCount <= 1) {
+      sessionTabsEl.hidden = true;
+      sessionTabsEl.innerHTML = '';
+      return;
+    }
+    sessionTabsEl.hidden = false;
+    sessionTabsEl.innerHTML = '';
+    var howMany = scheduleLater ? 1 : sessionCount;
+    for (var i = 0; i < howMany; i++) {
+      (function (idx) {
+        var btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'session-tab-btn';
+        if (idx === activeSessionIndex) btn.classList.add('is-active');
+        if (sessions[idx] && sessions[idx].date && sessions[idx].time) btn.classList.add('is-filled');
+        btn.textContent = D('sessionLabel') + ' ' + (idx + 1) + '/' + sessionCount;
+        btn.addEventListener('click', function () { selectSessionTab(idx); });
+        sessionTabsEl.appendChild(btn);
+      })(i);
+    }
+  }
+
+  function selectSessionTab(idx) {
+    if (idx === activeSessionIndex) return;
+    sessions[activeSessionIndex] = { date: selectedDate, time: selectedTime };
+    activeSessionIndex = idx;
+    var s = sessions[idx] || { date: null, time: null };
+    selectedDate = s.date;
+    selectedTime = s.time;
+    renderDays();
+    renderSlots();
+    updateSummary();
+    syncModalidadWithSelectedDate();
+    renderSessionTabs();
+  }
+
+  function resetSessionsState() {
+    sessionCount = 1;
+    scheduleLater = false;
+    sessions = [{ date: null, time: null }];
+    activeSessionIndex = 0;
+    selectedDate = null;
+    selectedTime = null;
+    if (sessionCountSelect) sessionCountSelect.value = '1';
+    if (scheduleLaterToggle) scheduleLaterToggle.checked = false;
+    if (scheduleLaterRow) scheduleLaterRow.hidden = true;
+  }
+
+  if (sessionCountSelect) {
+    sessionCountSelect.addEventListener('change', function () {
+      sessionCount = parseInt(sessionCountSelect.value, 10) || 1;
+      sessions = [];
+      for (var i = 0; i < sessionCount; i++) sessions.push({ date: null, time: null });
+      activeSessionIndex = 0;
+      selectedDate = null;
+      selectedTime = null;
+      if (scheduleLaterRow) scheduleLaterRow.hidden = sessionCount <= 1;
+      if (sessionCount <= 1 && scheduleLaterToggle) {
+        scheduleLaterToggle.checked = false;
+        scheduleLater = false;
+      }
+      renderDays();
+      renderSlots();
+      updateSummary();
+      syncModalidadWithSelectedDate();
+      renderSessionTabs();
+    });
+  }
+
+  if (scheduleLaterToggle) {
+    scheduleLaterToggle.addEventListener('change', function () {
+      scheduleLater = scheduleLaterToggle.checked;
+      if (scheduleLater && activeSessionIndex !== 0) {
+        selectSessionTab(0);
+      } else {
+        renderSessionTabs();
+        updateSummary();
+      }
     });
   }
 
@@ -1877,7 +2048,8 @@ function initBookingWidget() {
 
     var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
     var isHomeOnlyTime = !isWeekendDay && selectedTime && BOOKING_CONFIG.homeOnlySlots.indexOf(selectedTime) !== -1;
-    var noPresencial = isWeekendDay || isHomeOnlyTime;
+    var isPresencialDay = BOOKING_CONFIG.presencialDays.indexOf(selectedDate.getDay()) !== -1;
+    var noPresencial = isWeekendDay || isHomeOnlyTime || !isPresencialDay;
 
     if (noPresencial) {
       if (optOnline) optOnline.disabled = false;
@@ -1888,7 +2060,7 @@ function initBookingWidget() {
       if (formModalidad.value === 'Presencial') formModalidad.value = '';
       if (modalidadHint) {
         modalidadHint.hidden = false;
-        modalidadHint.innerHTML = isWeekendDay ? D('hintWeekend') : D('hintEvening');
+        modalidadHint.innerHTML = isWeekendDay ? D('hintWeekend') : (isHomeOnlyTime ? D('hintEvening') : D('hintNoPresencialDay'));
       }
     } else {
       if (optOnline) optOnline.disabled = false;
@@ -1899,23 +2071,70 @@ function initBookingWidget() {
   }
 
   function updateSummary() {
+    // Mantiene "sessions" al día con lo que se ve ahora mismo en el
+    // calendario (la sesión activa), antes de armar el resumen/los
+    // campos ocultos que se envían.
+    sessions[activeSessionIndex] = { date: selectedDate, time: selectedTime };
+
+    if (formSessionCount) formSessionCount.value = String(sessionCount);
+
+    if (sessionCount > 1) {
+      var howMany = scheduleLater ? 1 : sessionCount;
+      var lines = [];
+      var summaryTextParts = [];
+      for (var i = 0; i < howMany; i++) {
+        var s = sessions[i];
+        var label = D('sessionLabel') + ' ' + (i + 1) + '/' + sessionCount + ': ';
+        if (s && s.date && s.time) {
+          var lineText = formatLongDate(s.date) + ', ' + s.time + D('summaryHrs');
+          lines.push('<span class="session-summary-line"><strong>' + label + '</strong>' + lineText + '</span>');
+          summaryTextParts.push(label + lineText);
+        } else {
+          lines.push('<span class="session-summary-line"><strong>' + label + '</strong>' + D('sessionUnchosen') + '</span>');
+          summaryTextParts.push(label + D('sessionUnchosen'));
+        }
+      }
+      var pendingCount = scheduleLater ? (sessionCount - 1) : 0;
+      if (pendingCount > 0) {
+        lines.push('<span class="session-summary-pending">' + D('sessionsPendingWhatsapp') + '</span>');
+        summaryTextParts.push(D('sessionsPendingWhatsapp'));
+      }
+      bookingSummary.innerHTML = lines.join('');
+      formSessionsSummary.value = summaryTextParts.join(' | ');
+
+      var first = sessions[0];
+      if (first && first.date && first.time) {
+        formDate.value = formatLongDate(first.date);
+        formTime.value = first.time;
+        formSubject.value = 'Nueva solicitud de ' + sessionCount + ' sesiones — primera sesión: ' + formatLongDate(first.date) + ' ' + first.time + ' hrs';
+      } else {
+        formDate.value = '';
+        formTime.value = '';
+        formSubject.value = 'Nueva solicitud de ' + sessionCount + ' sesiones';
+      }
+      return;
+    }
+
     if (selectedDate && selectedTime) {
       var dateText = formatLongDate(selectedDate);
       var dateIso = isoDate(selectedDate);
       var isOnlineOnlyDay = !!BOOKING_CONFIG.onlineOnlyDates[dateIso];
       var isWeekendDay = BOOKING_CONFIG.weekendDays.indexOf(selectedDate.getDay()) !== -1;
       var isHomeOnlyTime = !isWeekendDay && !isOnlineOnlyDay && BOOKING_CONFIG.homeOnlySlots.indexOf(selectedTime) !== -1;
-      var noPresencial = isWeekendDay || isHomeOnlyTime;
+      var isPresencialDay = BOOKING_CONFIG.presencialDays.indexOf(selectedDate.getDay()) !== -1;
+      var noPresencial = isWeekendDay || isHomeOnlyTime || !isPresencialDay;
       var modalidadTag = isOnlineOnlyDay ? D('summaryOnlineOnly') : (noPresencial ? D('summaryNoPresencial') : '');
       bookingSummary.innerHTML = D('summaryPrefix') + '<strong>' + dateText + ', ' + selectedTime + D('summaryHrs') + '</strong>' + modalidadTag + '.';
       formDate.value = dateText;
       formTime.value = selectedTime;
+      formSessionsSummary.value = dateText + ', ' + selectedTime + D('summaryHrs');
       var subjectTag = isOnlineOnlyDay ? '[Solo online — temporal de lluvias] ' : (isWeekendDay ? '[Fin de semana] ' : (isHomeOnlyTime ? '[Horario online/domicilio] ' : ''));
       formSubject.value = subjectTag + 'Nueva solicitud de hora — ' + dateText + ' ' + selectedTime + ' hrs';
     } else {
       bookingSummary.textContent = (I18N_STATIC.text.t127[currentLang()] || I18N_STATIC.text.t127.es);
       formDate.value = '';
       formTime.value = '';
+      formSessionsSummary.value = '';
     }
   }
 
@@ -1931,29 +2150,46 @@ function initBookingWidget() {
     statusEl.className = 'booking-status';
     statusEl.textContent = '';
 
-    if (!selectedDate || !selectedTime) {
-      statusEl.textContent = D('statusChooseFirst');
+    // Guarda la sesión que se está viendo ahora mismo antes de validar.
+    sessions[activeSessionIndex] = { date: selectedDate, time: selectedTime };
+
+    // Arma la lista de sesiones que realmente hay que agendar ahora:
+    // todas, salvo que "scheduleLater" esté activo (ahí solo la primera).
+    var howMany = scheduleLater ? 1 : sessionCount;
+    var sessionsToSubmit = [];
+    for (var i = 0; i < howMany; i++) {
+      sessionsToSubmit.push({ index: i + 1, total: sessionCount, date: sessions[i] ? sessions[i].date : null, time: sessions[i] ? sessions[i].time : null });
+    }
+
+    var incomplete = sessionsToSubmit.some(function (s) { return !s.date || !s.time; });
+    if (incomplete) {
+      statusEl.textContent = sessionCount > 1 ? D('statusChooseAllSessions') : D('statusChooseFirst');
       statusEl.className = 'booking-status is-error';
       return;
     }
-
-    var chosenDateIso = isoDate(selectedDate);
-    var chosenTime = selectedTime;
 
     submitBtn.disabled = true;
     submitBtn.textContent = D('submitChecking');
 
     // Antes de enviar, se vuelve a consultar la Google Sheet por si alguien
-    // más acaba de tomar ese mismo horario en los últimos minutos.
+    // más acaba de tomar alguno de esos horarios en los últimos minutos.
     loadBookedSlots(function () {
-      if (bookedSlots[slotKey(chosenDateIso, chosenTime)]) {
+      var taken = sessionsToSubmit.filter(function (s) {
+        return bookedSlots[slotKey(isoDate(s.date), s.time)];
+      });
+      if (taken.length) {
         statusEl.textContent = D('statusJustTaken');
         statusEl.className = 'booking-status is-error';
         submitBtn.disabled = false;
         submitBtn.textContent = D('submitDefault');
-        selectedTime = null;
+        taken.forEach(function (s) {
+          var idx = s.index - 1;
+          if (sessions[idx]) sessions[idx].time = null;
+          if (idx === activeSessionIndex) selectedTime = null;
+        });
         renderSlots();
         updateSummary();
+        renderSessionTabs();
         return;
       }
 
@@ -1970,24 +2206,27 @@ function initBookingWidget() {
             statusEl.textContent = D('statusSuccess');
             statusEl.className = 'booking-status is-success';
 
-            // Guarda la reserva en la Google Sheet para bloquear ese horario
-            // a otras personas. Es "best effort": si esto falla (por ejemplo
-            // BOOKING_CONFIG.appsScriptUrl no está configurada todavía), la
-            // solicitud igual llegó por correo vía Formspree.
+            // Guarda cada sesión en la Google Sheet para bloquear esos
+            // horarios a otras personas. Es "best effort": si esto falla
+            // (por ejemplo BOOKING_CONFIG.appsScriptUrl no está configurada
+            // todavía), la solicitud igual llegó por correo vía Formspree.
             var url = BOOKING_CONFIG.appsScriptUrl;
             if (url && url.indexOf('PEGA_AQUI') === -1) {
               fetch(url, {
                 method: 'POST',
                 headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({
-                  fecha: chosenDateIso,
-                  hora: chosenTime,
                   nombre: formData.get('name') || '',
-                  modalidad: formData.get('modalidad') || ''
+                  modalidad: formData.get('modalidad') || '',
+                  sesiones: sessionsToSubmit.map(function (s) {
+                    return { fecha: isoDate(s.date), hora: s.time, indice: s.index, total: s.total };
+                  })
                 })
               })
                 .then(function () {
-                  bookedSlots[slotKey(chosenDateIso, chosenTime)] = true;
+                  sessionsToSubmit.forEach(function (s) {
+                    bookedSlots[slotKey(isoDate(s.date), s.time)] = true;
+                  });
                 })
                 .catch(function () {
                   // No interrumpe la experiencia del usuario si esto falla.
@@ -1995,14 +2234,14 @@ function initBookingWidget() {
             }
 
             form.reset();
-            selectedDate = null;
-            selectedTime = null;
+            resetSessionsState();
             if (optOnline) optOnline.disabled = false;
             if (optPresencial) optPresencial.disabled = false;
             if (modalidadHint) modalidadHint.hidden = true;
             renderDays();
             renderSlots();
             updateSummary();
+            renderSessionTabs();
           } else {
             return res.json().then(function (data) {
               var msg = (data && data.errors && data.errors.map(function (err) { return err.message; }).join(', ')) || 'Error desconocido';
@@ -2024,6 +2263,7 @@ function initBookingWidget() {
   renderDays();
   renderSlots();
   updateSummary();
+  renderSessionTabs();
   // Al cargar el widget, consulta qué horarios ya están ocupados y
   // vuelve a dibujar los horarios del día seleccionado (si había alguno).
   loadBookedSlots(function () {
@@ -2038,6 +2278,7 @@ function initBookingWidget() {
     renderSlots();
     updateSummary();
     syncModalidadWithSelectedDate();
+    renderSessionTabs();
   };
 }
 
