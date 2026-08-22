@@ -32,7 +32,7 @@ function getSheet_() {
   var sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
-    sheet.appendRow(['fecha', 'hora', 'nombre', 'modalidad', 'timestamp']);
+    sheet.appendRow(['fecha', 'hora', 'nombre', 'modalidad', 'timestamp', 'cantidad_sesiones', 'agendar_luego']);
   }
   // Fuerza a que las columnas "fecha" (A) y "hora" (B) se guarden siempre
   // como texto plano, para que Google Sheets no las "autoformatee" como
@@ -93,18 +93,58 @@ function doGet(e) {
 }
 
 /**
- * POST → usado por el sitio web para guardar una nueva reserva.
- * Espera un body JSON como:
+ * POST → usado por el sitio web para guardar una o varias reservas de
+ * una misma solicitud (agendar varias sesiones de una vez).
+ *
+ * Formato NUEVO (varias sesiones de una misma solicitud):
+ * {"reservas":[{"fecha":"2026-08-25","hora":"10:00"}, {"fecha":"2026-08-27","hora":"10:00"}],
+ *  "nombre":"Juanita Pérez","modalidad":"Online",
+ *  "cantidad_sesiones":"5","agendar_luego":"No"}
+ * Se agrega una fila por cada sesión en "reservas".
+ *
+ * Formato ANTERIOR (compatibilidad, una sola sesión):
  * {"fecha":"2026-07-10","hora":"09:00","nombre":"Juanita Pérez","modalidad":"Online"}
- * Responde: {"ok":true} o {"ok":false,"error":"..."}
+ *
+ * Responde: {"ok":true,"guardadas":N} o {"ok":false,"error":"..."}
  */
 function doPost(e) {
   try {
     var body = JSON.parse(e.postData.contents);
-    var fecha = String(body.fecha || '').trim();
-    var hora = String(body.hora || '').trim();
     var nombre = String(body.nombre || '').trim();
     var modalidad = String(body.modalidad || '').trim();
+    var cantidadSesiones = String(body.cantidad_sesiones || '').trim();
+    var agendarLuego = String(body.agendar_luego || '').trim();
+    var sheet = getSheet_();
+
+    // Formato nuevo: un arreglo "reservas" con una o varias sesiones de
+    // la misma solicitud (agendar varias sesiones a la vez).
+    if (body.reservas && Object.prototype.toString.call(body.reservas) === '[object Array]' && body.reservas.length > 0) {
+      var now = new Date();
+      var guardadas = 0;
+      for (var i = 0; i < body.reservas.length; i++) {
+        var r = body.reservas[i] || {};
+        var fecha = String(r.fecha || '').trim();
+        var hora = String(r.hora || '').trim();
+        // Sesiones marcadas para "agendar luego" llegan sin fecha/hora
+        // todavía: no corresponden a un horario reservado en el
+        // calendario, así que simplemente no se guardan como fila.
+        if (!fecha || !hora) continue;
+        sheet.appendRow([fecha, hora, nombre, modalidad, now, cantidadSesiones, agendarLuego]);
+        guardadas++;
+      }
+      if (guardadas === 0) {
+        return ContentService
+          .createTextOutput(JSON.stringify({ ok: false, error: 'El arreglo "reservas" no traía ninguna fecha/hora válida' }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
+      return ContentService
+        .createTextOutput(JSON.stringify({ ok: true, guardadas: guardadas }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // Formato anterior: una sola reserva (se mantiene por compatibilidad).
+    var fecha = String(body.fecha || '').trim();
+    var hora = String(body.hora || '').trim();
 
     if (!fecha || !hora) {
       return ContentService
@@ -112,11 +152,10 @@ function doPost(e) {
         .setMimeType(ContentService.MimeType.JSON);
     }
 
-    var sheet = getSheet_();
-    sheet.appendRow([fecha, hora, nombre, modalidad, new Date()]);
+    sheet.appendRow([fecha, hora, nombre, modalidad, new Date(), cantidadSesiones, agendarLuego]);
 
     return ContentService
-      .createTextOutput(JSON.stringify({ ok: true }))
+      .createTextOutput(JSON.stringify({ ok: true, guardadas: 1 }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService
