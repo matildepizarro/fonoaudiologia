@@ -1645,8 +1645,24 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  drawWaveform();
-  initBookingWidget();
+  // "drawWaveform" e "initBookingWidget" se ejecutan cada uno en su
+  // propio try/catch. Antes, si "drawWaveform" (la onda decorativa,
+  // puramente estética) fallaba por cualquier motivo en algún
+  // navegador, "initBookingWidget" ni siquiera llegaba a ejecutarse —
+  // y el calendario de Agenda completo se quedaba sin dibujar, en
+  // silencio, sin ningún aviso. Con esto, un problema en la onda
+  // decorativa ya no puede tumbar el calendario de reservas.
+  try {
+    drawWaveform();
+  } catch (err) {
+    console.error('No se pudo dibujar la onda decorativa del encabezado:', err);
+  }
+  try {
+    initBookingWidget();
+  } catch (err) {
+    console.error('No se pudo iniciar el calendario de Agenda:', err);
+    showBookingWidgetFallback();
+  }
 });
 
 /* ============================================================
@@ -2218,11 +2234,30 @@ function initBookingWidget() {
     return lines;
   }
 
+  // Formatea un número con puntos como separador de miles al estilo
+  // chileno (10000 -> "10.000"), a mano y sin usar toLocaleString/Intl:
+  // algunos navegadores móviles (sobre todo versiones acotadas de
+  // Firefox/WebView para Android) no traen datos de idioma completos y
+  // toLocaleString('es-CL') puede lanzar una excepción ahí. Si eso pasa
+  // dentro de una función que se llama antes de dibujar el calendario,
+  // el calendario completo se queda sin dibujar. Con este formateador
+  // manual evitamos depender de esa API por completo.
+  function formatCLP(n) {
+    var s = String(Math.round(n));
+    var out = '';
+    for (var i = 0; i < s.length; i++) {
+      var posFromEnd = s.length - i;
+      out += s[i];
+      if (posFromEnd > 1 && posFromEnd % 3 === 1) out += '.';
+    }
+    return out;
+  }
+
   function updateSessionsTotal() {
     if (!sessionsTotalEl) return;
     var n = sessions.length;
     var total = n * BOOKING_CONFIG.sessionPriceClp;
-    var totalFormatted = total.toLocaleString('es-CL');
+    var totalFormatted = formatCLP(total);
     var word = n === 1 ? D('sessionSingular') : D('sessionsPluralWord');
     sessionsTotalEl.textContent = n + ' ' + word + ' \u00b7 ' + D('sessionsTotalPrefix') + ' $' + totalFormatted + ' ' + D('sessionsTotalSuffix');
   }
@@ -2493,6 +2528,23 @@ function refreshBookingWidgetLanguage() {
   if (typeof window.__bookingRefresh === 'function') {
     window.__bookingRefresh();
   }
+}
+
+// Si initBookingWidget() falla por cualquier motivo (algún navegador
+// raro, una API que no existe ahí, etc.), esto reemplaza el calendario
+// por un aviso claro en vez de dejarlo vacío y en silencio — la persona
+// que quiere agendar necesita alguna forma de hacerlo igual.
+function showBookingWidgetFallback() {
+  var widget = document.getElementById('bookingWidget');
+  var sessionsPicker = document.getElementById('sessionsPicker');
+  var anchor = sessionsPicker || widget;
+  if (!anchor || !anchor.parentNode) return;
+  var msg = document.createElement('p');
+  msg.className = 'agenda-schedule-note';
+  msg.innerHTML = 'No pudimos cargar el calendario en este navegador. Escríbenos por <a href="https://wa.me/56971710225?text=Hola%20Matilde%2C%20quiero%20agendar%20una%20hora" target="_blank" rel="noopener noreferrer">WhatsApp</a> y coordinamos tu hora directamente.';
+  anchor.parentNode.insertBefore(msg, anchor);
+  if (sessionsPicker) sessionsPicker.hidden = true;
+  if (widget) widget.hidden = true;
 }
 
 function drawWaveform() {
