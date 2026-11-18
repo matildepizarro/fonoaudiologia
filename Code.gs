@@ -10,12 +10,8 @@
  *  - doGet()  → responde en JSON con la lista de fecha+hora ya reservadas.
  *               El sitio web lo consulta para saber qué horarios ocultar
  *               o mostrar como "Reservado".
- *  - doPost() → recibe una nueva reserva y la agrega como fila(s) nueva(s)
- *               en la Sheet. Ahora se puede recibir más de una sesión a
- *               la vez (por ejemplo, un plan de 5, 10 o 30 sesiones que
- *               la persona agendó todas juntas): cada sesión queda en su
- *               propia fila, agrupada con un "grupo" en común para que
- *               puedas identificar que pertenecen a la misma solicitud.
+ *  - doPost() → recibe una nueva reserva (fecha, hora, nombre, modalidad)
+ *               y la agrega como fila nueva en la Sheet.
  *
  * No necesitas tocar nada de este código para que funcione: solo debes
  * pegarlo en el editor de Apps Script de tu Google Sheet y publicarlo
@@ -29,6 +25,16 @@
 // cambia también el nombre de la pestaña en la Sheet.
 var SHEET_NAME = 'Reservas';
 
+// ------------------------------------------------------------
+// PRIVACIDAD (Ley de Datos Personales) — ver privacidad.html
+// ------------------------------------------------------------
+// Días que se conserva una fila DESPUÉS de la fecha de la sesión. La
+// Sheet solo sirve para bloquear horarios futuros; pasado ese plazo la
+// fila ya no es necesaria y se borra (principio de proporcionalidad).
+// La Política de Privacidad dice 30 días: si cambias este número,
+// cambia también el texto de la política.
+var RETENCION_DIAS = 30;
+
 // Devuelve la pestaña de reservas, creándola (con encabezados) si
 // todavía no existe.
 function getSheet_() {
@@ -36,7 +42,7 @@ function getSheet_() {
   var sheet = ss.getSheetByName(SHEET_NAME);
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
-    sheet.appendRow(['fecha', 'hora', 'nombre', 'modalidad', 'timestamp', 'sesion', 'grupo']);
+    sheet.appendRow(['fecha', 'hora', 'nombre', 'modalidad', 'timestamp', 'cantidad_sesiones', 'agendar_luego']);
   }
   // Fuerza a que las columnas "fecha" (A) y "hora" (B) se guarden siempre
   // como texto plano, para que Google Sheets no las "autoformatee" como
@@ -50,9 +56,6 @@ function getSheet_() {
 /**
  * GET → usado por el sitio web para saber qué horarios ya están ocupados.
  * Responde: {"reservados":[{"fecha":"2026-07-10","hora":"09:00"}, ...]}
- * Funciona igual que antes: no importa si una fila viene de una reserva
- * de 1 sesión o de un plan de varias sesiones, cada fila bloquea su
- * propio horario.
  */
 function doGet(e) {
   var sheet = getSheet_();
@@ -100,75 +103,123 @@ function doGet(e) {
 }
 
 /**
- * POST → usado por el sitio web para guardar una nueva reserva.
+ * POST → usado por el sitio web para guardar una o varias reservas de
+ * una misma solicitud (agendar varias sesiones de una vez).
  *
- * Ahora acepta dos formatos de body JSON:
+ * Formato NUEVO (varias sesiones de una misma solicitud):
+ * {"reservas":[{"fecha":"2026-08-25","hora":"10:00"}, {"fecha":"2026-08-27","hora":"10:00"}],
+ *  "nombre":"Juanita Pérez","modalidad":"Online",
+ *  "cantidad_sesiones":"5","agendar_luego":"No"}
+ * Se agrega una fila por cada sesión en "reservas".
  *
- * 1) Varias sesiones a la vez (plan de N sesiones agendadas juntas):
- *    {
- *      "nombre": "Juanita Pérez",
- *      "modalidad": "Online",
- *      "sesiones": [
- *        {"fecha":"2026-08-25","hora":"09:00","indice":1,"total":5},
- *        {"fecha":"2026-09-01","hora":"09:00","indice":2,"total":5},
- *        ...
- *      ]
- *    }
- *    Cada sesión se guarda en su propia fila, todas con el mismo "grupo"
- *    (un identificador único) para que sepas que pertenecen a la misma
- *    solicitud.
+ * Formato ANTERIOR (compatibilidad, una sola sesión):
+ * {"fecha":"2026-07-10","hora":"09:00","nombre":"Juanita Pérez","modalidad":"Online"}
  *
- * 2) Formato antiguo, una sola sesión (compatibilidad hacia atrás):
- *    {"fecha":"2026-07-10","hora":"09:00","nombre":"Juanita Pérez","modalidad":"Online"}
- *
- * Responde: {"ok":true} o {"ok":false,"error":"..."}
+ * Responde: {"ok":true,"guardadas":N} o {"ok":false,"error":"..."}
  */
 function doPost(e) {
   try {
     var body = JSON.parse(e.postData.contents);
     var nombre = String(body.nombre || '').trim();
     var modalidad = String(body.modalidad || '').trim();
-
-    var sesiones = [];
-    if (body.sesiones && body.sesiones.length) {
-      sesiones = body.sesiones;
-    } else if (body.fecha && body.hora) {
-      // Compatibilidad con envíos antiguos de una sola sesión.
-      sesiones = [{ fecha: body.fecha, hora: body.hora, indice: 1, total: 1 }];
-    }
-
-    if (!sesiones.length) {
-      return ContentService
-        .createTextOutput(JSON.stringify({ ok: false, error: 'Falta información de sesiones (fecha/hora)' }))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
-
-    var grupo = Utilities.getUuid();
+    var cantidadSesiones = String(body.cantidad_sesiones || '').trim();
+    var agendarLuego = String(body.agendar_luego || '').trim();
     var sheet = getSheet_();
-    var guardadas = 0;
 
-    sesiones.forEach(function (s) {
-      var fecha = String((s && s.fecha) || '').trim();
-      var hora = String((s && s.hora) || '').trim();
-      if (!fecha || !hora) return; // salta sesiones incompletas, sin cortar las demás
-      var indice = (s && s.indice) || 1;
-      var total = (s && s.total) || sesiones.length;
-      sheet.appendRow([fecha, hora, nombre, modalidad, new Date(), indice + '/' + total, grupo]);
-      guardadas++;
-    });
-
-    if (guardadas === 0) {
+    // Formato nuevo: un arreglo "reservas" con una o varias sesiones de
+    // la misma solicitud (agendar varias sesiones a la vez).
+    if (body.reservas && Object.prototype.toString.call(body.reservas) === '[object Array]' && body.reservas.length > 0) {
+      var now = new Date();
+      var guardadas = 0;
+      for (var i = 0; i < body.reservas.length; i++) {
+        var r = body.reservas[i] || {};
+        var fecha = String(r.fecha || '').trim();
+        var hora = String(r.hora || '').trim();
+        // Sesiones marcadas para "agendar luego" llegan sin fecha/hora
+        // todavía: no corresponden a un horario reservado en el
+        // calendario, así que simplemente no se guardan como fila.
+        if (!fecha || !hora) continue;
+        sheet.appendRow([fecha, hora, nombre, modalidad, now, cantidadSesiones, agendarLuego]);
+        guardadas++;
+      }
+      if (guardadas === 0) {
+        return ContentService
+          .createTextOutput(JSON.stringify({ ok: false, error: 'El arreglo "reservas" no traía ninguna fecha/hora válida' }))
+          .setMimeType(ContentService.MimeType.JSON);
+      }
       return ContentService
-        .createTextOutput(JSON.stringify({ ok: false, error: 'Ninguna sesión tenía fecha y hora válidas' }))
+        .createTextOutput(JSON.stringify({ ok: true, guardadas: guardadas }))
         .setMimeType(ContentService.MimeType.JSON);
     }
+
+    // Formato anterior: una sola reserva (se mantiene por compatibilidad).
+    var fecha = String(body.fecha || '').trim();
+    var hora = String(body.hora || '').trim();
+
+    if (!fecha || !hora) {
+      return ContentService
+        .createTextOutput(JSON.stringify({ ok: false, error: 'Falta fecha u hora' }))
+        .setMimeType(ContentService.MimeType.JSON);
+    }
+
+    sheet.appendRow([fecha, hora, nombre, modalidad, new Date(), cantidadSesiones, agendarLuego]);
 
     return ContentService
-      .createTextOutput(JSON.stringify({ ok: true, guardadas: guardadas }))
+      .createTextOutput(JSON.stringify({ ok: true, guardadas: 1 }))
       .setMimeType(ContentService.MimeType.JSON);
   } catch (err) {
     return ContentService
       .createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+
+/**
+ * LIMPIEZA AUTOMÁTICA — borra las filas cuya fecha de sesión ya pasó hace
+ * más de RETENCION_DIAS días. También sirve para borrar de una vez los
+ * nombres antiguos que hubiera en la columna "nombre" (los reemplaza por
+ * vacío en las filas que quedan).
+ *
+ * Se ejecuta sola si instalas el disparador diario con
+ * instalarLimpiezaDiaria() (hazlo UNA sola vez, ver LEEME-cumplimiento.md).
+ */
+function limpiarReservasAntiguas() {
+  var sheet = getSheet_();
+  var data = sheet.getDataRange().getValues();
+  var tz = Session.getScriptTimeZone();
+  var limite = new Date();
+  limite.setDate(limite.getDate() - RETENCION_DIAS);
+  var limiteTxt = Utilities.formatDate(limite, tz, 'yyyy-MM-dd');
+
+  // De abajo hacia arriba, para que borrar una fila no desordene las demás.
+  for (var i = data.length - 1; i >= 1; i--) {
+    var fecha = data[i][0];
+    if (Object.prototype.toString.call(fecha) === '[object Date]') {
+      fecha = Utilities.formatDate(fecha, tz, 'yyyy-MM-dd');
+    } else {
+      fecha = String(fecha).trim();
+    }
+    if (fecha && fecha < limiteTxt) {
+      sheet.deleteRow(i + 1);
+    }
+  }
+}
+
+/**
+ * Para borrar YA los nombres que se guardaron antes de este cambio
+ * (columna C "nombre"). Ejecútala una vez a mano si quieres.
+ */
+function borrarNombresGuardados() {
+  var sheet = getSheet_();
+  var last = sheet.getLastRow();
+  if (last > 1) sheet.getRange(2, 3, last - 1, 1).clearContent();
+}
+
+/** Crea el disparador que ejecuta la limpieza todos los días (una sola vez). */
+function instalarLimpiezaDiaria() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'limpiarReservasAntiguas') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('limpiarReservasAntiguas').timeBased().everyDays(1).atHour(3).create();
 }

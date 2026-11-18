@@ -25,6 +25,16 @@
 // cambia también el nombre de la pestaña en la Sheet.
 var SHEET_NAME = 'Reservas';
 
+// ------------------------------------------------------------
+// PRIVACIDAD (Ley de Datos Personales) — ver privacidad.html
+// ------------------------------------------------------------
+// Días que se conserva una fila DESPUÉS de la fecha de la sesión. La
+// Sheet solo sirve para bloquear horarios futuros; pasado ese plazo la
+// fila ya no es necesaria y se borra (principio de proporcionalidad).
+// La Política de Privacidad dice 30 días: si cambias este número,
+// cambia también el texto de la política.
+var RETENCION_DIAS = 30;
+
 // Devuelve la pestaña de reservas, creándola (con encabezados) si
 // todavía no existe.
 function getSheet_() {
@@ -162,4 +172,54 @@ function doPost(e) {
       .createTextOutput(JSON.stringify({ ok: false, error: String(err) }))
       .setMimeType(ContentService.MimeType.JSON);
   }
+}
+
+
+/**
+ * LIMPIEZA AUTOMÁTICA — borra las filas cuya fecha de sesión ya pasó hace
+ * más de RETENCION_DIAS días. También sirve para borrar de una vez los
+ * nombres antiguos que hubiera en la columna "nombre" (los reemplaza por
+ * vacío en las filas que quedan).
+ *
+ * Se ejecuta sola si instalas el disparador diario con
+ * instalarLimpiezaDiaria() (hazlo UNA sola vez, ver LEEME-cumplimiento.md).
+ */
+function limpiarReservasAntiguas() {
+  var sheet = getSheet_();
+  var data = sheet.getDataRange().getValues();
+  var tz = Session.getScriptTimeZone();
+  var limite = new Date();
+  limite.setDate(limite.getDate() - RETENCION_DIAS);
+  var limiteTxt = Utilities.formatDate(limite, tz, 'yyyy-MM-dd');
+
+  // De abajo hacia arriba, para que borrar una fila no desordene las demás.
+  for (var i = data.length - 1; i >= 1; i--) {
+    var fecha = data[i][0];
+    if (Object.prototype.toString.call(fecha) === '[object Date]') {
+      fecha = Utilities.formatDate(fecha, tz, 'yyyy-MM-dd');
+    } else {
+      fecha = String(fecha).trim();
+    }
+    if (fecha && fecha < limiteTxt) {
+      sheet.deleteRow(i + 1);
+    }
+  }
+}
+
+/**
+ * Para borrar YA los nombres que se guardaron antes de este cambio
+ * (columna C "nombre"). Ejecútala una vez a mano si quieres.
+ */
+function borrarNombresGuardados() {
+  var sheet = getSheet_();
+  var last = sheet.getLastRow();
+  if (last > 1) sheet.getRange(2, 3, last - 1, 1).clearContent();
+}
+
+/** Crea el disparador que ejecuta la limpieza todos los días (una sola vez). */
+function instalarLimpiezaDiaria() {
+  ScriptApp.getProjectTriggers().forEach(function (t) {
+    if (t.getHandlerFunction() === 'limpiarReservasAntiguas') ScriptApp.deleteTrigger(t);
+  });
+  ScriptApp.newTrigger('limpiarReservasAntiguas').timeBased().everyDays(1).atHour(3).create();
 }

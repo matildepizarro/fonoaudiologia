@@ -24,3 +24,8 @@ Afasia, deglución atípica, disartria, discapacidad intelectual, disfagia, disf
 
 ## Agendar hora
 Reservas en línea disponibles en: https://matildepizarro.github.io/fonoaudiologia/#agenda
+
+## Privacidad y condiciones
+- Política de privacidad: https://matildepizarro.github.io/fonoaudiologia/privacidad.html
+- Condiciones de reserva, abono y cancelación: https://matildepizarro.github.io/fonoaudiologia/condiciones.html
+- Derechos sobre datos personales (acceso, rectificación, supresión, oposición, portabilidad, bloqueo): escribir a matildepizarrotoro@gmail.com
